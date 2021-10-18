@@ -1,0 +1,9 @@
+<div>
+  <div style="height: 850px; width: 480px; padding: 40px;">
+    <gridster [options]="gridOptions" style="background-color: #1976d2">
+      <gridster-item [item]="component.gridsterItem" *ngFor="let component of dashboardComponents">
+        <app-preview-parentwidget [widgetType]="component.widgetType"></app-preview-parentwidget>
+      </gridster-item>
+    </gridster>
+  </div>
+</div>

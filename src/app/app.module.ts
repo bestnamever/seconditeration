@@ -13,6 +13,9 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import { ExampleGetdesignsComponent } from './features/components/example-getdesigns/example-getdesigns.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {HttpbaseurlInterceptor} from "./core/interceptors/httpbaseurl.interceptor";
+import { PreviewGridComponent } from './features/components/preview-grid/preview-grid.component';
+import { GridsterModule } from 'angular-gridster2';
+import { PreviewParentwidgetComponent } from './features/components/preview-parentwidget/preview-parentwidget.component';
 
 @NgModule({
   declarations: [
@@ -21,13 +24,16 @@ import {HttpbaseurlInterceptor} from "./core/interceptors/httpbaseurl.intercepto
     LayoutHeaderComponent,
     LayoutLeftbarComponent,
     LayoutRightbarComponent,
-    ExampleGetdesignsComponent
+    ExampleGetdesignsComponent,
+    PreviewGridComponent,
+    PreviewParentwidgetComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    GridsterModule,
     MatToolbarModule,
     MatSidenavModule,
   ],
