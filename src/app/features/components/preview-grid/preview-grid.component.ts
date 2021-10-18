@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {GridsterConfig, GridsterItem, GridsterItemComponentInterface} from "angular-gridster2";
 import {WidgetComponent} from "../../../core/models/widgetComponent";
 import {WidgetType} from "../../../core/models/widget-type";
+import {PhoneProperties} from "../../../core/models/phone-properties";
+import {PhoneType} from "../../../core/models/phone-type";
 
 @Component({
   selector: 'app-preview-grid',
@@ -12,6 +14,7 @@ export class PreviewGridComponent implements OnInit {
 
   // Variables
   gridOptions: GridsterConfig;
+  phoneOptions: PhoneProperties;
   dashboardComponents: Array<WidgetComponent> | undefined;
 
 
@@ -29,10 +32,10 @@ export class PreviewGridComponent implements OnInit {
       pushItems: true,
       margin: 12,
       outerMargin: true,
-      outerMarginTop: 24,
-      outerMarginBottom: 24,
-      outerMarginLeft: 24,
-      outerMarginRight: 24,
+      outerMarginTop: 36,
+      outerMarginBottom: 18,
+      outerMarginLeft: 18,
+      outerMarginRight: 18,
       minCols: 2,
       maxCols: 2,
       minRows: 2,
@@ -46,6 +49,7 @@ export class PreviewGridComponent implements OnInit {
       itemChangeCallback: (item, itemComponent) => { this.itemChange(item, itemComponent); },
       // itemResizeCallback: PreviewGridComponent.itemResize,
     };
+    this.phoneOptions = this.applyPhoneOptions(PhoneType.SAMSUNG_S20)
   }
 
 
@@ -72,6 +76,19 @@ export class PreviewGridComponent implements OnInit {
     const height = domRect.height;
     // this.gridItemCoordinates.set(itemComponent, { x: clientX, y: clientY, width, height });
     // console.log(this.gridItemCoordinates);
+  }
+
+  applyPhoneOptions(phoneType: PhoneType): any {
+    switch (phoneType) {
+      case PhoneType.SAMSUNG_S20:
+        return {
+          phoneType: PhoneType.SAMSUNG_S20,
+          borderThickness: '4px',
+          borderRadius: '30px',
+          notch: true,
+          notchRadius: '4px'
+        }
+    }
   }
 
 }

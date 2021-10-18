@@ -16,6 +16,8 @@ import {HttpbaseurlInterceptor} from "./core/interceptors/httpbaseurl.intercepto
 import { PreviewGridComponent } from './features/components/preview-grid/preview-grid.component';
 import { GridsterModule } from 'angular-gridster2';
 import { PreviewParentwidgetComponent } from './features/components/preview-parentwidget/preview-parentwidget.component';
+import { PreviewTopbarComponent } from './features/components/preview-topbar/preview-topbar.component';
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { PreviewParentwidgetComponent } from './features/components/preview-pare
     LayoutRightbarComponent,
     ExampleGetdesignsComponent,
     PreviewGridComponent,
-    PreviewParentwidgetComponent
+    PreviewParentwidgetComponent,
+    PreviewTopbarComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +39,7 @@ import { PreviewParentwidgetComponent } from './features/components/preview-pare
     GridsterModule,
     MatToolbarModule,
     MatSidenavModule,
+    MatIconModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpbaseurlInterceptor, multi: true }
