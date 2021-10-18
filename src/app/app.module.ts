@@ -10,6 +10,9 @@ import { LayoutHeaderComponent } from './features/components/layout-header/layou
 import { LayoutLeftbarComponent } from './features/components/layout-leftbar/layout-leftbar.component';
 import { LayoutRightbarComponent } from './features/components/layout-rightbar/layout-rightbar.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
+import { ExampleGetdesignsComponent } from './features/components/example-getdesigns/example-getdesigns.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {HttpbaseurlInterceptor} from "./core/interceptors/httpbaseurl.interceptor";
 
 @NgModule({
   declarations: [
@@ -17,16 +20,20 @@ import {MatSidenavModule} from "@angular/material/sidenav";
     HomepageComponent,
     LayoutHeaderComponent,
     LayoutLeftbarComponent,
-    LayoutRightbarComponent
+    LayoutRightbarComponent,
+    ExampleGetdesignsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     MatToolbarModule,
-    MatSidenavModule
+    MatSidenavModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: HttpbaseurlInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
