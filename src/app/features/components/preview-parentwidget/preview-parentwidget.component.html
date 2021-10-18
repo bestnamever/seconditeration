@@ -1,3 +1,4 @@
 <div class="widget">
-  <p>preview-parentwidget works!</p>
+  <app-widget-label *ngIf="isLabel()"></app-widget-label>
+  <app-widget-graph *ngIf="isGraph()"></app-widget-graph>
 </div>

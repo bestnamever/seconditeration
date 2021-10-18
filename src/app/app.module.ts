@@ -19,6 +19,8 @@ import { PreviewParentwidgetComponent } from './features/components/preview-pare
 import { PreviewTopbarComponent } from './features/components/preview-topbar/preview-topbar.component';
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
+import { WidgetLabelComponent } from './features/components/widget-label/widget-label.component';
+import { WidgetGraphComponent } from './features/components/widget-graph/widget-graph.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import {MatButtonModule} from "@angular/material/button";
     ExampleGetdesignsComponent,
     PreviewGridComponent,
     PreviewParentwidgetComponent,
-    PreviewTopbarComponent
+    PreviewTopbarComponent,
+    WidgetLabelComponent,
+    WidgetGraphComponent
   ],
   imports: [
     BrowserModule,

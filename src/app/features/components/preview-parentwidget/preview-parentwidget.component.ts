@@ -17,4 +17,10 @@ export class PreviewParentwidgetComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /* -------------------------------- */
+
+  // ngIf methods
+  isLabel(): boolean { return this.widgetType === WidgetType.LABEL; }
+  isGraph(): boolean { return this.widgetType === WidgetType.GRAPH; }
+
 }

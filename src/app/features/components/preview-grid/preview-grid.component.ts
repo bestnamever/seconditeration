@@ -60,7 +60,7 @@ export class PreviewGridComponent implements OnInit {
     this.dashboardComponents = [
       { gridsterItem: { id: 'item1', cols: 1, rows: 1, y: 0, x: 0, minItemCols: 1, minItemRows: 1 }, widgetType: WidgetType.LABEL },
       { gridsterItem: { id: 'item1', cols: 1, rows: 1, y: 0, x: 1, minItemCols: 1, minItemRows: 1 }, widgetType: WidgetType.LABEL },
-      { gridsterItem: { id: 'item3', cols: 1, rows: 1, y: 1, x: 0 }, widgetType: WidgetType.BUTTON }
+      { gridsterItem: { id: 'item3', cols: 2, rows: 2, y: 1, x: 0, minItemCols: 2, minItemRows: 2 }, widgetType: WidgetType.GRAPH }
     ];
   }
 
