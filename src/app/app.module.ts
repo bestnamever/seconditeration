@@ -18,6 +18,7 @@ import { GridsterModule } from 'angular-gridster2';
 import { PreviewParentwidgetComponent } from './features/components/preview-parentwidget/preview-parentwidget.component';
 import { PreviewTopbarComponent } from './features/components/preview-topbar/preview-topbar.component';
 import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import {MatIconModule} from "@angular/material/icon";
     GridsterModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpbaseurlInterceptor, multi: true }
