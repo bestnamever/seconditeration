@@ -27,7 +27,12 @@ export class PreviewGridComponent implements OnInit {
         enabled: true
       },
       pushItems: true,
-      margin: 16,
+      margin: 12,
+      outerMargin: true,
+      outerMarginTop: 24,
+      outerMarginBottom: 24,
+      outerMarginLeft: 24,
+      outerMarginRight: 24,
       minCols: 2,
       maxCols: 2,
       minRows: 2,
