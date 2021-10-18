@@ -9,16 +9,16 @@ import {HttpClient} from "@angular/common/http";
 export class DesignService {
 
   // Variables
-  private currentDesignSubject: BehaviorSubject<Design>;
-  public currentDesignState: Observable<Design>;
+  private currentDesignSubject: BehaviorSubject<Design>; // The state which we can edit
+  public currentDesignState: Observable<Design>; // The view-only state, where we can subscribe on to get updates.
 
 
   // Constructor
   constructor(private httpClient: HttpClient) {
 
     // Initialize variables
-    this.currentDesignSubject = new BehaviorSubject<Design>(this.getFirstDesign());
-    this.currentDesignState = this.currentDesignSubject.asObservable();
+    this.currentDesignSubject = new BehaviorSubject<Design>(this.getFirstDesign()); // Set the 1st design on init
+    this.currentDesignState = this.currentDesignSubject.asObservable(); // Make a clone of the state which is read-only
 
     // A method that sends a message to console when the Design gets updated
     this.currentDesignState.subscribe((design) => {
@@ -29,7 +29,7 @@ export class DesignService {
 
   /* ----------------------------------------- */
 
-  // Making a New design
+  // Making a first design; uses the Design model.
   getFirstDesign(): Design {
     return {
       id: 0,

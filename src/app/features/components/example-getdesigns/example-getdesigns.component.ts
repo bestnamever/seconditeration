@@ -28,6 +28,7 @@ export class ExampleGetdesignsComponent implements OnInit {
 
   /* ---------------------------------------------- */
 
+  // Method to save a new Design in the database. Gets called on Button click.
   save(): void {
     console.log('Saving a new Design...')
     this.designService.update({
