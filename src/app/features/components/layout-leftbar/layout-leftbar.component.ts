@@ -12,4 +12,12 @@ export class LayoutLeftbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+   /* ---------------------------------------------- */
+
+  setTab(tab : Event) : void  {
+      if (tab){
+        console.log(tab);
+      }
+   }  
+
 }
