@@ -14,10 +14,4 @@ export class LayoutLeftbarComponent implements OnInit {
 
    /* ---------------------------------------------- */
 
-  setTab(tab : Event) : void  {
-      if (tab){
-        console.log(tab);
-      }
-   }  
-
 }

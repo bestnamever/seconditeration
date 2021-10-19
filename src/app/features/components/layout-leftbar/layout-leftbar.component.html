@@ -1,10 +1,14 @@
 <div class="left-bar-wrapper">
-    <div class="bar-header-container">
-        <div class="header-left tab-head" (click)="setTab($event)" aria-selected="true">
-            <p>Left</p>
-        </div>
-        <div class="header-right tab-head" (click)="setTab($event)" aria-selected="false">
-            <p>Right</p>
-        </div>
-    </div>
+    <mat-tab-group mat-align-tabs="center" dynamicHeigh> 
+        <mat-tab label="Component Browser">
+            <div class="component-browser tab-wrapper">
+                <p>Component Browser</p>
+            </div>
+        </mat-tab>
+        <mat-tab label="Layers">
+            <div class="layers tab-wrapper">
+                <p>Layer Overview</p>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
 </div>
