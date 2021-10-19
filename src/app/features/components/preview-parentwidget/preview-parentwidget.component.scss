@@ -1,5 +1,16 @@
 .widget {
+  padding: 8px;
+}
+
+.flex-one {
+  display: flex;
   width: 100%;
   height: 100%;
-  padding: 4px;
+}
+
+.flex-two {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

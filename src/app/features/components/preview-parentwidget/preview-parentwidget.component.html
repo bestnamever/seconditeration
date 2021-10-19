@@ -1,4 +1,6 @@
-<div class="widget">
-  <app-widget-label *ngIf="isLabel()"></app-widget-label>
-  <app-widget-graph *ngIf="isGraph()"></app-widget-graph>
+<div class="flex-one">
+  <div class="widget flex-two">
+    <app-widget-label *ngIf="isLabel()"></app-widget-label>
+    <app-widget-graph *ngIf="isGraph()"></app-widget-graph>
+  </div>
 </div>

@@ -95,9 +95,9 @@ export class PreviewGridComponent implements OnInit {
 
   getBorderState(component: WidgetComponent): any {
     if(this.isWidgetSelected(component)) {
-      return 'inset 0px 0px 0px 1px green';
+      return 'inset 0px 0px 0px 2px #4D9D2A';
     } else {
-      return 'inset 0px 0px 0px 1px transparent';
+      return 'inset 0px 0px 0px 2px #E0E0E0';
     }
   }
 
