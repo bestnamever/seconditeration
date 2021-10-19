@@ -14,8 +14,10 @@
 }
 
 .phoneContainer {
-  height: 750px;
-  width: 400px;
+  height: 80vh;
+  min-height: 600px;
+  // width: 400px;
+  aspect-ratio: 9/17.5;
 }
 
 .phone {

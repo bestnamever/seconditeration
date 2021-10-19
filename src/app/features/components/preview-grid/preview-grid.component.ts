@@ -47,7 +47,6 @@ export class PreviewGridComponent implements OnInit {
       gridType: 'scrollVertical',
       pushResizeItems: true,
       disableScrollHorizontal: true,
-      disableWindowResize: true,
       displayGrid: 'onDrag&Resize',
       itemInitCallback: (item, itemComponent) => { this.itemChange(item, itemComponent); },
       itemChangeCallback: (item, itemComponent) => { this.itemChange(item, itemComponent); },
