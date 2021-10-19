@@ -7,11 +7,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LayoutLeftbarComponent implements OnInit {
 
-  constructor() { }
+  searchboxValue : string;
+
+  constructor() {
+    this.searchboxValue = '';
+  }
 
   ngOnInit(): void {
   }
 
    /* ---------------------------------------------- */
+  updateValue(e: Event) : void {
+    this.searchboxValue = (e.target) ? (<HTMLTextAreaElement>e.target).value : '';
+    console.log(this.searchboxValue);
+  }
+  
 
+  readValue(e : Event) : void {
+    e.preventDefault();
+    console.log('Dit werkt');
+  }
 }

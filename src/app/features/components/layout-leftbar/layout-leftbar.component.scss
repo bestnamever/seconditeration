@@ -2,5 +2,26 @@
     
     .tab-wrapper{
         padding: 30px ;
+
+        h3{
+            font-weight: 500;
+        }
     }
+
+    .component-browser{
+        .search-container{
+            margin-bottom: 20px;
+
+            form.search-form{
+                .searchbox{
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+p.debug{
+    color: darken($color: white, $amount: 45%);
+    font-style: italic;
 }

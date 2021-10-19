@@ -7,6 +7,8 @@ import { HomepageComponent } from './features/pages/homepage/homepage.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatTabsModule } from '@angular/material/tabs'; 
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 import { LayoutHeaderComponent } from './features/components/layout-header/layout-header.component';
 import { LayoutLeftbarComponent } from './features/components/layout-leftbar/layout-leftbar.component';
 import { LayoutRightbarComponent } from './features/components/layout-rightbar/layout-rightbar.component';
@@ -32,6 +34,8 @@ import {HttpbaseurlInterceptor} from "./core/interceptors/httpbaseurl.intercepto
     MatToolbarModule,
     MatSidenavModule,
     MatTabsModule,
+    MatInputModule,
+    MatIconModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpbaseurlInterceptor, multi: true }
