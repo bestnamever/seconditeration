@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {GridsterConfig, GridsterItem, GridsterItemComponentInterface} from "angular-gridster2";
-import {WidgetComponent} from "../../../core/models/widgetComponent";
+import {WidgetComponent} from "../../../core/models/widget-component";
 import {WidgetType} from "../../../core/models/widget-type";
 import {PhoneProperties} from "../../../core/models/phone-properties";
 import {PhoneType} from "../../../core/models/phone-type";
 import {PreviewService} from "../../../core/services/preview.service";
+import {AssetType} from "../../../core/models/asset-type";
 
 @Component({
   selector: 'app-preview-grid',
@@ -63,9 +64,9 @@ export class PreviewGridComponent implements OnInit {
   // Method called on init of the page
   ngOnInit(): void {
     this.dashboardComponents = [
-      { gridsterItem: { id: 'item1', cols: 1, rows: 1, y: 0, x: 0, minItemCols: 1, minItemRows: 1 }, widgetType: WidgetType.LABEL },
-      { gridsterItem: { id: 'item1', cols: 1, rows: 1, y: 0, x: 1, minItemCols: 1, minItemRows: 1 }, widgetType: WidgetType.LABEL },
-      { gridsterItem: { id: 'item3', cols: 2, rows: 2, y: 1, x: 0, minItemCols: 2, minItemRows: 2 }, widgetType: WidgetType.GRAPH }
+      { gridsterItem: { id: 'item1', cols: 1, rows: 1, y: 0, x: 0, minItemCols: 1, minItemRows: 1 }, widgetType: WidgetType.LABEL, assetType: AssetType.THERMOSTAT },
+      { gridsterItem: { id: 'item1', cols: 1, rows: 1, y: 0, x: 1, minItemCols: 1, minItemRows: 1 }, widgetType: WidgetType.LABEL, assetType: AssetType.SOLAR },
+      { gridsterItem: { id: 'item3', cols: 2, rows: 2, y: 1, x: 0, minItemCols: 2, minItemRows: 2 }, widgetType: WidgetType.GRAPH, assetType: AssetType.THERMOSTAT }
     ];
 
     // Subscribe to the currently selected Widget

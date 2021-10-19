@@ -1,6 +1,6 @@
 <div class="flex-one">
   <div class="widget flex-two">
-    <app-widget-label style="width: 100%; height: 100%;" *ngIf="isLabel()"></app-widget-label>
-    <app-widget-graph style="width: 100%; height: 100%;"  *ngIf="isGraph()"></app-widget-graph>
+    <app-widget-label class="childWidget" *ngIf="isLabel()" [assetType]="assetType" ></app-widget-label>
+    <app-widget-graph class="childWidget" *ngIf="isGraph()"></app-widget-graph>
   </div>
 </div>

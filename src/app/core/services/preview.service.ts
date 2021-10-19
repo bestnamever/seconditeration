@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
-import {WidgetComponent} from "../models/widgetComponent";
+import {WidgetComponent} from "../models/widget-component";
 import {Design} from "../models/design";
 
 @Injectable({
@@ -27,7 +27,7 @@ export class PreviewService {
     this.currentlySelectedWidgetSubject.next(widget);
   }
 
-  
+
 
 
 }
