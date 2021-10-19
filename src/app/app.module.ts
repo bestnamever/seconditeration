@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { LayoutHeaderComponent } from './features/components/layout-header/layout-header.component';
 import { LayoutLeftbarComponent } from './features/components/layout-leftbar/layout-leftbar.component';
 import { LayoutRightbarComponent } from './features/components/layout-rightbar/layout-rightbar.component';
+import { SearchFormComponent } from './features/components/search-form/search-form.component';
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { ExampleGetdesignsComponent } from './features/components/example-getdesigns/example-getdesigns.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
@@ -24,7 +25,8 @@ import {HttpbaseurlInterceptor} from "./core/interceptors/httpbaseurl.intercepto
     LayoutHeaderComponent,
     LayoutLeftbarComponent,
     LayoutRightbarComponent,
-    ExampleGetdesignsComponent
+    ExampleGetdesignsComponent,
+    SearchFormComponent
   ],
   imports: [
     BrowserModule,

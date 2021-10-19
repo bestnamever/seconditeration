@@ -4,13 +4,7 @@
             <div class="component-browser tab-wrapper">
                 <div class="search-container">
                     <h3>Filter components</h3>
-                    <form ngForm (keydown.enter)="readValue($event)" class="search-form">
-                        <mat-form-field class="searchbox" appearance="fill">
-                          <mat-label>Search for a component</mat-label>
-                          <input matInput placeholder="Ex. Button" type="search" (input)="updateValue($event)">
-                        </mat-form-field>
-                    </form>
-                    <p class="debug">[ DEBUG - Searchbox Value ] : {{ searchboxValue }}</p>
+                    <app-search-form (searchUpdateEvent)="updateSearchValue($event)"></app-search-form>
                 </div>
                 <div class="asset-filter-container">
                     <h3>Filter on asset type</h3>

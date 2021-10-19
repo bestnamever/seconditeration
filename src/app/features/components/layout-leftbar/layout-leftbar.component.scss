@@ -11,17 +11,6 @@
     .component-browser{
         .search-container{
             margin-bottom: 20px;
-
-            form.search-form{
-                .searchbox{
-                    width: 100%;
-                }
-            }
         }
     }
-}
-
-p.debug{
-    color: darken($color: white, $amount: 45%);
-    font-style: italic;
 }
