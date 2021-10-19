@@ -13,6 +13,14 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import { ExampleGetdesignsComponent } from './features/components/example-getdesigns/example-getdesigns.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {HttpbaseurlInterceptor} from "./core/interceptors/httpbaseurl.interceptor";
+import { PreviewGridComponent } from './features/components/preview-grid/preview-grid.component';
+import { GridsterModule } from 'angular-gridster2';
+import { PreviewParentwidgetComponent } from './features/components/preview-parentwidget/preview-parentwidget.component';
+import { PreviewTopbarComponent } from './features/components/preview-topbar/preview-topbar.component';
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
+import { WidgetLabelComponent } from './features/components/widget-label/widget-label.component';
+import { WidgetGraphComponent } from './features/components/widget-graph/widget-graph.component';
 
 @NgModule({
   declarations: [
@@ -21,15 +29,23 @@ import {HttpbaseurlInterceptor} from "./core/interceptors/httpbaseurl.intercepto
     LayoutHeaderComponent,
     LayoutLeftbarComponent,
     LayoutRightbarComponent,
-    ExampleGetdesignsComponent
+    ExampleGetdesignsComponent,
+    PreviewGridComponent,
+    PreviewParentwidgetComponent,
+    PreviewTopbarComponent,
+    WidgetLabelComponent,
+    WidgetGraphComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    GridsterModule,
     MatToolbarModule,
     MatSidenavModule,
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpbaseurlInterceptor, multi: true }
