@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LayoutLeftbarComponent implements OnInit {
 
-  searchValue : string;
+  searchValue : string; // Value for the component searchbox
 
   constructor() {
     this.searchValue = '';
@@ -18,8 +18,14 @@ export class LayoutLeftbarComponent implements OnInit {
   }
 
    /* ---------------------------------------------- */
+   /**
+    * Function that updates the searchvalue
+    * @param {string} value Value of the linked searchform
+    */
    updateSearchValue(value : string){
      this.searchValue = value;
      console.log(`The searchbox value is: ${value}`);
+
+     // Do something
    }
 }

@@ -8,7 +8,7 @@ import { Output, EventEmitter } from '@angular/core';
 })
 export class SearchFormComponent implements OnInit {
 
-  searchboxValue : string;
+  searchboxValue : string; // Input value
 
   constructor() {
     this.searchboxValue = '';
@@ -17,16 +17,25 @@ export class SearchFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  @Output() searchUpdateEvent = new EventEmitter<string>();
+  @Output() searchUpdateEvent = new EventEmitter<string>(); // Setup an eventemitter to send data outside component
 
+  /**
+   * Function that updates the searchbox value to the value in the html element
+   * @param {Event} e The event
+   */
   updateValue(e: Event) : void {
     this.searchboxValue = (e.target) ? (<HTMLTextAreaElement>e.target).value : '';
     this.searchUpdateEvent.emit((e.target) ? (<HTMLTextAreaElement>e.target).value : '');
   }
   
+  /**
+   * Funcition that sets the searchbox's value whenever the form is submitted
+   * @param {Event} e The sumbit event of the form
+   */
   readValue(e : Event) : void {
     e.preventDefault();
-    console.log('Dit werkt');
+    this.searchboxValue = (e.target) ? (<HTMLTextAreaElement>e.target).value : ''
+    console.log('Form submitted'); // debug
   }
 
 }
