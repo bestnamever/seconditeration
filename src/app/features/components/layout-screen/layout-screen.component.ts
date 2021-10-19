@@ -19,6 +19,12 @@ export class LayoutScreenComponent implements OnInit {
   }
   homepage: string;
   propertyItems: string[] = ['Set Homepage', 'Show in navigation'];
-
   text: string = "Use custom screen size";
+  isHidden = true
+
+
+
+  toggle(){
+    this.isHidden=!this.isHidden;
+  }
 }
