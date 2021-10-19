@@ -4,6 +4,7 @@ import {WidgetComponent} from "../../../core/models/widgetComponent";
 import {WidgetType} from "../../../core/models/widget-type";
 import {PhoneProperties} from "../../../core/models/phone-properties";
 import {PhoneType} from "../../../core/models/phone-type";
+import {PreviewService} from "../../../core/services/preview.service";
 
 @Component({
   selector: 'app-preview-grid',
@@ -17,9 +18,12 @@ export class PreviewGridComponent implements OnInit {
   phoneOptions: PhoneProperties;
   dashboardComponents: Array<WidgetComponent> | undefined;
 
+  selectedWidget: WidgetComponent | null;
 
   // Constructor
-  constructor() {
+  constructor(private previewService: PreviewService) {
+    this.selectedWidget = null;
+
     this.gridOptions = {
       isMobile: true,
       mobileBreakpoint: 1,
@@ -49,7 +53,9 @@ export class PreviewGridComponent implements OnInit {
       itemChangeCallback: (item, itemComponent) => { this.itemChange(item, itemComponent); },
       // itemResizeCallback: PreviewGridComponent.itemResize,
     };
-    this.phoneOptions = this.applyPhoneOptions(PhoneType.SAMSUNG_S20)
+
+    // Apply phone options
+    this.phoneOptions = this.applyPhoneOptions(PhoneType.SAMSUNG_S20);
   }
 
 
@@ -62,6 +68,11 @@ export class PreviewGridComponent implements OnInit {
       { gridsterItem: { id: 'item1', cols: 1, rows: 1, y: 0, x: 1, minItemCols: 1, minItemRows: 1 }, widgetType: WidgetType.LABEL },
       { gridsterItem: { id: 'item3', cols: 2, rows: 2, y: 1, x: 0, minItemCols: 2, minItemRows: 2 }, widgetType: WidgetType.GRAPH }
     ];
+
+    // Subscribe to the currently selected Widget
+    this.previewService.currentlySelectedWidgetState.subscribe(widget => {
+      this.selectedWidget = widget;
+    });
   }
 
   /* ----------------------------------------------- */
@@ -76,6 +87,22 @@ export class PreviewGridComponent implements OnInit {
     const height = domRect.height;
     // this.gridItemCoordinates.set(itemComponent, { x: clientX, y: clientY, width, height });
     // console.log(this.gridItemCoordinates);
+  }
+
+  selectItem(component: WidgetComponent): void {
+    this.previewService.selectWidget(component);
+  }
+
+  getBorderState(component: WidgetComponent): any {
+    if(this.isWidgetSelected(component)) {
+      return 'inset 0px 0px 0px 1px green';
+    } else {
+      return 'inset 0px 0px 0px 1px transparent';
+    }
+  }
+
+  isWidgetSelected(component: WidgetComponent): any {
+    return this.selectedWidget === component;
   }
 
   applyPhoneOptions(phoneType: PhoneType): any {

@@ -31,7 +31,14 @@
   flex: 1 1 auto;
 }
 
+.widgetContainer {
+  height: 100%;
+  width: 100%;
+  transition: box-shadow 0.15s ease-in-out;
+}
+
 .item {
+  box-sizing: border-box;
   box-shadow: 0px 3px 6px #00000029;
 }
 

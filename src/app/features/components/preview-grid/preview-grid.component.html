@@ -5,8 +5,10 @@
         <app-preview-topbar></app-preview-topbar>
         <div class="gridContainer">
           <gridster [options]="gridOptions" class="customGrid">
-            <gridster-item class="item" [item]="component.gridsterItem" *ngFor="let component of dashboardComponents">
-              <app-preview-parentwidget [widgetType]="component.widgetType"></app-preview-parentwidget>
+            <gridster-item class="item" [item]="component.gridsterItem" *ngFor="let component of dashboardComponents" (click)="selectItem(component)">
+              <div class="widgetContainer" [ngStyle]="{'box-shadow': getBorderState(component)}">
+                <app-preview-parentwidget [widgetType]="component.widgetType"></app-preview-parentwidget>
+              </div>
             </gridster-item>
           </gridster>
         </div>
