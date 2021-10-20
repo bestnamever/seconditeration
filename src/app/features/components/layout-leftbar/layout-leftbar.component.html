@@ -1,7 +1,7 @@
 <div class="left-bar-wrapper">
     <mat-tab-group mat-align-tabs="center" dynamicHeigh> 
         <mat-tab label="Component Browser">
-            <div class="component-browser tab-wrapper">
+            <div class="tab-component-browser tab-wrapper">
                 <div class="search-container">
                     <h3>Filter components</h3>
                     <app-search-form (searchUpdateEvent)="updateSearchValue($event)"></app-search-form>
@@ -11,16 +11,22 @@
                     <mat-form-field class="asset-filter" appearance="fill">
                         <mat-label>Choose an asset type</mat-label>
                         <mat-select disableOptionCentering [(value)]='selectedAssetType' (selectionChange)="updateAssetValue()">
-                          <mat-option value="Thermostat">Thermostat</mat-option>
-                          <mat-option value="Solar Collector">Solar Collector</mat-option>
-                          <mat-option value="Air Quality Meter">Air Quality Meter</mat-option>
+                            <mat-option *ngFor="let type of assetTypeData" [value]="type">
+                                {{type}}
+                                </mat-option>
                         </mat-select>
                     </mat-form-field>
+                </div>
+                <div class="component-browser-container">
+                    <h3>Browse components</h3>
+                    <div id="component-list" class="component-list-wrapper">
+                        <app-component-thumbnail class="component-card-wrapper" componentTitle="Data Card" iconCode="crop_3_2"></app-component-thumbnail>
+                    </div>
                 </div>
             </div>
         </mat-tab>
         <mat-tab label="Layers">
-            <div class="layers tab-wrapper">
+            <div class="tab-layers tab-wrapper">
                 <p>Layer Overview</p>
             </div>
         </mat-tab>

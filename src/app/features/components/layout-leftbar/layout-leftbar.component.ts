@@ -11,11 +11,14 @@ import {
 export class LayoutLeftbarComponent implements OnInit {
 
   searchValue: string; // Value for the component searchbox
-  selectedAssetType : string;
+  selectedAssetType : string; // Value for the asset-type dropdown
+
+  assetTypeData : Array<string>; // TEMPORARY - List of availible asset types 
 
   constructor() {
     this.searchValue = '';
     this.selectedAssetType = '';
+    this.assetTypeData = ['Thermostat', 'Solar Collector', 'Air-quality Sensor', "Hue LED's"];
   }
 
   ngOnInit(): void {

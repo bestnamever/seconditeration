@@ -14,6 +14,7 @@ import { LayoutHeaderComponent } from './features/components/layout-header/layou
 import { LayoutLeftbarComponent } from './features/components/layout-leftbar/layout-leftbar.component';
 import { LayoutRightbarComponent } from './features/components/layout-rightbar/layout-rightbar.component';
 import { SearchFormComponent } from './features/components/search-form/search-form.component';
+import { ComponentThumbnailComponent } from './features/components/component-thumbnail/component-thumbnail.component';
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { ExampleGetdesignsComponent } from './features/components/example-getdesigns/example-getdesigns.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
@@ -27,7 +28,8 @@ import {HttpbaseurlInterceptor} from "./core/interceptors/httpbaseurl.intercepto
     LayoutLeftbarComponent,
     LayoutRightbarComponent,
     ExampleGetdesignsComponent,
-    SearchFormComponent
+    SearchFormComponent,
+    ComponentThumbnailComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,14 +9,30 @@
         }
     }
 
-    .component-browser{
+    .tab-component-browser{
         .search-container{
             margin-bottom: 20px;
         }
 
         .asset-filter-container{
+            margin-bottom: 20px;
+
             .asset-filter{
                 width: 100%;
+            }
+        }
+
+        .component-browser-container{
+            #component-list{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                flex-wrap: wrap;
+
+                .component-card-wrapper{
+                    flex-basis: 30%;
+                    aspect-ratio: 1/1;
+                }
             }
         }
     }
