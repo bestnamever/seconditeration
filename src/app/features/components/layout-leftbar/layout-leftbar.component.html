@@ -1,6 +1,7 @@
 <div class="left-bar-wrapper">
     <mat-tab-group mat-align-tabs="center" dynamicHeigh> 
         <mat-tab label="Component Browser">
+            <!-- Component Browser tab -->
             <div class="tab-component-browser tab-wrapper">
                 <div class="search-container">
                     <h3>Filter components</h3>
@@ -20,11 +21,16 @@
                 <div class="component-browser-container">
                     <h3>Browse components</h3>
                     <div id="component-list" class="component-list-wrapper">
-                        <app-component-thumbnail class="component-card-wrapper" componentTitle="Data Card" iconCode="crop_3_2"></app-component-thumbnail>
+                        <!-- Hardcoded for now, needs to be loaded and updated dynamic -->
+                        <app-component-thumbnail class="component-card-wrapper" componentTitle="Data card" iconCode="crop_3_2"></app-component-thumbnail>
+                        <app-component-thumbnail class="component-card-wrapper" componentTitle="Bar chart" iconCode="insert_chart_outlined"></app-component-thumbnail>
+                        <app-component-thumbnail class="component-card-wrapper" componentTitle="Pie chart" iconCode="pie_chart"></app-component-thumbnail>
+                        <app-component-thumbnail class="component-card-wrapper" componentTitle="Graph" iconCode="show_chart"></app-component-thumbnail>
                     </div>
                 </div>
             </div>
         </mat-tab>
+        <!-- Layers tab -->
         <mat-tab label="Layers">
             <div class="tab-layers tab-wrapper">
                 <p>Layer Overview</p>
