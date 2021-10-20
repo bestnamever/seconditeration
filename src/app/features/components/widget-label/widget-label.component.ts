@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AssetType} from "../../../core/models/asset-type";
+import {DesignElement} from "../../../core/models/design-element";
+import {WidgetType} from "../../../core/models/widget-type";
 
 @Component({
   selector: 'app-widget-label',
@@ -9,19 +11,33 @@ import {AssetType} from "../../../core/models/asset-type";
 export class WidgetLabelComponent implements OnInit {
 
   // Input fields
-  @Input('assetType') assetType: AssetType | undefined;
-
+  @Input('widgetData') widgetData: DesignElement | undefined;
+  assetType: AssetType | undefined;
+  value: string | undefined;
+  text: string | undefined;
 
   // Variables
 
   // Constructor
-  constructor() {
-  }
+  constructor() { }
 
   ngOnInit(): void {
+    this.assetType = (this.widgetData?.assetType != null) ? this.widgetData?.assetType : AssetType.THERMOSTAT;
+    this.value = (this.widgetData?.values[0].value != null) ? this.widgetData.values[0].value : 'NaN';
+    this.text = (this.widgetData?.text != null) ? this.widgetData.text : 'Invalid Widget';
+    /*this.widgetData = {
+      widgetType: WidgetType.LABEL,
+      assetType: AssetType.THERMOSTAT,
+      text: "Invalid Card",
+      values: [{
+        asset: "Invalid Asset",
+        time: Date.prototype,
+        value: "Invalid value"
+      }]
+    }*/
   }
 
-  isThermostat(): any { return this.assetType === AssetType.THERMOSTAT; }
-  isSolar(): any { return this.assetType === AssetType.SOLAR; }
+  isThermostat(): any { return this.widgetData?.assetType === AssetType.THERMOSTAT; }
+  isSolar(): any { return this.widgetData?.assetType === AssetType.SOLAR; }
 
 }

@@ -7,5 +7,5 @@ export interface DesignElement {
   assetType: AssetType;
   text: string;
   values: Array<DesignElementvalue>;
-  details: Map<string, string>;
+  details?: Map<string, string>;
 }
