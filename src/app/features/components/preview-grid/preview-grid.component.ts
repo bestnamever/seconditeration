@@ -71,25 +71,29 @@ export class PreviewGridComponent implements OnInit {
 
   // Method called on init of the page
   ngOnInit(): void {
+
+    // Subscribe to changes of the Design
     this.designService.currentDesignState.subscribe(design => {
       console.log('Starting to render the design..');
       this.currentDesignPage = design;
-      this.dashboardComponents.length = 0; // clearing the array
       if(design != null) {
         design.positions.forEach(position => {
-          console.log('Checking position with these properties:');
-          console.log(position);
-          this.dashboardComponents.push({
+          const item = {
             gridsterItem: {
-              id: 'item',
+              id: position.id,
               cols: position.width,
               rows: position.height,
               x: position.positionX,
               y: position.positionY
             },
             widgetData: position.element
-          })
-        })
+          };
+
+          // Check if the component is already added with the same properties (width, height, x, y, etc)
+          if(this.dashboardComponents.filter(x => { return (x.widgetData == item.widgetData); }).length == 0) {
+            this.dashboardComponents.push(item);
+          }
+        });
         console.log('Rendering finished!');
         console.log(this.dashboardComponents);
       }
@@ -108,21 +112,21 @@ export class PreviewGridComponent implements OnInit {
   }
 
   itemChange(item: GridsterItem, itemComponent: GridsterItemComponentInterface): void {
-    console.log('itemChanged', item, itemComponent);
-    // const itemComponent = this.gridOptions.api.getItemComponent(item);
-    const domRect = itemComponent.el.getBoundingClientRect();
-    const clientX = domRect.left;
-    const clientY = domRect.top;
-    const width = domRect.width;
-    const height = domRect.height;
-    // this.gridItemCoordinates.set(itemComponent, { x: clientX, y: clientY, width, height });
-    // console.log(this.gridItemCoordinates);
 
     // Update the design in the storage
     if(this.currentDesignPage != null) {
       this.currentDesignPage.positions.forEach(position => {
-        if(position.positionX == item.x && position.positionY == item.y) {
-
+        if(position.id == item.id) {
+          console.log('An item with the id [' + position.id + '] changed!');
+          position.positionX = item.x;
+          position.positionY = item.y;
+          position.width = item.cols;
+          position.height = item.rows;
+          if(this.currentDesignPage != null) {
+            this.designService.update(this.currentDesignPage);
+          } else {
+            console.error("Could not update the Design! CurrentDesignPage state does not exist!");
+          }
         }
       })
     }

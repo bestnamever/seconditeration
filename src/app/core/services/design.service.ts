@@ -23,38 +23,64 @@ export class DesignService {
 
     // A method that sends a message to console when the Design gets updated
     this.currentDesignState.subscribe((design) => {
-      console.log('The design has been updated!');
-      console.log(design);
+      localStorage.setItem('savedDesign', JSON.stringify(design))
     });
   }
 
   /* ----------------------------------------- */
 
-  update(): any {
-
+  update(designPage: DesignPage): any {
+    this.currentDesignSubject.next(designPage);
   }
 
   /* ----------------------------------------- */
 
   getFirstDesign(): DesignPage {
-    return {
-      name: "Temporary Page",
-      positions: [{
-        positionX: 0,
-        positionY: 0,
-        width: 1,
-        height: 1,
-        element: {
-          widgetType: WidgetType.LABEL,
-          assetType: AssetType.THERMOSTAT,
-          text: "Label for Thermostat",
-          values: [{
-            asset: "Thermostat 1",
-            time: new Date("2019-01-16"),
-            value: "25"
-          }]
-        }
-      }]
+    const savedDesign = localStorage.getItem('savedDesign');
+    if(savedDesign != null) {
+      console.log('Got the design from local Storage!');
+      console.log(savedDesign);
+      return JSON.parse(savedDesign) as DesignPage;
+    } else {
+      return {
+        name: "Temporary Page",
+        positions: [
+          {
+            id: 0,
+            positionX: 0,
+            positionY: 0,
+            width: 1,
+            height: 1,
+            element: {
+              widgetType: WidgetType.LABEL,
+              assetType: AssetType.THERMOSTAT,
+              text: "Label for Thermostat",
+              values: [{
+                asset: "Thermostat 1",
+                time: new Date("2019-01-16"),
+                value: "25"
+              }]
+            }
+          },
+          {
+            id: 1,
+            positionX: 0,
+            positionY: 1,
+            width: 2,
+            height: 1,
+            element: {
+              widgetType: WidgetType.LABEL,
+              assetType: AssetType.SOLAR,
+              text: "Solar Energy",
+              values: [{
+                asset: "Solar Collector 1",
+                time: new Date("2019-01-16"),
+                value: "1060"
+              }]
+            }
+          }
+        ]
+      }
     }
   }
 

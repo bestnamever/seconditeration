@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AssetType} from "../../../core/models/asset-type";
 import {DesignElement} from "../../../core/models/design-element";
-import {WidgetType} from "../../../core/models/widget-type";
 
 @Component({
   selector: 'app-widget-label',

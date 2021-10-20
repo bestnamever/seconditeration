@@ -98,13 +98,13 @@ h3 { // Sidebar Title & Headings
   line-height: 19px !important;
 }
 
-/*p { // Sidebar comments & regular text
+.text { // Sidebar comments & regular text
   font-weight: 400 !important;
   font-size: 14px !important;
   color: #4C4C4C !important;
   letter-spacing: 0 !important;
   line-height: 16px !important;
-}*/
+}
 
 .cardSubtext {
   font-weight: 400;
@@ -118,8 +118,8 @@ h3 { // Sidebar Title & Headings
 }
 
 gridster .gridster-column {
-  outline: 1px solid #707070;
+  outline: 1px solid lightgray;
 }
 gridster .gridster-row {
-  outline: 1px solid #707070;
+  outline: 1px solid lightgray;
 }
