@@ -7,4 +7,7 @@ export interface PhoneProperties {
   borderRadius: string;
   notch: boolean;
   notchRadius: string;
+
+  customWidth?: number;
+  customHeight?: number;
 }
