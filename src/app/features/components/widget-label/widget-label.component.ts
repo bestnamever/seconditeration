@@ -25,16 +25,6 @@ export class WidgetLabelComponent implements OnInit {
     this.assetType = (this.widgetData?.assetType != null) ? this.widgetData?.assetType : AssetType.THERMOSTAT;
     this.value = (this.widgetData?.values[0].value != null) ? this.widgetData.values[0].value : 'NaN';
     this.text = (this.widgetData?.text != null) ? this.widgetData.text : 'Invalid Widget';
-    /*this.widgetData = {
-      widgetType: WidgetType.LABEL,
-      assetType: AssetType.THERMOSTAT,
-      text: "Invalid Card",
-      values: [{
-        asset: "Invalid Asset",
-        time: Date.prototype,
-        value: "Invalid value"
-      }]
-    }*/
   }
 
   isThermostat(): any { return this.widgetData?.assetType === AssetType.THERMOSTAT; }

@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
 import {DesignPage} from "../models/design-page";
 import {WidgetType} from "../models/widget-type";
 import {AssetType} from "../models/asset-type";
@@ -16,7 +15,7 @@ export class DesignService {
 
 
   // Constructor
-  constructor(private httpClient: HttpClient) {
+  constructor() {
 
     // Initialize variables
     this.currentDesignSubject = new BehaviorSubject<DesignPage | null>(this.getFirstDesign()); // Set the 1st design on init
@@ -31,19 +30,8 @@ export class DesignService {
 
   /* ----------------------------------------- */
 
-  // Update a design
-  update(designPage: DesignPage): void {
+  update(): any {
 
-    // TEMPORARY EXAMPLE: Save the new design in the state because there is no API
-    this.currentDesignSubject.next(designPage);
-
-    // Send the design to the database, and listen to the response sent back by the API
-    /*this.httpClient.put<any>(`/api/designs/` + design.id, design)
-      .pipe(first((response: any) => {
-        console.log(response);
-        this.currentDesignSubject.next(response.newDesign); // Updates the object in the state
-        return response;
-    }));*/
   }
 
   /* ----------------------------------------- */
@@ -68,14 +56,7 @@ export class DesignService {
         }
       }]
     }
-
   }
-
-  /*  { gridsterItem: { id: 'item1', cols: 1, rows: 1, y: 0, x: 0, minItemCols: 1, minItemRows: 1 }, widgetType: WidgetType.LABEL, assetType: AssetType.THERMOSTAT },
-      { gridsterItem: { id: 'item1', cols: 1, rows: 1, y: 0, x: 1, minItemCols: 1, minItemRows: 1 }, widgetType: WidgetType.LABEL, assetType: AssetType.SOLAR },
-      { gridsterItem: { id: 'item3', cols: 2, rows: 2, y: 1, x: 0, minItemCols: 2, minItemRows: 2 }, widgetType: WidgetType.GRAPH, assetType: AssetType.THERMOSTAT }
-
-   */
 
 
 }

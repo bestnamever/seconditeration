@@ -6,6 +6,7 @@ import {PhoneType} from "../../../core/models/phone-type";
 import {PreviewService} from "../../../core/services/preview.service";
 import {DesignPage} from "../../../core/models/design-page";
 import {DesignService} from "../../../core/services/design.service";
+import {PhoneService} from "../../../core/services/phone.service";
 
 @Component({
   selector: 'app-preview-grid',
@@ -16,7 +17,7 @@ export class PreviewGridComponent implements OnInit {
 
   // Variables
   gridOptions: GridsterConfig;
-  phoneOptions: PhoneProperties;
+  phoneOptions: PhoneProperties | undefined;
   dashboardComponents: Array<WidgetComponent>;
 
   currentDesignPage: DesignPage | null;
@@ -25,7 +26,7 @@ export class PreviewGridComponent implements OnInit {
   /* ---------------------------------------------------------- */
 
   // Constructor
-  constructor(private previewService: PreviewService, private designService: DesignService) {
+  constructor(private previewService: PreviewService, private designService: DesignService, private phoneService: PhoneService) {
     this.selectedWidget = null;
     this.currentDesignPage = null;
     this.dashboardComponents = new Array<WidgetComponent>();
@@ -60,7 +61,9 @@ export class PreviewGridComponent implements OnInit {
     };
 
     // Apply phone options
-    this.phoneOptions = this.applyPhoneOptions(PhoneType.SAMSUNG_S20);
+    this.phoneService.currentPhoneState.subscribe(phone => {
+      this.phoneOptions = phone;
+    });
   }
 
 
@@ -91,11 +94,6 @@ export class PreviewGridComponent implements OnInit {
         console.log(this.dashboardComponents);
       }
     });
-/*    this.dashboardComponents = [
-      { gridsterItem: { id: 'item1', cols: 1, rows: 1, y: 0, x: 0, minItemCols: 1, minItemRows: 1 }, widgetType: WidgetType.LABEL, assetType: AssetType.THERMOSTAT },
-      { gridsterItem: { id: 'item1', cols: 1, rows: 1, y: 0, x: 1, minItemCols: 1, minItemRows: 1 }, widgetType: WidgetType.LABEL, assetType: AssetType.SOLAR },
-      { gridsterItem: { id: 'item3', cols: 2, rows: 2, y: 1, x: 0, minItemCols: 2, minItemRows: 2 }, widgetType: WidgetType.GRAPH, assetType: AssetType.THERMOSTAT }
-    ];*/
 
     // Subscribe to the currently selected Widget
     this.previewService.currentlySelectedWidgetState.subscribe(widget => {
@@ -150,19 +148,6 @@ export class PreviewGridComponent implements OnInit {
 
   isWidgetSelected(component: WidgetComponent): any {
     return this.selectedWidget === component;
-  }
-
-  applyPhoneOptions(phoneType: PhoneType): any {
-    switch (phoneType) {
-      case PhoneType.SAMSUNG_S20:
-        return {
-          phoneType: PhoneType.SAMSUNG_S20,
-          borderThickness: '4px',
-          borderRadius: '30px',
-          notch: true,
-          notchRadius: '4px'
-        }
-    }
   }
 
 }
