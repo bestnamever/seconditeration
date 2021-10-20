@@ -1,4 +1,6 @@
-import { AfterContentChecked, Component, OnInit } from '@angular/core';
+import { AfterContentChecked, Component, Inject, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DeleteComfirmComponent } from '../delete-comfirm/delete-comfirm.component'
 
 @Component({
   selector: 'app-layout-screen',
@@ -7,24 +9,45 @@ import { AfterContentChecked, Component, OnInit } from '@angular/core';
 })
 
 
-
-
 export class LayoutScreenComponent implements OnInit {
 
-  constructor() {
+  constructor(public dialog: MatDialog) {
     this.homepage = "homepage"
+    this.height = 0
+    this.width = 0
+    this.customScreenSize = "Use custom screen size";
+    this.isHidden = true
+    this.safeSpace = "Display safe-space in preview"
+    this.setHomepage = "Set Homepage"
+    this.isInNavigation = "Show in navigation"
+    this.delete_title = "Delete this page"
+
   }
 
   ngOnInit(): void {
   }
+
   homepage: string;
-  propertyItems: string[] = ['Set Homepage', 'Show in navigation'];
-  text: string = "Use custom screen size";
-  isHidden = true
+  width: number;
+  height: number;
+  setHomepage: string;
+  isInNavigation: string;
+  customScreenSize: string;
+  isHidden: boolean;
+  safeSpace: string;
+  delete_title: string;
 
 
+  showHideCustom() {
+    this.isHidden = !this.isHidden;
+  }
 
-  toggle(){
-    this.isHidden=!this.isHidden;
+  openDeleteDialog() {
+    const dialogRef = this.dialog.open(DeleteComfirmComponent, { data: { title: this.delete_title } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }
+

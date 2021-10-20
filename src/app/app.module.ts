@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +24,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DeleteComfirmComponent } from './features/components/delete-comfirm/delete-comfirm.component';
+
 
 @NgModule({
   declarations: [
@@ -34,7 +38,11 @@ import { MatSelectModule } from '@angular/material/select';
     ExampleGetdesignsComponent,
     LayoutTabComponent,
     LayoutScreenComponent,
-    DividerComponent
+    DividerComponent,
+    DeleteComfirmComponent,
+  ],
+  entryComponents:[
+    DeleteComfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -45,15 +53,17 @@ import { MatSelectModule } from '@angular/material/select';
     MatSidenavModule,
     MatTabsModule,
     MatIconModule,
-    MatDividerModule,
     MatInputModule,
     MatCheckboxModule,
     MatListModule,
-    MatSelectModule
+    MatSelectModule,
+    RouterModule,
+    MatDialogModule,
+    MatDividerModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpbaseurlInterceptor, multi: true }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
