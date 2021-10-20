@@ -9,6 +9,7 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatTabsModule } from '@angular/material/tabs'; 
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select'; 
 import { LayoutHeaderComponent } from './features/components/layout-header/layout-header.component';
 import { LayoutLeftbarComponent } from './features/components/layout-leftbar/layout-leftbar.component';
 import { LayoutRightbarComponent } from './features/components/layout-rightbar/layout-rightbar.component';
@@ -38,6 +39,7 @@ import {HttpbaseurlInterceptor} from "./core/interceptors/httpbaseurl.intercepto
     MatTabsModule,
     MatInputModule,
     MatIconModule,
+    MatSelectModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpbaseurlInterceptor, multi: true }

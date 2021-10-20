@@ -1,4 +1,5 @@
 .left-bar-wrapper{
+    height: 100%;
     
     .tab-wrapper{
         padding: 30px ;
@@ -11,6 +12,12 @@
     .component-browser{
         .search-container{
             margin-bottom: 20px;
+        }
+
+        .asset-filter-container{
+            .asset-filter{
+                width: 100%;
+            }
         }
     }
 }

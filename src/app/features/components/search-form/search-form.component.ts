@@ -21,7 +21,7 @@ export class SearchFormComponent implements OnInit {
 
   /**
    * Function that updates the searchbox value to the value in the html element
-   * @param {Event} e The event
+   * @param {Event} e The event for changing the input value
    */
   updateValue(e: Event) : void {
     this.searchboxValue = (e.target) ? (<HTMLTextAreaElement>e.target).value : '';

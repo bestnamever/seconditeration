@@ -8,6 +8,14 @@
                 </div>
                 <div class="asset-filter-container">
                     <h3>Filter on asset type</h3>
+                    <mat-form-field class="asset-filter" appearance="fill">
+                        <mat-label>Choose an asset type</mat-label>
+                        <mat-select disableOptionCentering [(value)]='selectedAssetType' (selectionChange)="updateAssetValue()">
+                          <mat-option value="Thermostat">Thermostat</mat-option>
+                          <mat-option value="Solar Collector">Solar Collector</mat-option>
+                          <mat-option value="Air Quality Meter">Air Quality Meter</mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </div>
             </div>
         </mat-tab>
