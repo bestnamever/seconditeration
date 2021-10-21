@@ -10,7 +10,7 @@ import {DesignElement} from "../../../core/models/design-element";
 export class PreviewParentwidgetComponent implements OnInit {
 
   // Variables
-  @Input('widgetData') widgetData: any;
+  @Input('widgetData') widgetData: DesignElement | undefined;
 
   // Constructor
   constructor() {
