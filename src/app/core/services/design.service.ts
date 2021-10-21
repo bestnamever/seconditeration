@@ -37,11 +37,11 @@ export class DesignService {
 
   getFirstDesign(): DesignPage {
     const savedDesign = localStorage.getItem('savedDesign');
-    if(savedDesign != null) {
+    /*if(savedDesign != null) {
       console.log('Got the design from local Storage!');
       console.log(savedDesign);
       return JSON.parse(savedDesign) as DesignPage;
-    } else {
+    } else {*/
       return {
         name: "Temporary Page",
         positions: [
@@ -67,21 +67,52 @@ export class DesignService {
             positionX: 0,
             positionY: 1,
             width: 2,
-            height: 1,
+            height: 2,
             element: {
-              widgetType: WidgetType.LABEL,
+              widgetType: WidgetType.GRAPH,
               assetType: AssetType.SOLAR,
               text: "Solar Energy",
-              values: [{
-                asset: "Solar Collector 1",
-                time: new Date("2019-01-16"),
-                value: "1060"
-              }]
+              values: [
+                {
+                  asset: "Solar Collector 1",
+                  time: new Date(new Date().getTime() - (1000 * 60 * 60 * 12)),
+                  value: "1.6"
+                },
+                {
+                  asset: "Solar Collector 1",
+                  time: new Date(new Date().getTime() - (1000 * 60 * 60 * 10)),
+                  value: "1.8"
+                },
+                {
+                  asset: "Solar Collector 1",
+                  time: new Date(new Date().getTime() - (1000 * 60 * 60 * 8)),
+                  value: "1.3"
+                },
+                {
+                  asset: "Solar Collector 1",
+                  time: new Date(new Date().getTime() - (1000 * 60 * 60 * 6)),
+                  value: "1.9"
+                },
+                {
+                  asset: "Solar Collector 1",
+                  time: new Date(new Date().getTime() - (1000 * 60 * 60 * 4)),
+                  value: "1.8"
+                },
+                {
+                  asset: "Solar Collector 1",
+                  time: new Date(new Date().getTime() - (1000 * 60 * 60 * 2)),
+                  value: "1.2"
+                },
+                {
+                  asset: "Solar Collector 1",
+                  time: new Date(new Date().getTime() + (1000 * 60 * 60 * 2)),
+                  value: "1.1"
+                },]
             }
           }
         ]
       }
-    }
+    //}
   }
 
 

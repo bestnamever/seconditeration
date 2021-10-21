@@ -23,6 +23,8 @@ import { WidgetLabelComponent } from './features/components/widget-label/widget-
 import { WidgetGraphComponent } from './features/components/widget-graph/widget-graph.component';
 import { PreviewUpdatedtextComponent } from './features/components/preview-updatedtext/preview-updatedtext.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {NgChartsModule} from "ng2-charts";
+import { WidgetBarchartComponent } from './features/components/widget-barchart/widget-barchart.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     PreviewTopbarComponent,
     WidgetLabelComponent,
     WidgetGraphComponent,
-    PreviewUpdatedtextComponent
+    PreviewUpdatedtextComponent,
+    WidgetBarchartComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     HttpClientModule,
     BrowserAnimationsModule,
     GridsterModule,
+    NgChartsModule,
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
