@@ -21,6 +21,8 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import { WidgetLabelComponent } from './features/components/widget-label/widget-label.component';
 import { WidgetGraphComponent } from './features/components/widget-graph/widget-graph.component';
+import { PreviewUpdatedtextComponent } from './features/components/preview-updatedtext/preview-updatedtext.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { WidgetGraphComponent } from './features/components/widget-graph/widget-
     PreviewParentwidgetComponent,
     PreviewTopbarComponent,
     WidgetLabelComponent,
-    WidgetGraphComponent
+    WidgetGraphComponent,
+    PreviewUpdatedtextComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +48,8 @@ import { WidgetGraphComponent } from './features/components/widget-graph/widget-
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpbaseurlInterceptor, multi: true }

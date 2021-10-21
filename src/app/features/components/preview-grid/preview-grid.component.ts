@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {GridsterConfig, GridsterItem, GridsterItemComponentInterface} from "angular-gridster2";
 import {WidgetComponent} from "../../../core/models/widget-component";
-import {WidgetType} from "../../../core/models/widget-type";
 import {PhoneProperties} from "../../../core/models/phone-properties";
 import {PhoneType} from "../../../core/models/phone-type";
 import {PreviewService} from "../../../core/services/preview.service";
-import {AssetType} from "../../../core/models/asset-type";
+import {DesignPage} from "../../../core/models/design-page";
+import {DesignService} from "../../../core/services/design.service";
+import {PhoneService} from "../../../core/services/phone.service";
 
 @Component({
   selector: 'app-preview-grid',
@@ -16,14 +17,19 @@ export class PreviewGridComponent implements OnInit {
 
   // Variables
   gridOptions: GridsterConfig;
-  phoneOptions: PhoneProperties;
-  dashboardComponents: Array<WidgetComponent> | undefined;
+  phoneOptions: PhoneProperties | undefined;
+  dashboardComponents: Array<WidgetComponent>;
 
+  currentDesignPage: DesignPage | null;
   selectedWidget: WidgetComponent | null;
 
+  /* ---------------------------------------------------------- */
+
   // Constructor
-  constructor(private previewService: PreviewService) {
+  constructor(private previewService: PreviewService, private designService: DesignService, private phoneService: PhoneService) {
     this.selectedWidget = null;
+    this.currentDesignPage = null;
+    this.dashboardComponents = new Array<WidgetComponent>();
 
     this.gridOptions = {
       isMobile: true,
@@ -49,13 +55,15 @@ export class PreviewGridComponent implements OnInit {
       pushResizeItems: true,
       disableScrollHorizontal: true,
       displayGrid: 'onDrag&Resize',
-      itemInitCallback: (item, itemComponent) => { this.itemChange(item, itemComponent); },
+      itemInitCallback: (item, itemComponent) => { this.itemInit(item, itemComponent); },
       itemChangeCallback: (item, itemComponent) => { this.itemChange(item, itemComponent); },
       // itemResizeCallback: PreviewGridComponent.itemResize,
     };
 
     // Apply phone options
-    this.phoneOptions = this.applyPhoneOptions(PhoneType.SAMSUNG_S20);
+    this.phoneService.currentPhoneState.subscribe(phone => {
+      this.phoneOptions = phone;
+    });
   }
 
 
@@ -63,11 +71,33 @@ export class PreviewGridComponent implements OnInit {
 
   // Method called on init of the page
   ngOnInit(): void {
-    this.dashboardComponents = [
-      { gridsterItem: { id: 'item1', cols: 1, rows: 1, y: 0, x: 0, minItemCols: 1, minItemRows: 1 }, widgetType: WidgetType.LABEL, assetType: AssetType.THERMOSTAT },
-      { gridsterItem: { id: 'item1', cols: 1, rows: 1, y: 0, x: 1, minItemCols: 1, minItemRows: 1 }, widgetType: WidgetType.LABEL, assetType: AssetType.SOLAR },
-      { gridsterItem: { id: 'item3', cols: 2, rows: 2, y: 1, x: 0, minItemCols: 2, minItemRows: 2 }, widgetType: WidgetType.GRAPH, assetType: AssetType.THERMOSTAT }
-    ];
+
+    // Subscribe to changes of the Design
+    this.designService.currentDesignState.subscribe(design => {
+      console.log('Starting to render the design..');
+      this.currentDesignPage = design;
+      if(design != null) {
+        design.positions.forEach(position => {
+          const item = {
+            gridsterItem: {
+              id: position.id,
+              cols: position.width,
+              rows: position.height,
+              x: position.positionX,
+              y: position.positionY
+            },
+            widgetData: position.element
+          };
+
+          // Check if the component is already added with the same properties (width, height, x, y, etc)
+          if(this.dashboardComponents.filter(x => { return (x.widgetData == item.widgetData); }).length == 0) {
+            this.dashboardComponents.push(item);
+          }
+        });
+        console.log('Rendering finished!');
+        console.log(this.dashboardComponents);
+      }
+    });
 
     // Subscribe to the currently selected Widget
     this.previewService.currentlySelectedWidgetState.subscribe(widget => {
@@ -77,17 +107,36 @@ export class PreviewGridComponent implements OnInit {
 
   /* ----------------------------------------------- */
 
-  itemChange(item: GridsterItem, itemComponent: GridsterItemComponentInterface): void {
-    console.log('itemChanged', item, itemComponent);
-    // const itemComponent = this.gridOptions.api.getItemComponent(item);
-    const domRect = itemComponent.el.getBoundingClientRect();
-    const clientX = domRect.left;
-    const clientY = domRect.top;
-    const width = domRect.width;
-    const height = domRect.height;
-    // this.gridItemCoordinates.set(itemComponent, { x: clientX, y: clientY, width, height });
-    // console.log(this.gridItemCoordinates);
+  itemInit(item: GridsterItem, itemComponent: GridsterItemComponentInterface): void {
+
   }
+
+  itemChange(item: GridsterItem, itemComponent: GridsterItemComponentInterface): void {
+
+    // Update the design in the storage
+    if(this.currentDesignPage != null) {
+      this.currentDesignPage.positions.forEach(position => {
+        if(position.id == item.id) {
+          console.log('An item with the id [' + position.id + '] changed!');
+          position.positionX = item.x;
+          position.positionY = item.y;
+          position.width = item.cols;
+          position.height = item.rows;
+          if(this.currentDesignPage != null) {
+            this.designService.update(this.currentDesignPage);
+          } else {
+            console.error("Could not update the Design! CurrentDesignPage state does not exist!");
+          }
+        }
+      })
+    }
+  }
+
+
+
+
+  /* --------------------------------------- */
+
 
   selectItem(component: WidgetComponent): void {
     this.previewService.selectWidget(component);
@@ -103,19 +152,6 @@ export class PreviewGridComponent implements OnInit {
 
   isWidgetSelected(component: WidgetComponent): any {
     return this.selectedWidget === component;
-  }
-
-  applyPhoneOptions(phoneType: PhoneType): any {
-    switch (phoneType) {
-      case PhoneType.SAMSUNG_S20:
-        return {
-          phoneType: PhoneType.SAMSUNG_S20,
-          borderThickness: '4px',
-          borderRadius: '30px',
-          notch: true,
-          notchRadius: '4px'
-        }
-    }
   }
 
 }

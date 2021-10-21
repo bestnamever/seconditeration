@@ -1,18 +1,20 @@
 <div class="flex-one">
   <div class="flex-two">
     <div class="phoneContainer">
-      <div class="phone" style="border: 1px solid black; height: 100%;" [ngStyle]="{'border-radius': phoneOptions.borderRadius, 'border-width': phoneOptions.borderThickness}">
+      <div class="phone" [ngStyle]="{'border-radius': phoneOptions?.borderRadius, 'border-width': phoneOptions?.borderThickness}">
         <app-preview-topbar></app-preview-topbar>
         <div class="gridContainer">
           <gridster [options]="gridOptions" class="customGrid">
             <gridster-item class="item" [item]="component.gridsterItem" *ngFor="let component of dashboardComponents" (click)="selectItem(component)">
               <div class="widgetContainer" [ngStyle]="{'box-shadow': getBorderState(component)}">
-                <app-preview-parentwidget [widgetType]="component.widgetType"></app-preview-parentwidget>
+                <!--<p>Test {{component.widgetData}}</p>-->
+                <app-preview-parentwidget [widgetData]="component.widgetData"></app-preview-parentwidget>
               </div>
             </gridster-item>
           </gridster>
         </div>
       </div>
     </div>
+    <app-preview-updatedtext style="margin-top: 1.5em;"></app-preview-updatedtext>
   </div>
 </div>

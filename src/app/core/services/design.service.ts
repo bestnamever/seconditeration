@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
-import {Design} from "../models/design";
-import {HttpClient} from "@angular/common/http";
+import {DesignPage} from "../models/design-page";
+import {WidgetType} from "../models/widget-type";
+import {AssetType} from "../models/asset-type";
 
 @Injectable({
   providedIn: 'root'
@@ -9,51 +10,79 @@ import {HttpClient} from "@angular/common/http";
 export class DesignService {
 
   // Variables
-  private currentDesignSubject: BehaviorSubject<Design>; // The state which we can edit
-  public currentDesignState: Observable<Design>; // The view-only state, where we can subscribe on to get updates.
+  private currentDesignSubject: BehaviorSubject<DesignPage>; // The state which we can edit
+  public currentDesignState: Observable<DesignPage>; // The view-only state, where we can subscribe on to get updates.
 
 
   // Constructor
-  constructor(private httpClient: HttpClient) {
+  constructor() {
 
     // Initialize variables
-    this.currentDesignSubject = new BehaviorSubject<Design>(this.getFirstDesign()); // Set the 1st design on init
+    this.currentDesignSubject = new BehaviorSubject<DesignPage>(this.getFirstDesign()); // Set the 1st design on init
     this.currentDesignState = this.currentDesignSubject.asObservable(); // Make a clone of the state which is read-only
 
     // A method that sends a message to console when the Design gets updated
     this.currentDesignState.subscribe((design) => {
-      console.log('The design has been updated!');
-      console.log(design);
+      localStorage.setItem('savedDesign', JSON.stringify(design))
     });
   }
 
   /* ----------------------------------------- */
 
-  // Making a first design; uses the Design model.
-  getFirstDesign(): Design {
-    return {
-      id: 0,
-      randomField: 'nothing',
-      anotherField: 'nothing'
-    };
-  }
-
-  // Update a design
-  update(design: Design): void {
-
-    // TEMPORARY EXAMPLE: Save the new design in the state because there is no API
-    this.currentDesignSubject.next(design);
-
-    // Send the design to the database, and listen to the response sent back by the API
-    /*this.httpClient.put<any>(`/api/designs/` + design.id, design)
-      .pipe(first((response: any) => {
-        console.log(response);
-        this.currentDesignSubject.next(response.newDesign); // Updates the object in the state
-        return response;
-    }));*/
+  update(designPage: DesignPage): any {
+    this.currentDesignSubject.next(designPage);
   }
 
   /* ----------------------------------------- */
+
+  getFirstDesign(): DesignPage {
+    const savedDesign = localStorage.getItem('savedDesign');
+    if(savedDesign != null) {
+      console.log('Got the design from local Storage!');
+      console.log(savedDesign);
+      return JSON.parse(savedDesign) as DesignPage;
+    } else {
+      return {
+        name: "Temporary Page",
+        positions: [
+          {
+            id: 0,
+            positionX: 0,
+            positionY: 0,
+            width: 1,
+            height: 1,
+            element: {
+              widgetType: WidgetType.LABEL,
+              assetType: AssetType.THERMOSTAT,
+              text: "Label for Thermostat",
+              values: [{
+                asset: "Thermostat 1",
+                time: new Date("2019-01-16"),
+                value: "25"
+              }]
+            }
+          },
+          {
+            id: 1,
+            positionX: 0,
+            positionY: 1,
+            width: 2,
+            height: 1,
+            element: {
+              widgetType: WidgetType.LABEL,
+              assetType: AssetType.SOLAR,
+              text: "Solar Energy",
+              values: [{
+                asset: "Solar Collector 1",
+                time: new Date("2019-01-16"),
+                value: "1060"
+              }]
+            }
+          }
+        ]
+      }
+    }
+  }
 
 
 }
