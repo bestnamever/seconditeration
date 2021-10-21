@@ -18,6 +18,7 @@ export class WidgetGraphComponent implements OnInit {
   barChartOptions: ChartOptions;
   type: ChartType;
   isLoading: boolean;
+  text: string | undefined;
 
   // Constructor
   constructor() {
@@ -29,12 +30,20 @@ export class WidgetGraphComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.getGraphData());
+    this.text = (this.widgetData?.text != null) ? this.widgetData.text : 'Invalid Widget';
     this.barChartData = {
       labels: this.getGraphTimes(),
       datasets: [{
         label: 'Temperature',
         data: this.getGraphData(),
-        backgroundColor: ['red', 'blue', 'green']
+        backgroundColor: ['red', 'blue', 'green'],
+        pointBackgroundColor: '#4d9d2a',
+        pointRadius: 5,
+        hoverRadius: 8,
+        pointHoverBackgroundColor: '#4d9d2a',
+        pointHoverBorderWidth: 2,
+        pointHoverBorderColor: '#ffffff',
+        tension: 0.4,
       }]
     };
     this.barChartOptions = {
@@ -45,6 +54,7 @@ export class WidgetGraphComponent implements OnInit {
       },*/
       // devicePixelRatio: 1,
       parsing: false,
+      borderColor: '#4d9d2a',
       scales: {
         xAxes: {
           type: "time",
@@ -53,14 +63,18 @@ export class WidgetGraphComponent implements OnInit {
             isoWeekday: true
           }
         },
-        /*yAxes: {
+        yAxes: {
           beginAtZero: true,
           max: this.getMaxHeight()
-        }*/
+        }
       },
       plugins: {
         legend: {
           display: false
+        },
+        tooltip: {
+          enabled: true,
+          yAlign: 'bottom'
         }
       }
     };
@@ -90,7 +104,7 @@ export class WidgetGraphComponent implements OnInit {
         if(values.length > 0) { return Number.parseFloat(values[0].value); }
         else { return 30; }
       case AssetType.SOLAR:
-        return 4;
+        return 3;
     }
     return 100;
   }

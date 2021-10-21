@@ -3,6 +3,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {DesignPage} from "../models/design-page";
 import {WidgetType} from "../models/widget-type";
 import {AssetType} from "../models/asset-type";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +23,11 @@ export class DesignService {
     this.currentDesignState = this.currentDesignSubject.asObservable(); // Make a clone of the state which is read-only
 
     // A method that sends a message to console when the Design gets updated
-    this.currentDesignState.subscribe((design) => {
-      localStorage.setItem('savedDesign', JSON.stringify(design))
-    });
+    if (environment.useLocalStorage) {
+      this.currentDesignState.subscribe((design) => {
+        localStorage.setItem('savedDesign', JSON.stringify(design))
+      });
+    }
   }
 
   /* ----------------------------------------- */
@@ -37,11 +40,11 @@ export class DesignService {
 
   getFirstDesign(): DesignPage {
     const savedDesign = localStorage.getItem('savedDesign');
-    /*if(savedDesign != null) {
+    if (environment.useLocalStorage && savedDesign != null) {
       console.log('Got the design from local Storage!');
       console.log(savedDesign);
       return JSON.parse(savedDesign) as DesignPage;
-    } else {*/
+    } else {
       return {
         name: "Temporary Page",
         positions: [
@@ -76,12 +79,12 @@ export class DesignService {
                 {
                   asset: "Solar Collector 1",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 12)),
-                  value: "1.6"
+                  value: "0.1"
                 },
                 {
                   asset: "Solar Collector 1",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 10)),
-                  value: "1.8"
+                  value: "1.2"
                 },
                 {
                   asset: "Solar Collector 1",
@@ -107,14 +110,14 @@ export class DesignService {
                   asset: "Solar Collector 1",
                   time: new Date(new Date().getTime() + (1000 * 60 * 60 * 2)),
                   value: "1.1"
-                },]
+                }
+              ]
             }
           }
         ]
       }
-    //}
+      //}
+    }
   }
-
-
 }
 
