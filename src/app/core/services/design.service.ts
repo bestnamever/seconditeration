@@ -10,15 +10,15 @@ import {AssetType} from "../models/asset-type";
 export class DesignService {
 
   // Variables
-  private currentDesignSubject: BehaviorSubject<DesignPage | null>; // The state which we can edit
-  public currentDesignState: Observable<DesignPage | null>; // The view-only state, where we can subscribe on to get updates.
+  private currentDesignSubject: BehaviorSubject<DesignPage>; // The state which we can edit
+  public currentDesignState: Observable<DesignPage>; // The view-only state, where we can subscribe on to get updates.
 
 
   // Constructor
   constructor() {
 
     // Initialize variables
-    this.currentDesignSubject = new BehaviorSubject<DesignPage | null>(this.getFirstDesign()); // Set the 1st design on init
+    this.currentDesignSubject = new BehaviorSubject<DesignPage>(this.getFirstDesign()); // Set the 1st design on init
     this.currentDesignState = this.currentDesignSubject.asObservable(); // Make a clone of the state which is read-only
 
     // A method that sends a message to console when the Design gets updated
