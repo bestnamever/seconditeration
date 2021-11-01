@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomepageComponent } from './features/pages/homepage/homepage.component';
+import { LayoutRightbarComponentsComponent } from './features/components/layout-rightbar-components/layout-rightbar-components.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { LayoutHeaderComponent } from './features/components/layout-header/layout-header.component';
@@ -26,6 +27,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DeleteComfirmComponent } from './features/components/delete-comfirm/delete-comfirm.component';
+import { LayoutComponentSettingComponent } from './features/components/layout-component-setting/layout-component-setting.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 @NgModule({
@@ -40,8 +43,10 @@ import { DeleteComfirmComponent } from './features/components/delete-comfirm/del
     LayoutScreenComponent,
     DividerComponent,
     DeleteComfirmComponent,
+    LayoutRightbarComponentsComponent,
+    LayoutComponentSettingComponent
   ],
-  entryComponents:[
+  entryComponents: [
     DeleteComfirmComponent
   ],
   imports: [
@@ -60,6 +65,7 @@ import { DeleteComfirmComponent } from './features/components/delete-comfirm/del
     RouterModule,
     MatDialogModule,
     MatDividerModule,
+    MatChipsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpbaseurlInterceptor, multi: true }

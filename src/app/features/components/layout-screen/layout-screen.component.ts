@@ -20,7 +20,8 @@ export class LayoutScreenComponent implements OnInit {
     this.safeSpace = "Display safe-space in preview"
     this.setHomepage = "Set Homepage"
     this.isInNavigation = "Show in navigation"
-    this.delete_title = "Delete this page"
+    this.delete_component = "Homepage"
+    this.delete_title = "page"
 
   }
 
@@ -35,6 +36,7 @@ export class LayoutScreenComponent implements OnInit {
   customScreenSize: string;
   isHidden: boolean;
   safeSpace: string;
+  delete_component: string;
   delete_title: string;
 
 
@@ -43,7 +45,7 @@ export class LayoutScreenComponent implements OnInit {
   }
 
   openDeleteDialog() {
-    const dialogRef = this.dialog.open(DeleteComfirmComponent, { data: { title: this.delete_title } });
+    const dialogRef = this.dialog.open(DeleteComfirmComponent, { width: '30%', data: { title: this.delete_title, component: this.delete_component } });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
