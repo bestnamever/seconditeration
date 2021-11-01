@@ -1,6 +1,7 @@
 <div class="flex-one">
   <div class="widget flex-two">
     <app-widget-label class="childWidget" *ngIf="isLabel()" [widgetData]="this.widgetData" ></app-widget-label>
-    <app-widget-graph class="childWidget" *ngIf="isGraph()"></app-widget-graph>
+    <app-widget-graph class="childWidget" *ngIf="isGraph()" [widgetData]="this.widgetData"></app-widget-graph>
+    <app-widget-barchart class="childWidget" *ngIf="isBarChart()" [widgetData]="this.widgetData"></app-widget-barchart>
   </div>
 </div>
