@@ -26,5 +26,6 @@ export class PreviewParentwidgetComponent implements OnInit {
   // ngIf methods
   isLabel(): boolean { return this.widgetData?.widgetType === WidgetType.LABEL; }
   isGraph(): boolean { return this.widgetData?.widgetType === WidgetType.GRAPH; }
+  isBarChart(): boolean { return this.widgetData?.widgetType === WidgetType.BARCHART }
 
 }

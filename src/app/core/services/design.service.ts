@@ -70,7 +70,7 @@ export class DesignService {
             positionX: 0,
             positionY: 1,
             width: 2,
-            height: 2,
+            height: 1,
             element: {
               widgetType: WidgetType.GRAPH,
               assetType: AssetType.SOLAR,
@@ -110,6 +110,25 @@ export class DesignService {
                   asset: "Solar Collector 1",
                   time: new Date(new Date().getTime() + (1000 * 60 * 60 * 2)),
                   value: "1.1"
+                }
+              ]
+            }
+          },
+          {
+            id: 2,
+            positionX: 0,
+            positionY: 2,
+            width: 2,
+            height: 1,
+            element: {
+              widgetType: WidgetType.BARCHART,
+              assetType: AssetType.THERMOSTAT,
+              text: "Temperature Bar",
+              values: [
+                {
+                  asset: "Thermostat 1",
+                  time: new Date("2019-01-16"),
+                  value: "25"
                 }
               ]
             }
