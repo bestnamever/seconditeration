@@ -36,4 +36,38 @@
             }
         }
     }
+
+    .tab-layers{
+        padding: 0;
+
+        .heading-container{
+            padding: 30px 30px 10px 30px;
+        }
+
+        .layer-item{
+            display: flex;
+            justify-content: flex-start;
+            padding: 5px 15px;
+
+            span{
+
+            }
+
+            .component-icon{
+                margin-right: 15px;
+            }
+
+            &.selected{
+                background: rgba($color: #4D9D2A, $alpha: 0.25);
+
+                span{
+                    color: #4D9D2A;
+                }
+
+                .component-icon{
+                    color: #4D9D2A;
+                }
+            }
+        }
+    }
 }
