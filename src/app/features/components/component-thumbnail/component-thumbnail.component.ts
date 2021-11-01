@@ -9,10 +9,12 @@ export class ComponentThumbnailComponent implements OnInit {
 
   @Input() componentTitle : any;
   @Input() iconCode : any;
+  @Input() componentType : any;
 
   constructor() { }
 
   ngOnInit() {
+
   }
 
 }

@@ -2,6 +2,9 @@ import {
   Component,
   OnInit
 } from '@angular/core';
+import { AssetType } from 'src/app/core/models/asset-type';
+
+
 
 @Component({
   selector: 'app-layout-leftbar',
@@ -18,11 +21,11 @@ export class LayoutLeftbarComponent implements OnInit {
   constructor() {
     this.searchValue = '';
     this.selectedAssetType = '';
-    this.assetTypeData = ['Thermostat', 'Solar Collector', 'Air-quality Sensor', "Hue LED's"];
+    this.assetTypeData = Object.values(AssetType);
   }
 
   ngOnInit(): void {
-
+    console.log(this.assetTypeData);
   }
 
   /* ---------------------------------------------- */
