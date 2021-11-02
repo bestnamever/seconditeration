@@ -8,3 +8,14 @@ p.debug{
     color: darken($color: white, $amount: 45%);
     font-style: italic;
 }
+
+::ng-deep.mat-form-field{
+
+    &.mat-focused{
+      span label{
+        mat-label{
+          color: #4d9d2a;
+        }
+      }
+    }
+  }
