@@ -25,6 +25,7 @@ import { PreviewUpdatedtextComponent } from './features/components/preview-updat
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {NgChartsModule} from "ng2-charts";
 import { WidgetBarchartComponent } from './features/components/widget-barchart/widget-barchart.component';
+import {LittestingComponent} from "./features/pages/littesting/littesting.component";
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { WidgetBarchartComponent } from './features/components/widget-barchart/w
     WidgetLabelComponent,
     WidgetGraphComponent,
     PreviewUpdatedtextComponent,
-    WidgetBarchartComponent
+    WidgetBarchartComponent,
+    LittestingComponent
   ],
   imports: [
     BrowserModule,

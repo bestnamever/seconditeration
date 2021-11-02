@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {HomepageComponent} from "./features/pages/homepage/homepage.component";
+import {LittestingComponent} from "./features/pages/littesting/littesting.component";
 
 const routes: Routes = [
 
   { path: 'home', component: HomepageComponent },
-  { path: '**', redirectTo: 'home' }
+  { path: '', component: LittestingComponent },
+  { path: '**', redirectTo: 'home' },
 
 ];
 
