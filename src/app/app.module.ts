@@ -27,7 +27,9 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {NgChartsModule} from "ng2-charts";
 import { WidgetBarchartComponent } from './features/components/widget-barchart/widget-barchart.component';
 import {LittestingComponent} from "./features/pages/littesting/littesting.component";
+
 import './features/litelements/vd-label/vd-label.component'
+import './features/litelements/vd-graph/vd-graph.component'
 
 @NgModule({
   declarations: [
