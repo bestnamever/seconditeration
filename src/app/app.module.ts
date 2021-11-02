@@ -49,8 +49,11 @@ import { WidgetLabelComponent } from './features/components/widget-label/widget-
 import { WidgetGraphComponent } from './features/components/widget-graph/widget-graph.component';
 import { WidgetBarchartComponent } from './features/components/widget-barchart/widget-barchart.component';
 
+// Self-made service
+import { DataSharingService } from './core/services/data-sharing.service';
 
-  /* -------------------------------------------------------------- */
+
+/* -------------------------------------------------------------- */
 
 @NgModule({
   declarations: [
@@ -95,7 +98,8 @@ import { WidgetBarchartComponent } from './features/components/widget-barchart/w
     MatDialogModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: HttpbaseurlInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: HttpbaseurlInterceptor, multi: true },
+    DataSharingService
   ],
   bootstrap: [AppComponent]
 })

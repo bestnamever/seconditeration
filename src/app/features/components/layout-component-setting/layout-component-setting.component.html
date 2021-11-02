@@ -1,6 +1,6 @@
 <p>{{message}}</p>
 <div class="card_setting">
-    <div *ngIf="message =='label'" class="label_card">
+    <div *ngIf="message === '0'" class="label_card">
         <form class="form">
             <mat-form-field class="label_card_text" appearance="outline">
                 <mat-label>Card text</mat-label>
@@ -17,7 +17,7 @@
         <p>width selected is {{widthValue}}</p>
     </div>
 
-    <div *ngIf="message =='graph'">
+    <div *ngIf="message === '1'">
         <a>graph card setting</a>
     </div>
 </div>

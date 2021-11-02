@@ -1,5 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatChip } from '@angular/material/chips';
+import { DataSharingService } from "../../../core/services/data-sharing.service"
+import { Subscription } from 'rxjs';
 
 interface width {
   value: number
@@ -13,15 +15,14 @@ interface width {
 })
 export class LayoutComponentSettingComponent implements OnInit {
 
-  @Input('type')
   message: string;
+  subscription: Subscription;
 
   text: string;
-
   widths: width[];
   widthValue: number;
 
-  constructor() {
+  constructor(private data: DataSharingService) {
     this.message = "something"
     this.text = "Room Temperature"
     this.widths = [
@@ -31,7 +32,10 @@ export class LayoutComponentSettingComponent implements OnInit {
       { value: 100, viewValue: '100%' }
     ]
     this.widthValue = 0
+
+    this.subscription = this.data.currentMessage.subscribe(message => this.message = message)
   }
+
 
   ngOnInit() {
   }

@@ -1,19 +1,21 @@
-import {Component, OnInit} from '@angular/core';
-import {GridsterConfig, GridsterItem, GridsterItemComponentInterface} from "angular-gridster2";
-import {WidgetComponent} from "../../../core/models/widget-component";
-import {PhoneProperties} from "../../../core/models/phone-properties";
-import {PhoneType} from "../../../core/models/phone-type";
-import {PreviewService} from "../../../core/services/preview.service";
-import {DesignPage} from "../../../core/models/design-page";
-import {DesignService} from "../../../core/services/design.service";
-import {PhoneService} from "../../../core/services/phone.service";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { GridsterConfig, GridsterItem, GridsterItemComponentInterface } from "angular-gridster2";
+import { WidgetComponent } from "../../../core/models/widget-component";
+import { PhoneProperties } from "../../../core/models/phone-properties";
+import { PhoneType } from "../../../core/models/phone-type";
+import { PreviewService } from "../../../core/services/preview.service";
+import { DesignPage } from "../../../core/models/design-page";
+import { DesignService } from "../../../core/services/design.service";
+import { PhoneService } from "../../../core/services/phone.service";
+import { Subscription } from 'rxjs';
+import { DataSharingService } from "../../../core/services/data-sharing.service"
 
 @Component({
   selector: 'app-preview-grid',
   templateUrl: './preview-grid.component.html',
   styleUrls: ['./preview-grid.component.scss']
 })
-export class PreviewGridComponent implements OnInit {
+export class PreviewGridComponent implements OnInit{
 
   // Variables
   gridOptions: GridsterConfig;
@@ -23,10 +25,16 @@ export class PreviewGridComponent implements OnInit {
   currentDesignPage: DesignPage | null;
   selectedWidget: WidgetComponent | null;
 
+  //selected type
+  message: string;
+  subscription: Subscription;
+
+  testmessage: string;
+
   /* ---------------------------------------------------------- */
 
   // Constructor
-  constructor(private previewService: PreviewService, private designService: DesignService, private phoneService: PhoneService) {
+  constructor(private previewService: PreviewService, private designService: DesignService, private phoneService: PhoneService, private data: DataSharingService) {
     this.selectedWidget = null;
     this.currentDesignPage = null;
     this.dashboardComponents = new Array<WidgetComponent>();
@@ -64,8 +72,12 @@ export class PreviewGridComponent implements OnInit {
     this.phoneService.currentPhoneState.subscribe(phone => {
       this.phoneOptions = phone;
     });
-  }
 
+    //subscribe to type of selected widght 
+    this.message = ""
+    this.subscription = this.data.currentMessage.subscribe((message: string) => this.message = message)
+    this.testmessage = ""
+  }
 
   /* ------------------------------------------------------- */
 
@@ -76,7 +88,7 @@ export class PreviewGridComponent implements OnInit {
     this.designService.currentDesignState.subscribe(design => {
       console.log('Starting to render the design..');
       this.currentDesignPage = design;
-      if(design != null) {
+      if (design != null) {
         design.positions.forEach(position => {
           const item = {
             gridsterItem: {
@@ -90,7 +102,7 @@ export class PreviewGridComponent implements OnInit {
           };
 
           // Check if the component is already added with the same properties (width, height, x, y, etc)
-          if(this.dashboardComponents.filter(x => { return (x.widgetData == item.widgetData); }).length == 0) {
+          if (this.dashboardComponents.filter(x => { return (x.widgetData == item.widgetData); }).length == 0) {
             this.dashboardComponents.push(item);
           }
         });
@@ -103,6 +115,7 @@ export class PreviewGridComponent implements OnInit {
     this.previewService.currentlySelectedWidgetState.subscribe(widget => {
       this.selectedWidget = widget;
     });
+
   }
 
   /* ----------------------------------------------- */
@@ -114,15 +127,15 @@ export class PreviewGridComponent implements OnInit {
   itemChange(item: GridsterItem, itemComponent: GridsterItemComponentInterface): void {
 
     // Update the design in the storage
-    if(this.currentDesignPage != null) {
+    if (this.currentDesignPage != null) {
       this.currentDesignPage.positions.forEach(position => {
-        if(position.id == item.id) {
+        if (position.id == item.id) {
           console.log('An item with the id [' + position.id + '] changed!');
           position.positionX = item.x;
           position.positionY = item.y;
           position.width = item.cols;
           position.height = item.rows;
-          if(this.currentDesignPage != null) {
+          if (this.currentDesignPage != null) {
             this.designService.update(this.currentDesignPage);
           } else {
             console.error("Could not update the Design! CurrentDesignPage state does not exist!");
@@ -140,10 +153,14 @@ export class PreviewGridComponent implements OnInit {
 
   selectItem(component: WidgetComponent): void {
     this.previewService.selectWidget(component);
+
+    // set subsciption
+    this.data.changeMessage(component.widgetData.assetType.toString())
+    console.log(this.data.currentMessage)
   }
 
   getBorderState(component: WidgetComponent): any {
-    if(this.isWidgetSelected(component)) {
+    if (this.isWidgetSelected(component)) {
       return 'inset 0px 0px 0px 2px #4D9D2A';
     } else {
       return 'inset 0px 0px 0px 2px #E0E0E0';
