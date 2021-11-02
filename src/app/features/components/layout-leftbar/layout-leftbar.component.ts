@@ -4,8 +4,6 @@ import {
 } from '@angular/core';
 import { AssetType } from 'src/app/core/models/asset-type';
 
-
-
 @Component({
   selector: 'app-layout-leftbar',
   templateUrl: './layout-leftbar.component.html',
@@ -16,7 +14,7 @@ export class LayoutLeftbarComponent implements OnInit {
   searchValue: string; // Value for the component searchbox
   selectedAssetType : string; // Value for the asset-type dropdown
 
-  assetTypeData : Array<string>; // TEMPORARY - List of availible asset types 
+  assetTypeData : Array<string>; // All availible asset types
 
   constructor() {
     this.searchValue = '';
@@ -37,7 +35,23 @@ export class LayoutLeftbarComponent implements OnInit {
     this.searchValue = value;
     console.log(`The searchbox value is: ${value}`);
 
-    // Do something
+    // -- Filter the component browser --
+    // Get the component thumbnail html-elements
+    var components = (<HTMLScriptElement[]><any>document.getElementById('component-list')?.childNodes);
+
+    // Check if there are components found
+    if (!components) return;
+
+    // Check for each component if it matches the search-term
+    components.forEach(item => {
+      var componentName = item.getAttribute('componenttitle');
+      if (!componentName?.toLowerCase()?.match(value.toLowerCase()) && !item.classList.contains('hidden')){
+        item.classList.add('hidden');
+      }
+      else if (componentName?.toLowerCase()?.match(value.toLowerCase()) && item.classList.contains('hidden')){
+        item.classList.remove('hidden');
+      }
+    });
   }
 
   /**
@@ -46,6 +60,7 @@ export class LayoutLeftbarComponent implements OnInit {
   updateAssetValue(): void {
     console.log(`The searchbox value is: ${this.selectedAssetType}`);
 
-    // Do something
+    // Filter the component browser
+
   }
 }
