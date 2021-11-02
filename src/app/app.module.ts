@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +27,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {NgChartsModule} from "ng2-charts";
 import { WidgetBarchartComponent } from './features/components/widget-barchart/widget-barchart.component';
 import {LittestingComponent} from "./features/pages/littesting/littesting.component";
+import './features/litelements/vd-label/vd-label.component'
 
 @NgModule({
   declarations: [
@@ -45,6 +47,7 @@ import {LittestingComponent} from "./features/pages/littesting/littesting.compon
     LittestingComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -60,6 +63,11 @@ import {LittestingComponent} from "./features/pages/littesting/littesting.compon
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpbaseurlInterceptor, multi: true }
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() {
+    // customElements.define('app-vd-label', VdLabelComponent);
+  }
+}

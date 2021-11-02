@@ -6,7 +6,7 @@ import {LittestingComponent} from "./features/pages/littesting/littesting.compon
 const routes: Routes = [
 
   { path: 'home', component: HomepageComponent },
-  { path: '', component: LittestingComponent },
+  { path: 'testing', component: LittestingComponent },
   { path: '**', redirectTo: 'home' },
 
 ];
