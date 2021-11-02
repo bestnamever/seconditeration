@@ -1,0 +1,15 @@
+<div style="height: 100%;">
+  <div class="align-topleft">
+    <mat-icon *ngIf="isThermostat()" style="color: #B2B2B2">thermostat</mat-icon>
+    <mat-icon *ngIf="isSolar()" style="color: #B2B2B2">bolt</mat-icon>
+  </div>
+  <div class="flex-one">
+    <div class="flex-two">
+      <h1 *ngIf="(isThermostat() && this.value != 'NaN') else nothermostat" style="text-align: center;">{{this.value}}°c</h1>
+      <ng-template #nothermostat>
+        <h1 style="text-align: center;">{{this.value}}</h1>
+      </ng-template>
+      <p class="cardSubtext" style="text-align: center;">{{this.text}}</p>
+    </div>
+  </div>
+</div>

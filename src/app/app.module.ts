@@ -13,8 +13,6 @@ import { LayoutLeftbarComponent } from './features/components/layout-leftbar/lay
 import { LayoutRightbarComponent } from './features/components/layout-rightbar/layout-rightbar.component';
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { ExampleGetdesignsComponent } from './features/components/example-getdesigns/example-getdesigns.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
-import { HttpbaseurlInterceptor } from "./core/interceptors/httpbaseurl.interceptor";
 import { LayoutTabComponent } from './features/components/layout-tab/layout-tab.component';
 import { MatTabsModule } from "@angular/material/tabs";
 import { MatIconModule } from '@angular/material/icon';
@@ -29,7 +27,19 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DeleteComfirmComponent } from './features/components/delete-comfirm/delete-comfirm.component';
 import { LayoutComponentSettingComponent } from './features/components/layout-component-setting/layout-component-setting.component';
 import { MatChipsModule } from '@angular/material/chips';
-
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {HttpbaseurlInterceptor} from "./core/interceptors/httpbaseurl.interceptor";
+import { PreviewGridComponent } from './features/components/preview-grid/preview-grid.component';
+import { GridsterModule } from 'angular-gridster2';
+import { PreviewParentwidgetComponent } from './features/components/preview-parentwidget/preview-parentwidget.component';
+import { PreviewTopbarComponent } from './features/components/preview-topbar/preview-topbar.component';
+import {MatButtonModule} from "@angular/material/button";
+import { WidgetLabelComponent } from './features/components/widget-label/widget-label.component';
+import { WidgetGraphComponent } from './features/components/widget-graph/widget-graph.component';
+import { PreviewUpdatedtextComponent } from './features/components/preview-updatedtext/preview-updatedtext.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {NgChartsModule} from "ng2-charts";
+import { WidgetBarchartComponent } from './features/components/widget-barchart/widget-barchart.component';
 
 @NgModule({
   declarations: [
@@ -48,16 +58,24 @@ import { MatChipsModule } from '@angular/material/chips';
   ],
   entryComponents: [
     DeleteComfirmComponent
+    PreviewGridComponent,
+    PreviewParentwidgetComponent,
+    PreviewTopbarComponent,
+    WidgetLabelComponent,
+    WidgetGraphComponent,
+    PreviewUpdatedtextComponent,
+    WidgetBarchartComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    GridsterModule,
+    NgChartsModule,
     MatToolbarModule,
     MatSidenavModule,
     MatTabsModule,
-    MatIconModule,
     MatInputModule,
     MatCheckboxModule,
     MatListModule,
@@ -66,6 +84,9 @@ import { MatChipsModule } from '@angular/material/chips';
     MatDialogModule,
     MatDividerModule,
     MatChipsModule
+    MatIconModule,
+    MatButtonModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpbaseurlInterceptor, multi: true }
