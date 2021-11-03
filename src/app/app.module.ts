@@ -20,7 +20,6 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatInputModule } from "@angular/material/input";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatListModule } from '@angular/material/list';
-import { MatSidenavModule } from "@angular/material/sidenav";
 
 // Other externally imported Libraries
 import { GridsterModule } from 'angular-gridster2'
