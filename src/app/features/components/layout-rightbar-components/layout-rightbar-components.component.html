@@ -1,0 +1,38 @@
+<div class="top_info">
+    <div class="icon">
+        Infomation card
+    </div>
+</div>
+<mat-divider class="material-devider"></mat-divider>
+<div class="screen_body">
+    <div class="content">
+        <div class="title">General settings</div>
+        <div class="Asset">
+            <mat-form-field appearance="outline" class="form">
+                <mat-label>Select Asset type</mat-label>
+                <mat-select disableOptionCentering>
+                    <mat-option *ngFor="let asset of assets" [value]="asset.value">
+                        {{asset.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="Properties">
+            <mat-form-field appearance="outline" class="form">
+                <mat-label>Select Properties</mat-label>
+                <mat-select disableOptionCentering>
+                    <mat-option *ngFor="let property of properties" [value]="property.value">
+                        {{property.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="title">Card settings</div>
+        <!-- test only -->
+        <div style="margin-bottom:20px;">
+            <button mat-raised-button (click)="setCardSetting('label')" style="margin-right: 20px;">Label</button>
+            <button mat-raised-button (click)="setCardSetting('graph')">Graph</button>
+        </div>
+        <app-layout-component-setting [type]="text"></app-layout-component-setting>
+    </div>
+</div>

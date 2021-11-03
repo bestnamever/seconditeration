@@ -1,0 +1,78 @@
+<div class="top_info">
+    <div class="icon">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" class="home_icon">home</mat-icon>
+        Homepage
+        <!-- <Homepage> as name will be the paramter sent by preview -->
+    </div>
+</div>
+<mat-divider class="material-devider"></mat-divider>
+<div class="screen_body">
+    <div class="content">
+        <div class="title">Page properties</div>
+        <form class="form">
+            <mat-form-field class="page_name" appearance="outline">
+                <mat-label>Page name</mat-label>
+                <input matInput placeholder="Ex. Homepage" value={{homepage}}>
+                <!-- value will be passed by the preview -->
+            </mat-form-field>
+        </form>
+        <div class="set_homepage">
+            <mat-checkbox [labelPosition]="'before'">
+                {{ setHomepage }}
+            </mat-checkbox>
+        </div>
+        <div class="in_navigation">
+            <mat-checkbox [labelPosition]="'before'">
+                {{ isInNavigation }}
+            </mat-checkbox>
+        </div>
+        <div class="title">Screen properties</div>
+        <div class="device">
+            <mat-form-field appearance="outline" class="form">
+                <mat-label>Display on the device</mat-label>
+                <mat-select disableOptionCentering>
+                    <mat-option value="one">Iphone 11</mat-option>
+                    <mat-option value="two">Iphone 11 Pro Max</mat-option>
+                    <mat-option value="three">Sumsung s20</mat-option>
+                    <mat-option value="four">Sumsung s19</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="customize_screen">
+            <mat-checkbox (click)='showHideCustom()' [labelPosition]="'before'">
+                {{ customScreenSize }}
+            </mat-checkbox>
+            <div [hidden]='isHidden' class="custom_size">
+                <mat-form-field class="custom_height" appearance="outline">
+                    <mat-label>Height</mat-label>
+                    <input matInput placeholder="Height" value={{height}}>
+                    <!-- value will be passed by the preview -->
+                </mat-form-field>
+                <mat-form-field class="custom_width" appearance="outline">
+                    <mat-label>Width</mat-label>
+                    <input matInput placeholder="Width" value={{height}}>
+                    <!-- value will be passed by the preview -->
+                </mat-form-field>
+            </div>
+        </div>
+        <div>
+            <mat-form-field appearance="outline" class="form">
+                <mat-label>Screen safe space(padding)</mat-label>
+                <mat-select disableOptionCentering>
+                    <mat-option value="one">2px</mat-option>
+                    <mat-option value="two">4px</mat-option>
+                    <mat-option value="three">6px</mat-option>
+                    <mat-option value="four">8px</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="safe_space">
+            <mat-checkbox [labelPosition]="'before'">
+                {{ safeSpace }}
+            </mat-checkbox>
+        </div>
+    </div>
+    <div class="delete" style="cursor: pointer;">
+        <a (click)="openDeleteDialog()">Delete Page</a>
+    </div>
+</div>

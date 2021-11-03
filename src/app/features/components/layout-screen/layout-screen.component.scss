@@ -1,0 +1,94 @@
+.screen_body {
+    position: relative;
+    margin-left: 40px;
+    max-width: 340px;
+}
+.top_info {
+    margin: 20px 34px;
+    width: 340px;
+    font-weight: 500;
+}
+
+.icon {
+    display: flex;
+    align-items: center;
+}
+
+.home_icon {
+    margin-right: 10px;
+    transform: scale(0.7);
+}
+
+.material-devider {
+    margin: 30px;
+    height: 2px;
+    width: 330px;
+}
+
+.title {
+    margin-top: 20px;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.form {
+    margin-top: 20px;
+    width: 300px;
+}
+
+.page_name {
+    width: 300px;
+}
+
+.screen_body {
+    height: 600px;
+    width: 360px;
+}
+
+.set_homepage {
+    margin-top: 10px;
+}
+
+.checkboxlist {
+    text-align: left;
+    size: 16px;
+}
+
+.mat-checkbox {
+    height: 48px;
+    display: flex;
+    align-items: center;
+}
+
+::ng-deep .mat-checkbox-layout {
+    display: flex;
+    width: 90%;
+    justify-content: space-between;
+}
+
+:host ::ng-deep .mat-checkbox-label-before .mat-checkbox-inner-container {
+    margin-right: 0;
+}
+
+.custom_size {
+    text-align: justify;
+}
+
+.custom_height {
+    float: left;
+    max-width: 120px;
+}
+
+.custom_width {
+    float: right;
+    max-width: 120px;
+    margin-right: 40px;
+}
+
+.delete {
+    margin-top: 80px;
+}
+.delete a {
+    color: red;
+    font-size: 18px;
+}
