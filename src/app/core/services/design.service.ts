@@ -134,6 +134,21 @@ export class DesignService {
                   asset: "Thermostat 2",
                   time: new Date("2019-01-16"),
                   value: "19"
+                },
+                {
+                  asset: "Thermostat 3",
+                  time: new Date("2019-01-16"),
+                  value: "22"
+                },
+                {
+                  asset: "Thermostat 4",
+                  time: new Date("2019-01-16"),
+                  value: "23"
+                },
+                {
+                  asset: "Thermostat 5",
+                  time: new Date("2019-01-16"),
+                  value: "21"
                 }
               ]
             }

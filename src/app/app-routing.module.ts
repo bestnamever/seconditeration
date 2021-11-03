@@ -5,7 +5,7 @@ import {HomepageComponent} from "./features/pages/homepage/homepage.component";
 const routes: Routes = [
 
   { path: 'home', component: HomepageComponent },
-  { path: '**', redirectTo: 'home' }
+  { path: '**', redirectTo: 'home' },
 
 ];
 
