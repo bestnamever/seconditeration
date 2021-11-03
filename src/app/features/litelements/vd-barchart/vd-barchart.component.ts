@@ -95,7 +95,7 @@ export class VdBarChartComponent extends LitElement {
         datasets: [{
           label: this.widgetData?.assetType.toString(),
           data: this.getWidgetData(),
-          backgroundColor: ['red', 'blue', 'green']
+          backgroundColor: ['#4D9D2A']
         }]
       },
       options: {
