@@ -50,8 +50,8 @@ export class VdLabelComponent extends LitElement {
         <div class="flex-one">
           <div class="flex-two">
             ${this.isThermostat()
-              ? html`<h1 style="text-align: center;">${this.value}°c</h1>`
-              : html`<h1 style="text-align: center;">${this.value}</h1>`
+              ? html`<h1 style="text-align: center; color: #4D9D2A">${this.value}°c</h1>`
+              : html`<h1 style="text-align: center; color: #4D9D2A">${this.value}</h1>`
             }
             <p class="cardSubtext" style="text-align: center;">${this.text}</p>
           </div>
