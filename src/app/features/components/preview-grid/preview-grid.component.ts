@@ -7,8 +7,8 @@ import { PreviewService } from "../../../core/services/preview.service";
 import { DesignPage } from "../../../core/models/design-page";
 import { DesignService } from "../../../core/services/design.service";
 import { PhoneService } from "../../../core/services/phone.service";
-import { Subscription } from 'rxjs';
-import { DataSharingService } from "../../../core/services/data-sharing.service"
+
+
 
 @Component({
   selector: 'app-preview-grid',
@@ -32,7 +32,7 @@ export class PreviewGridComponent implements OnInit {
   /* ---------------------------------------------------------- */
 
   // Constructor
-  constructor(private previewService: PreviewService, private designService: DesignService, private phoneService: PhoneService, private data: DataSharingService) {
+  constructor(private previewService: PreviewService, private designService: DesignService, private phoneService: PhoneService) {
     this.selectedWidget = null;
     this.currentDesignPage = null;
     this.dashboardComponents = new Array<WidgetComponent>();
