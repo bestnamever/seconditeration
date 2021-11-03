@@ -22,7 +22,6 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import { PreviewUpdatedtextComponent } from './features/components/preview-updatedtext/preview-updatedtext.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {LittestingComponent} from "./features/pages/littesting/littesting.component";
 
 import './features/litelements/vd-label/vd-label.component'
 import './features/litelements/vd-graph/vd-graph.component';
@@ -40,7 +39,6 @@ import './features/litelements/vd-barchart/vd-barchart.component';
     PreviewParentwidgetComponent,
     PreviewTopbarComponent,
     PreviewUpdatedtextComponent,
-    LittestingComponent
   ],
   imports: [
     CommonModule,
