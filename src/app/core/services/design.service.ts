@@ -32,7 +32,7 @@ export class DesignService {
 
   /* ----------------------------------------- */
 
-  update(designPage: DesignPage): any {
+  updateLocation(designPage: DesignPage): any {
     this.currentDesignSubject.next(designPage);
   }
 
@@ -152,6 +152,10 @@ export class DesignService {
       }
       //}
     }
+  }
+
+  updateData(value: DesignPage): any {
+    this.currentDesignSubject.next(value);
   }
 }
 

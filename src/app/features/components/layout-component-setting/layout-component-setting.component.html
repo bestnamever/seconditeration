@@ -1,12 +1,13 @@
 <div class="card_setting">
     <div *ngIf="type === '0'" class="label_card">
         <form class="form">
-            <mat-form-field class="label_card_text" appearance="outline">
+            <mat-form-field class="label_card_text" appearance="outline" >
                 <mat-label>Value</mat-label>
-                <input matInput placeholder="Ex. 25" value={{value}}>
+                <input matInput placeholder="Ex. 25" value={{value}} >
                 <!-- value will be passed by the preview -->
             </mat-form-field>
         </form>
+        <button (click)="testsetvalue()">set value</button>
         <form class="form">
             <mat-form-field class="label_card_text" appearance="outline">
                 <mat-label>Card text</mat-label>
@@ -17,7 +18,7 @@
         <mat-chip-list>
             <a style="margin-right: 30px">Width</a>
             <mat-chip #c="matChip" *ngFor="let width of widths" [value]="width.value"
-                (click)="selection(c,width.value)">{{width.viewValue}}
+                (click)="selectionOnChip(c,width.value)">{{width.viewValue}}
             </mat-chip>
         </mat-chip-list>
         <p>width selected is {{widthValue}}</p>
@@ -25,5 +26,13 @@
 
     <div *ngIf="type === '1'">
         <a>graph card setting</a>
+    </div>
+
+    <div *ngIf="type === '2'">
+        <a>button card setting</a>
+    </div>
+
+    <div *ngIf="type === '3'">
+        <a>bar chart card setting</a>
     </div>
 </div>

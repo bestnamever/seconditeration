@@ -133,7 +133,7 @@ export class PreviewGridComponent implements OnInit {
           position.width = item.cols;
           position.height = item.rows;
           if (this.currentDesignPage != null) {
-            this.designService.update(this.currentDesignPage);
+            this.designService.updateLocation(this.currentDesignPage);
           } else {
             console.error("Could not update the Design! CurrentDesignPage state does not exist!");
           }
@@ -150,8 +150,7 @@ export class PreviewGridComponent implements OnInit {
 
   selectItem(component: WidgetComponent): void {
     this.previewService.selectWidget(component);
-
-    console.log(this.previewService.currentlySelectedWidgetState)
+    // console.log(this.previewService.currentlySelectedWidgetState)
   }
 
   getBorderState(component: WidgetComponent): any {
