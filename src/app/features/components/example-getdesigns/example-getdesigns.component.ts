@@ -19,7 +19,7 @@ export class ExampleGetdesignsComponent implements OnInit {
     // Here we subscribe to the currentDesign, so that we get updates whenever it changes
     designService.currentDesignState.subscribe(design => {
       console.log('Design updated! Now we can show it on the page!');
-      this.design = design;
+      // this.design = design;
     })
   }
 
@@ -31,10 +31,10 @@ export class ExampleGetdesignsComponent implements OnInit {
   // Method to save a new Design in the database. Gets called on Button click.
   save(): void {
     console.log('Saving a new Design...')
-    this.designService.update({
+    /*this.designService.update({
       id: 0,
       randomField: 'something',
       anotherField: 'something'
-    });
+    });*/
   }
 }

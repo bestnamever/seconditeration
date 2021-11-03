@@ -71,3 +71,55 @@ $VisualDesigner-frontend-theme: mat.define-light-theme((
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+h1 { // Big Titles and Statistics and stuff
+  font-weight: 700 !important;
+  font-size: 31px !important;
+  color: #4d9d2a !important;
+  letter-spacing: 0.93px !important;
+  line-height: 31px !important;
+}
+
+h2 { // Bigger titles for in the App Preview for example
+  font-weight: bold !important;
+  font-size: 17px !important;
+  color: #4C4C4C !important;
+  letter-spacing: 0 !important;
+  line-height: 20px !important;
+}
+
+h3 { // Sidebar Title & Headings
+  font-weight: 500 !important;
+  font-size: 16px !important;
+  color: #4C4C4C !important;
+  letter-spacing: 0 !important;
+  line-height: 19px !important;
+}
+
+.text { // Sidebar comments & regular text
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  color: #4C4C4C !important;
+  letter-spacing: 0 !important;
+  line-height: 16px !important;
+}
+
+.cardSubtext {
+  font-weight: 400;
+  font-size: 9px;
+  color: #4C4C4C;
+  letter-spacing: 0px;
+  line-height: 9px;
+}
+.title {
+  color: green;
+}
+
+gridster .gridster-column {
+  outline: 1px solid lightgray;
+}
+gridster .gridster-row {
+  outline: 1px solid lightgray;
+}

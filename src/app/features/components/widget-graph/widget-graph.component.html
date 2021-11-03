@@ -1,0 +1,17 @@
+<div style="height: 100%;">
+  <div class="flex-one">
+    <div class="flex-two">
+      <div *ngIf="this.isLoading else isLoaded">
+        <mat-spinner diameter="36"></mat-spinner>
+      </div>
+      <ng-template #isLoaded>
+        <canvas style="margin: 12px;" baseChart
+                [data]="this.barChartData"
+                [options]="this.barChartOptions"
+                [type]="this.type">
+        </canvas>
+      </ng-template>
+      <p class="cardSubtext" style="text-align: center;">{{this.text}}</p>
+    </div>
+  </div>
+</div>
