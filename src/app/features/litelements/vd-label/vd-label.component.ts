@@ -20,7 +20,7 @@ enum AssetType {
 export class VdLabelComponent extends LitElement {
 
   // Variables
-  @property() widgetData: any;
+  @property() widgetData: DesignElement | undefined;
   assetType: AssetType | undefined;
   value: string | undefined;
   text: string | undefined;
