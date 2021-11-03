@@ -26,7 +26,8 @@ import { WidgetBarchartComponent } from './features/components/widget-barchart/w
 import {LittestingComponent} from "./features/pages/littesting/littesting.component";
 
 import './features/litelements/vd-label/vd-label.component'
-import './features/litelements/vd-graph/vd-graph.component'
+import './features/litelements/vd-graph/vd-graph.component';
+import './features/litelements/vd-barchart/vd-barchart.component';
 
 @NgModule({
   declarations: [
