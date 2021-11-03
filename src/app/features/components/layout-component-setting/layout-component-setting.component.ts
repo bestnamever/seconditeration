@@ -1,7 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatChip } from '@angular/material/chips';
-import { DataSharingService } from "../../../core/services/data-sharing.service"
-import { Subscription } from 'rxjs';
 import { WidgetComponent } from 'src/app/core/models/widget-component';
 import { component } from 'vue/types/umd';
 import { PreviewService } from "../../../core/services/preview.service"
@@ -40,7 +38,7 @@ export class LayoutComponentSettingComponent implements OnInit {
     this.data.currentlySelectedWidgetState.subscribe(widget => (
       this.message = widget?.widgetData.widgetType.toString(), 
       this.text = widget?.widgetData.text
-      
+
       
       ))
   }
