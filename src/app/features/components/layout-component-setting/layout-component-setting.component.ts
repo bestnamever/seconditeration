@@ -16,16 +16,20 @@ interface width {
 })
 export class LayoutComponentSettingComponent implements OnInit {
 
-  widgetSelected: WidgetComponent | null;
-  message: string | undefined;
+  // selected widget type
+  type: string | undefined;
 
-  text: string | undefined
-  measurement : string | undefined
+  // selected widget label text
+  text: string | undefined;
+
+  // selected widget value
+  value: string | undefined;
+
+
   widths: width[];
   widthValue: number;
 
   constructor(private data: PreviewService) {
-    this.message = "something"
     this.text = "Room Temperature"
     this.widths = [
       { value: 30, viewValue: '30%' },
@@ -34,13 +38,13 @@ export class LayoutComponentSettingComponent implements OnInit {
       { value: 100, viewValue: '100%' }
     ]
     this.widthValue = 0
-    this.widgetSelected = null
-    this.data.currentlySelectedWidgetState.subscribe(widget => (
-      this.message = widget?.widgetData.widgetType.toString(), 
-      this.text = widget?.widgetData.text
 
-      
-      ))
+    // set value on right side bar
+    this.data.currentlySelectedWidgetState.subscribe(widget => (
+      this.type = widget?.widgetData.widgetType.toString(),
+      this.text = widget?.widgetData.text,
+      this.value = widget?.widgetData.values[0].value
+    ))
   }
 
   ngOnInit() {

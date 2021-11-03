@@ -10,7 +10,7 @@
         <div class="Asset">
             <mat-form-field appearance="outline" class="form">
                 <mat-label>Select Asset type</mat-label>
-                <mat-select disableOptionCentering>
+                <mat-select disableOptionCentering [(value)]="assetSelected">
                     <mat-option *ngFor="let asset of assets" [value]="asset.value">
                         {{asset.viewValue}}
                     </mat-option>
@@ -20,7 +20,7 @@
         <div class="Properties">
             <mat-form-field appearance="outline" class="form">
                 <mat-label>Select Properties</mat-label>
-                <mat-select disableOptionCentering>
+                <mat-select disableOptionCentering [(value)]="measurementSelected">
                     <mat-option *ngFor="let property of properties" [value]="property.value">
                         {{property.viewValue}}
                     </mat-option>
