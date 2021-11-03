@@ -25,7 +25,6 @@
     "chartjs-adapter-date-fns": "^2.0.0",
     "date-fns": "^2.25.0",
     "lit-element": "^2.5.1",
-    "ng2-charts": "^3.0.0-rc.5",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

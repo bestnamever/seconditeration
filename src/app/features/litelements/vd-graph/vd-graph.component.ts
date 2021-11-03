@@ -1,5 +1,6 @@
 import {LitElement, css, html, property, customElement, PropertyValues} from 'lit-element';
-import { Chart } from 'chart.js';
+import {Chart, registerables} from 'chart.js';
+import 'chartjs-adapter-date-fns';
 
 /* ----------------------- */
 
@@ -34,6 +35,7 @@ export class VdGraphComponent extends LitElement {
   // Constructor
   constructor() {
     super();
+    Chart.register(...registerables);
   }
 
   /* ------------------------------------- */
@@ -115,7 +117,7 @@ export class VdGraphComponent extends LitElement {
         borderColor: '#4d9d2a',
         scales: {
           xAxes: {
-            type: "time",
+            type: 'time',
             display: true,
             time: {
               isoWeekday: true

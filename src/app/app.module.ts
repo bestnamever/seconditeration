@@ -20,11 +20,8 @@ import { PreviewParentwidgetComponent } from './features/components/preview-pare
 import { PreviewTopbarComponent } from './features/components/preview-topbar/preview-topbar.component';
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
-import { WidgetLabelComponent } from './features/components/widget-label/widget-label.component';
-import { WidgetGraphComponent } from './features/components/widget-graph/widget-graph.component';
 import { PreviewUpdatedtextComponent } from './features/components/preview-updatedtext/preview-updatedtext.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {NgChartsModule} from "ng2-charts";
 import { WidgetBarchartComponent } from './features/components/widget-barchart/widget-barchart.component';
 import {LittestingComponent} from "./features/pages/littesting/littesting.component";
 
@@ -42,8 +39,6 @@ import './features/litelements/vd-graph/vd-graph.component'
     PreviewGridComponent,
     PreviewParentwidgetComponent,
     PreviewTopbarComponent,
-    WidgetLabelComponent,
-    WidgetGraphComponent,
     PreviewUpdatedtextComponent,
     WidgetBarchartComponent,
     LittestingComponent
@@ -55,7 +50,6 @@ import './features/litelements/vd-graph/vd-graph.component'
     HttpClientModule,
     BrowserAnimationsModule,
     GridsterModule,
-    NgChartsModule,
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
