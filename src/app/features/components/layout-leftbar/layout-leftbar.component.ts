@@ -23,7 +23,7 @@ export class LayoutLeftbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.assetTypeData);
+
   }
 
   /* ---------------------------------------------- */
@@ -33,34 +33,45 @@ export class LayoutLeftbarComponent implements OnInit {
    */
   updateSearchValue(value: string): void {
     this.searchValue = value;
-    console.log(`The searchbox value is: ${value}`);
+    console.log(`The searchbox value is: ${value}`); // DEBUG
 
-    // -- Filter the component browser --
-    // Get the component thumbnail html-elements
-    var components = (<HTMLScriptElement[]><any>document.getElementById('component-list')?.childNodes);
-
-    // Check if there are components found
-    if (!components) return;
-
-    // Check for each component if it matches the search-term
-    components.forEach(item => {
-      var componentName = item.getAttribute('componenttitle');
-      if (!componentName?.toLowerCase()?.match(value.toLowerCase()) && !item.classList.contains('hidden')){
-        item.classList.add('hidden');
-      }
-      else if (componentName?.toLowerCase()?.match(value.toLowerCase()) && item.classList.contains('hidden')){
-        item.classList.remove('hidden');
-      }
-    });
+    // Filter the component browser
+    this.filterComponents();
   }
 
   /**
    * Function that reads the new selected asset type whenever the dropdown value updates
    */
   updateAssetValue(): void {
-    console.log(`The searchbox value is: ${this.selectedAssetType}`);
+    console.log(`The searchbox value is: ${this.selectedAssetType}`); // DEBUG
 
     // Filter the component browser
+    this.filterComponents();
+  }
 
+  /**
+   * Function that uses the searchbox value together with the dropdown to filter the components in the browser
+   */
+  filterComponents() : void {
+    // Get the component thumbnail html-elements
+    var components = (<HTMLScriptElement[]><any>document.getElementById('component-list')?.childNodes);
+
+    // Check if there are components found
+    if (!components) return;
+
+    // ==== Searchbox filtering ====
+    // Check for each component if it matches the search-term
+    components.forEach(item => {
+      var componentName = item.getAttribute('componenttitle');
+      // Hide the elemnent if the strings don't match
+      if (!componentName?.toLowerCase()?.match(this.searchValue.toLowerCase()) && !item.classList.contains('hidden')){
+        item.classList.add('hidden');
+      }
+      // Remove the hidden class if the string does match and the element was hidden
+      else if (componentName?.toLowerCase()?.match(this.searchValue.toLowerCase()) && item.classList.contains('hidden')){
+        item.classList.remove('hidden');
+      }
+    });
+      
   }
 }

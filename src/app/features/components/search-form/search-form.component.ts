@@ -35,7 +35,6 @@ export class SearchFormComponent implements OnInit {
   readValue(e : Event) : void {
     e.preventDefault();
     this.searchboxValue = (e.target) ? (<HTMLTextAreaElement>e.target).value : ''
-    console.log('Form submitted'); // debug
   }
 
 }
