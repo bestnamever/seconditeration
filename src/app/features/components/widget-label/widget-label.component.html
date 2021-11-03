@@ -5,7 +5,7 @@
   </div>
   <div class="flex-one">
     <div class="flex-two">
-      <h1 *ngIf="(isThermostat() && this.value != 'NaN') else nothermostat" style="text-align: center;">{{this.value}}°c</h1>
+      <h1 *ngIf="(isThermostat() && this.value != 'NaN') else nothermostat" style="text-align: center;">{{this.value}}{{this.measurement}}</h1>
       <ng-template #nothermostat>
         <h1 style="text-align: center;">{{this.value}}</h1>
       </ng-template>

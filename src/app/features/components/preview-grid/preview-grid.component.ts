@@ -15,7 +15,7 @@ import { DataSharingService } from "../../../core/services/data-sharing.service"
   templateUrl: './preview-grid.component.html',
   styleUrls: ['./preview-grid.component.scss']
 })
-export class PreviewGridComponent implements OnInit{
+export class PreviewGridComponent implements OnInit {
 
   // Variables
   gridOptions: GridsterConfig;
@@ -26,10 +26,8 @@ export class PreviewGridComponent implements OnInit{
   selectedWidget: WidgetComponent | null;
 
   //selected type
-  message: string;
-  subscription: Subscription;
-
-  testmessage: string;
+  // message: string;
+  // subscription: Subscription;
 
   /* ---------------------------------------------------------- */
 
@@ -74,9 +72,8 @@ export class PreviewGridComponent implements OnInit{
     });
 
     //subscribe to type of selected widght 
-    this.message = ""
-    this.subscription = this.data.currentMessage.subscribe((message: string) => this.message = message)
-    this.testmessage = ""
+    // this.message = ""
+    // this.subscription = this.data.currentMessage.subscribe((message: string) => this.message = message)
   }
 
   /* ------------------------------------------------------- */
@@ -154,9 +151,7 @@ export class PreviewGridComponent implements OnInit{
   selectItem(component: WidgetComponent): void {
     this.previewService.selectWidget(component);
 
-    // set subsciption
-    this.data.changeMessage(component.widgetData.assetType.toString())
-    console.log(this.data.currentMessage)
+    console.log(this.previewService.currentlySelectedWidgetState)
   }
 
   getBorderState(component: WidgetComponent): any {

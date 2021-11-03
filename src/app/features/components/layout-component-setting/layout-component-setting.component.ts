@@ -2,6 +2,9 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatChip } from '@angular/material/chips';
 import { DataSharingService } from "../../../core/services/data-sharing.service"
 import { Subscription } from 'rxjs';
+import { WidgetComponent } from 'src/app/core/models/widget-component';
+import { component } from 'vue/types/umd';
+import { PreviewService } from "../../../core/services/preview.service"
 
 interface width {
   value: number
@@ -15,14 +18,15 @@ interface width {
 })
 export class LayoutComponentSettingComponent implements OnInit {
 
-  message: string;
-  subscription: Subscription;
+  widgetSelected: WidgetComponent | null;
+  message: string | undefined;
 
-  text: string;
+  text: string | undefined
+  measurement : string | undefined
   widths: width[];
   widthValue: number;
 
-  constructor(private data: DataSharingService) {
+  constructor(private data: PreviewService) {
     this.message = "something"
     this.text = "Room Temperature"
     this.widths = [
@@ -32,12 +36,17 @@ export class LayoutComponentSettingComponent implements OnInit {
       { value: 100, viewValue: '100%' }
     ]
     this.widthValue = 0
-
-    this.subscription = this.data.currentMessage.subscribe(message => this.message = message)
+    this.widgetSelected = null
+    this.data.currentlySelectedWidgetState.subscribe(widget => (
+      this.message = widget?.widgetData.widgetType.toString(), 
+      this.text = widget?.widgetData.text
+      
+      
+      ))
   }
 
-
   ngOnInit() {
+
   }
 
   selection(chip: MatChip, value: number) {
