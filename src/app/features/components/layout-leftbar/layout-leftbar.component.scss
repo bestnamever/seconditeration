@@ -1,0 +1,115 @@
+.left-bar-wrapper{
+    height: 100%;
+    
+    .tab-wrapper{
+        padding: 30px ;
+
+        h3{
+            font-weight: 500;
+        }
+    }
+
+    .tab-component-browser{
+        .search-container{
+            margin-bottom: 20px;
+        }
+
+        .asset-filter-container{
+            margin-bottom: 20px;
+
+            .asset-filter{
+                width: 100%;
+            }
+        }
+
+        .component-browser-container{
+            #component-list{
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                flex-wrap: wrap;
+
+                .component-card-wrapper{
+                    flex-basis: 33%;
+                    aspect-ratio: 1/1;
+                }
+            }
+        }
+    }
+
+    .tab-layers{
+        padding: 0;
+
+        .heading-container{
+            padding: 30px 30px 10px 30px;
+        }
+
+        .layer-item{
+            display: flex;
+            justify-content: flex-start;
+            padding: 5px 15px;
+
+            .component-icon{
+                margin-right: 15px;
+                font-size: 24px !important;
+            }
+
+            &[aria-selected="true"]{
+                background: rgba($color: #4D9D2A, $alpha: 0.25);
+
+                span{
+                    color: #4D9D2A;
+                }
+
+                .component-icon{
+                    color: #4D9D2A;
+                }
+            }
+        }
+    }
+}
+
+::ng-deep mat-list-option.mat-list-item{
+    .mat-list-item-content{
+        width: 100% !important;
+
+        .mat-list-text{
+            flex-direction: row !important;
+            width: 100%;
+        }
+    }
+}
+
+// Material Tabs
+::ng-deep.mat-tab-group{
+
+    height: 100%;
+  
+    .mat-tab-body-wrapper{
+      height: 100%;
+    }
+  
+    .mat-tab-header{
+      box-shadow: 0px 5px 5px 2px rgba($color: #000000, $alpha: 0.25);
+      border-bottom: unset;
+  
+      .mat-tab-label {
+        width: 50%;
+        height: max-content;
+        background: #4d9d2a;
+        opacity: 1;
+        color: white;
+        font-size: 16px;
+        padding: 15px 0px;
+      }
+    }
+  
+    .mat-ink-bar{
+      background-color: white !important;
+      opacity: 1;
+    }
+}
+
+.hidden{
+    display: none !important;
+}

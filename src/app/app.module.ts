@@ -19,6 +19,8 @@ import { MatChipsModule } from "@angular/material/chips";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatInputModule } from "@angular/material/input";
 import { MatDialogModule } from "@angular/material/dialog";
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from "@angular/material/sidenav";
 
 // Other externally imported Libraries
 import { GridsterModule } from 'angular-gridster2'
@@ -45,6 +47,8 @@ import { PreviewGridComponent } from './features/components/preview-grid/preview
 import { PreviewParentwidgetComponent } from './features/components/preview-parentwidget/preview-parentwidget.component';
 import { PreviewTopbarComponent } from './features/components/preview-topbar/preview-topbar.component';
 import { PreviewUpdatedtextComponent } from './features/components/preview-updatedtext/preview-updatedtext.component';
+import { SearchFormComponent } from './features/components/search-form/search-form.component';
+import { ComponentThumbnailComponent } from './features/components/component-thumbnail/component-thumbnail.component';
 import { WidgetLabelComponent } from './features/components/widget-label/widget-label.component';
 import { WidgetGraphComponent } from './features/components/widget-graph/widget-graph.component';
 import { WidgetBarchartComponent } from './features/components/widget-barchart/widget-barchart.component';
@@ -60,6 +64,8 @@ import { WidgetBarchartComponent } from './features/components/widget-barchart/w
     LayoutLeftbarComponent,
     LayoutRightbarComponent,
     ExampleGetdesignsComponent,
+    SearchFormComponent,
+    ComponentThumbnailComponent,
     PreviewGridComponent,
     PreviewParentwidgetComponent,
     PreviewTopbarComponent,
@@ -82,6 +88,7 @@ import { WidgetBarchartComponent } from './features/components/widget-barchart/w
     NgChartsModule,
     MatToolbarModule,
     MatSidenavModule,
+    MatListModule,
     MatIconModule,
     MatButtonModule,
     MatProgressSpinnerModule,

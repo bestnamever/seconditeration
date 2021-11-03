@@ -1,4 +1,6 @@
 export enum AssetType {
-  THERMOSTAT,
-  SOLAR
+    THERMOSTAT = "Thermostat",
+    SOLAR = "Solar Collector",
+    AIR = "Air Quality Sensor",
+    HUE = "Philips Hue"
 }
