@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { FormsModule } from '@angular/forms';
 
 // Material UI
 import { MatToolbarModule } from "@angular/material/toolbar";
@@ -54,7 +55,8 @@ import './features/litelements/vd-graph/vd-graph.component';
 import './features/litelements/vd-barchart/vd-barchart.component';
 
 
-  /* -------------------------------------------------------------- */
+
+/* -------------------------------------------------------------- */
 
 // @ts-ignore
 @NgModule({
@@ -97,10 +99,11 @@ import './features/litelements/vd-barchart/vd-barchart.component';
     MatChipsModule,
     MatCheckboxModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    FormsModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: HttpbaseurlInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: HttpbaseurlInterceptor, multi: true },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]

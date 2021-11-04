@@ -5,22 +5,25 @@
 }
 
 .top_info {
-    margin: 20px 34px;
+    margin-left: 40px;
+    margin-top: 30px;
     width: 340px;
     font-weight: 500;
+    font-size: medium;
 }
 
 .material-devider {
-    margin: 20px;
-    height: 2px;
-    width: 330px;
+    margin-top: 10px;
+    margin-left: 30px;
+    width: 340px;
+    border-top-width: 2.5px;
 }
 
 .title {
     margin-top: 20px;
     font-weight: 500;
     font-size: 16px;
-    margin-bottom: 20px;
+    color: black;
 }
 
 .form {

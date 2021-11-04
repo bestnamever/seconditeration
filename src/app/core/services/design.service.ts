@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
-import {DesignPage} from "../models/design-page";
-import {WidgetType} from "../models/widget-type";
-import {AssetType} from "../models/asset-type";
-import {environment} from "../../../environments/environment";
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from "rxjs";
+import { DesignPage } from "../models/design-page";
+import { WidgetType } from "../models/widget-type";
+import { AssetType } from "../models/asset-type";
+import { environment } from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +32,7 @@ export class DesignService {
 
   /* ----------------------------------------- */
 
-  update(designPage: DesignPage): any {
+  updateLocation(designPage: DesignPage): any {
     this.currentDesignSubject.next(designPage);
   }
 
@@ -61,7 +61,8 @@ export class DesignService {
               values: [{
                 asset: "Thermostat 1",
                 time: new Date("2019-01-16"),
-                value: "25"
+                value: "25",
+                measurement: "°C"
               }]
             }
           },
@@ -79,37 +80,44 @@ export class DesignService {
                 {
                   asset: "Solar Collector 1",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 12)),
-                  value: "0.1"
+                  value: "0.1",
+                  measurement: "KW"
                 },
                 {
                   asset: "Solar Collector 1",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 10)),
-                  value: "1.2"
+                  value: "1.2",
+                  measurement: "KW"
                 },
                 {
                   asset: "Solar Collector 1",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 8)),
-                  value: "1.3"
+                  value: "1.3",
+                  measurement: "KW"
                 },
                 {
                   asset: "Solar Collector 1",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 6)),
-                  value: "1.9"
+                  value: "1.9",
+                  measurement: "KW"
                 },
                 {
                   asset: "Solar Collector 1",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 4)),
-                  value: "1.8"
+                  value: "1.8",
+                  measurement: "KW"
                 },
                 {
                   asset: "Solar Collector 1",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 2)),
-                  value: "1.2"
+                  value: "1.2",
+                  measurement: "KW"
                 },
                 {
                   asset: "Solar Collector 1",
                   time: new Date(new Date().getTime() + (1000 * 60 * 60 * 2)),
-                  value: "1.1"
+                  value: "1.1",
+                  measurement: "KW"
                 }
               ]
             }
@@ -128,27 +136,14 @@ export class DesignService {
                 {
                   asset: "Thermostat 1",
                   time: new Date("2019-01-16"),
-                  value: "25"
+                  value: "25",
+                  measurement: "°C"
                 },
                 {
                   asset: "Thermostat 2",
                   time: new Date("2019-01-16"),
-                  value: "19"
-                },
-                {
-                  asset: "Thermostat 3",
-                  time: new Date("2019-01-16"),
-                  value: "22"
-                },
-                {
-                  asset: "Thermostat 4",
-                  time: new Date("2019-01-16"),
-                  value: "23"
-                },
-                {
-                  asset: "Thermostat 5",
-                  time: new Date("2019-01-16"),
-                  value: "21"
+                  value: "19",
+                  measurement: "°C"
                 }
               ]
             }
@@ -157,6 +152,10 @@ export class DesignService {
       }
       //}
     }
+  }
+
+  updateData(value: DesignPage): any {
+    this.currentDesignSubject.next(value);
   }
 }
 
