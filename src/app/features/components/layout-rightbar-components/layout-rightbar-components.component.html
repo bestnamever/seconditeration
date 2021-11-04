@@ -21,9 +21,16 @@
             <mat-form-field appearance="outline" class="form">
                 <mat-label>Select Properties</mat-label>
                 <mat-select disableOptionCentering [(value)]="measurementSelected">
-                    <mat-option *ngFor="let property of properties" [value]="property.value">
-                        {{property.viewValue}}
-                    </mat-option>
+                    <div *ngIf="getPropertyType()">
+                        <mat-option *ngFor="let property of wattProperties" [value]="property.value">
+                            {{property.viewValue}}
+                        </mat-option>
+                    </div>
+                    <div *ngIf="!getPropertyType()">
+                        <mat-option *ngFor="let property of tempProperties" [value]="property.value">
+                            {{property.viewValue}}
+                        </mat-option>
+                    </div>
                 </mat-select>
             </mat-form-field>
         </div>

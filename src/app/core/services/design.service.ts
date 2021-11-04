@@ -81,43 +81,43 @@ export class DesignService {
                   asset: "Solar Collector 1",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 12)),
                   value: "0.1",
-                  measurement: "°C"
+                  measurement: "KW"
                 },
                 {
                   asset: "Solar Collector 1",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 10)),
                   value: "1.2",
-                  measurement: "°C"
+                  measurement: "KW"
                 },
                 {
                   asset: "Solar Collector 1",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 8)),
                   value: "1.3",
-                  measurement: "°C"
+                  measurement: "KW"
                 },
                 {
                   asset: "Solar Collector 1",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 6)),
                   value: "1.9",
-                  measurement: "°C"
+                  measurement: "KW"
                 },
                 {
                   asset: "Solar Collector 1",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 4)),
                   value: "1.8",
-                  measurement: "°C"
+                  measurement: "KW"
                 },
                 {
                   asset: "Solar Collector 1",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 2)),
                   value: "1.2",
-                  measurement: "°C"
+                  measurement: "KW"
                 },
                 {
                   asset: "Solar Collector 1",
                   time: new Date(new Date().getTime() + (1000 * 60 * 60 * 2)),
                   value: "1.1",
-                  measurement: "°C"
+                  measurement: "KW"
                 }
               ]
             }

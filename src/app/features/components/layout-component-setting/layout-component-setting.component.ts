@@ -62,7 +62,7 @@ export class LayoutComponentSettingComponent implements OnInit {
       this.type = widget?.widgetData.widgetType,
       this.text = widget?.widgetData.text,
       this.value = widget?.widgetData.values[0].value,
-      console.log(this.widget)
+      console.log("value is : " + this.value)
     ))
 
     this.outputData.currentDesignState.subscribe(designpage => (
@@ -81,15 +81,19 @@ export class LayoutComponentSettingComponent implements OnInit {
   }
 
   //select value by input textarea
-  setValue(value: string) {
-
-    //set textarea
-    this.value = value
+  setValue(key: string, value: string) {
 
     // change value in designpage
     this.designPage?.positions.forEach(element => {
       if (element.id == this.widget?.id) {
-        element.element.values[0].value = value
+        if (key === "value") {
+          element.element.values[0].value = value
+          this.value = value
+        }
+        else if (key === "text") {
+          element.element.text = value
+          this.text = value
+        }
       }
     })
 
@@ -98,20 +102,18 @@ export class LayoutComponentSettingComponent implements OnInit {
       this.outputData.updateData(this.designPage)
   }
 
-  testsetvalue() {
-    this.designPage?.positions.forEach(element => {
-      if (element.id == this.widget?.id) {
-        console.log(element.element.values[0]) //out before design page
-        console.log("before value is :" + element.element.values[0].value) //output 25
+  //textarea input
+  updateData(event: any, key: string) {
+    console.log("new value " + event.target.value);
 
-        this.setValue("300")
-
-        this.outputData.currentDesignState.subscribe(designPage => console.log(designPage.positions[0].element.values[0])) //output current design page
-        console.log("now value is :" + element.element.values[0].value) //output 100
-      }
-    })
+    this.setValue(key, event.target.value)
   }
 
+
+  /**
+   * card setting display
+   * @returns settings card of selected widget and delete button
+   */
   showCardView(): boolean { return this.type === 0 }
   showGraphView(): boolean { return this.type === 1 }
   showButtonView(): boolean { return this.type === 2 }
@@ -125,6 +127,7 @@ export class LayoutComponentSettingComponent implements OnInit {
       return false
   }
 
+  //open delete dialog
   openDeleteDialog() {
     const dialogRef = this.dialog.open(DeleteComfirmComponent, { width: '30%', data: { title: this.delete_title, component: this.delete_component } });
 

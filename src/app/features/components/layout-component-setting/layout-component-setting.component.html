@@ -3,18 +3,21 @@
         <form class="form">
             <mat-form-field class="label_card_text" appearance="outline">
                 <mat-label>Value</mat-label>
-                <input matInput placeholder="Ex. 25" value={{value}}>
+                <!-- keyup could be changed-->
+                <input matInput placeholder="Ex. 25" value={{value}} (keyup)="updateData($event,'value')"
+                    [(ngModel)]="value" name="value">
                 <!-- value will be passed by the preview -->
             </mat-form-field>
         </form>
-        <button (click)="testsetvalue()">set value</button>
+
         <form class="form">
             <mat-form-field class="label_card_text" appearance="outline">
                 <mat-label>Card text</mat-label>
-                <input matInput placeholder="Ex. Room temperature" value={{text}}>
+                <input matInput placeholder="Ex. Room temperature" value={{text}} (keyup)="updateData($event,'text')" [(ngModel)]="text" name="text">
                 <!-- value will be passed by the preview -->
             </mat-form-field>
         </form>
+        
         <mat-chip-list>
             <a style="margin-right: 30px">Width</a>
             <mat-chip #c="matChip" *ngFor="let width of widths" [value]="width.value"

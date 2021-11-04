@@ -20,7 +20,12 @@ export class LayoutRightbarComponentsComponent implements OnInit {
   measurementSelected: string | undefined
 
   assets: optionList[]
-  properties: optionList[]
+
+  //temperature properties
+  tempProperties: optionList[]
+
+  //watt properties
+  wattProperties: optionList[]
 
   text: string
 
@@ -34,16 +39,23 @@ export class LayoutRightbarComponentsComponent implements OnInit {
       { value: '1', viewValue: "Solar panel" }
     ]
 
-    this.properties = [
+    this.tempProperties = [
       { value: "°C", viewValue: "Temperature(°C)" },
       { value: "°F", viewValue: "Temperature(°F)" },
       { value: "K", viewValue: "Temperature(K)" }
     ]
 
+    this.wattProperties = [
+      { value: "KW", viewValue: "KILOWATT" },
+      { value: "W", viewValue: "WATT" },
+    ]
+
     // set value on right side bar
     this.data.currentlySelectedWidgetState.subscribe(widget => (
       this.assetSelected = widget?.widgetData.assetType.toString(),
-      this.measurementSelected = widget?.widgetData.values[0].measurement))
+      this.measurementSelected = widget?.widgetData.values[0].measurement,
+      console.log("property is ::" + this.measurementSelected)
+    ))
 
     this.text = "example"
 
@@ -52,9 +64,14 @@ export class LayoutRightbarComponentsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  setCardSetting(message: string) {
-    this.text = message;
+  //get type of properties
+  getPropertyType(): boolean {
+    return (this.measurementSelected === "KW" || this.measurementSelected === "W") ? true : false
   }
+
+  // setCardSetting(message: string) {
+  //   this.text = message;
+  // }
 
 }
 

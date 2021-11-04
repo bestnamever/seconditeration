@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { FormsModule } from '@angular/forms';
 
 // Material UI
 import { MatToolbarModule } from "@angular/material/toolbar";
@@ -93,7 +94,8 @@ import { WidgetBarchartComponent } from './features/components/widget-barchart/w
     MatChipsModule,
     MatCheckboxModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    FormsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpbaseurlInterceptor, multi: true },
