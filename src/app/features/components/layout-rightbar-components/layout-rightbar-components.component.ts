@@ -44,8 +44,6 @@ export class LayoutRightbarComponentsComponent implements OnInit {
       { value: "Govee Thermometer", viewValue: "Govee Thermometer" },
       { value: "Govee WIFI Thermometer", viewValue: "Govee WIFI Thermometer" },
       { value: "Zigbee 2500W", viewValue: "Zigbee 2500W" },
-      { value: "0", viewValue: "Thermometer" },
-      { value: '1', viewValue: "Solar panel" }
     ]
 
     this.tempProperties = [
@@ -62,7 +60,7 @@ export class LayoutRightbarComponentsComponent implements OnInit {
     // set value on right side bar
     this.data.currentlySelectedWidgetState.subscribe(widget => (
       this.widget = widget?.gridsterItem,
-      this.assetSelected = widget?.widgetData.assetType.toString(),
+      this.assetSelected = widget?.widgetData.values[0].asset,
       this.measurementSelected = widget?.widgetData.values[0].measurement,
       console.log("property is ::" + this.measurementSelected)
     ))
