@@ -4,14 +4,17 @@
     max-width: 340px;
 }
 .top_info {
-    margin: 20px 34px;
+    margin-left: 25px;
+    margin-top: 30px;
     width: 340px;
     font-weight: 500;
+    font-size: medium;
 }
 
 .icon {
     display: flex;
     align-items: center;
+    size: 16px;
 }
 
 .home_icon {
@@ -20,19 +23,21 @@
 }
 
 .material-devider {
-    margin: 30px;
-    height: 2px;
-    width: 330px;
+    margin-top: 10px;
+    margin-left: 30px;
+    width: 340px;
+    border-top-width: 2.5px;
 }
 
 .title {
     margin-top: 20px;
     font-weight: 500;
     font-size: 16px;
+    color: black;
 }
 
 .form {
-    margin-top: 10px;
+    margin-top: 20px;
     width: 300px;
     height: 60px;
 }
@@ -50,13 +55,17 @@
     margin-top: 0px;
 }
 
+.in_navigation {
+    margin-top: 0px;
+}
+
 .checkboxlist {
     text-align: left;
     size: 16px;
 }
 
 .mat-checkbox {
-    height: 48px;
+    height: 35px;
     display: flex;
     align-items: center;
 }
@@ -73,6 +82,7 @@
 
 .custom_size {
     text-align: justify;
+    margin-top: 10px;
 }
 
 .custom_height {
@@ -86,8 +96,8 @@
     margin-right: 40px;
 }
 
-.delete{
-    position:fixed;
+.delete {
+    position: fixed;
     bottom: 0;
     margin-bottom: 30px;
 }
@@ -95,4 +105,13 @@
 .delete a {
     color: red;
     font-size: 18px;
+}
+
+.safe_space_form {
+    width: 300px;
+    height: 60px;
+}
+
+.customize_screen{
+    margin-top: 10px;
 }
