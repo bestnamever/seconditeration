@@ -35,7 +35,14 @@ export class PhoneService {
     switch (phoneType) {
 
       case PhoneType.SAMSUNG_S20: {
-        this.currentPhoneSubject.next(this.getDefaultPhone());
+        this.currentPhoneSubject.next({
+          phoneType: PhoneType.SAMSUNG_S20,
+          borderThickness: '4px',
+          borderRadius: '30px',
+          notch: true,
+          notchRadius: '4px',
+          aspectRatio: '9/17.5'
+        });
         break;
       }
       case PhoneType.SAMSUNG_S10: {

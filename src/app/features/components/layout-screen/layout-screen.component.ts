@@ -76,7 +76,6 @@ export class LayoutScreenComponent implements OnInit {
   //selection change
   change(phoneType: string) {
     this.phoneSetting.changePhone(parseInt(phoneType))
-
   }
 
 
