@@ -1,4 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { GridsterItem } from 'angular-gridster2';
+import { DesignPage } from 'src/app/core/models/design-page';
+import { DesignService } from 'src/app/core/services/design.service';
 import { PreviewService } from "../../../core/services/preview.service"
 
 interface optionList {
@@ -12,6 +15,12 @@ interface optionList {
   styleUrls: ['./layout-rightbar-components.component.scss']
 })
 export class LayoutRightbarComponentsComponent implements OnInit {
+
+  //page value
+  designPage: DesignPage | undefined
+
+  // selected widget
+  widget: GridsterItem | undefined
 
   // selected asset 
   assetSelected: string | undefined
@@ -27,9 +36,9 @@ export class LayoutRightbarComponentsComponent implements OnInit {
   //watt properties
   wattProperties: optionList[]
 
-  text: string
+  // text: string
 
-  constructor(private data: PreviewService) {
+  constructor(private data: PreviewService, private outputData: DesignService) {
     this.assets = [
       { value: "ALTA Wireless Temperature Sensor", viewValue: "ALTA Wireless Temperature Sensor" },
       { value: "Govee Thermometer", viewValue: "Govee Thermometer" },
@@ -52,12 +61,17 @@ export class LayoutRightbarComponentsComponent implements OnInit {
 
     // set value on right side bar
     this.data.currentlySelectedWidgetState.subscribe(widget => (
+      this.widget = widget?.gridsterItem,
       this.assetSelected = widget?.widgetData.assetType.toString(),
       this.measurementSelected = widget?.widgetData.values[0].measurement,
       console.log("property is ::" + this.measurementSelected)
     ))
 
-    this.text = "example"
+    this.outputData.currentDesignState.subscribe(designpage => (
+      this.designPage = designpage
+    ))
+
+    // this.text = "example"
 
   }
 
@@ -67,6 +81,30 @@ export class LayoutRightbarComponentsComponent implements OnInit {
   //get type of properties
   getPropertyType(): boolean {
     return (this.measurementSelected === "KW" || this.measurementSelected === "W") ? true : false
+  }
+
+  //change value
+  setValue(key: string, value: string) {
+
+    this.designPage?.positions.forEach(element => {
+      if (element.id == this.widget?.id) {
+        if (key === "asset") {
+          element.element.values[0].asset = value
+        }
+        else if (key === "measurement") {
+          element.element.values[0].measurement = value
+        }
+      }
+    })
+
+    if (this.designPage != null)
+      this.outputData.updateData(this.designPage)
+  }
+
+  //selection change
+  change(chosenkey: string, chosenValue: string) {
+    console.log(chosenValue)
+    this.setValue(chosenkey, chosenValue)
   }
 
   // setCardSetting(message: string) {

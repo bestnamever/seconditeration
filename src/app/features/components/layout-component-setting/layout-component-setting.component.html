@@ -13,18 +13,17 @@
         <form class="form">
             <mat-form-field class="label_card_text" appearance="outline">
                 <mat-label>Card text</mat-label>
-                <input matInput placeholder="Ex. Room temperature" value={{text}} (keyup)="updateData($event,'text')" [(ngModel)]="text" name="text">
+                <input matInput placeholder="Ex. Room temperature" value={{text}} (keyup)="updateData($event,'text')"
+                    [(ngModel)]="text" name="text">
                 <!-- value will be passed by the preview -->
             </mat-form-field>
         </form>
-        
+
         <mat-chip-list>
             <a style="margin-right: 30px">Width</a>
-            <mat-chip #c="matChip" *ngFor="let width of widths" [value]="width.value"
-                (click)="selectionOnChip(c,width.value)">{{width.viewValue}}
+            <mat-chip #c="matChip" *ngFor="let width of widths" [value]="width.value" disabled>{{width.viewValue}}
             </mat-chip>
         </mat-chip-list>
-        <p>width selected is {{widthValue}}</p>
     </div>
 
     <div *ngIf="showGraphView()">
