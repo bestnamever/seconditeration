@@ -3,11 +3,8 @@ import { GridsterItem } from 'angular-gridster2';
 import { DesignPage } from 'src/app/core/models/design-page';
 import { DesignService } from 'src/app/core/services/design.service';
 import { PreviewService } from "../../../core/services/preview.service"
+import { OptionList } from 'src/app/core/models/option-list';
 
-interface optionList {
-  value: string,
-  viewValue: string
-}
 
 @Component({
   selector: 'app-layout-rightbar-components',
@@ -28,13 +25,13 @@ export class LayoutRightbarComponentsComponent implements OnInit {
   // selected measurement
   measurementSelected: string | undefined
 
-  assets: optionList[]
+  assets: OptionList[]
 
   //temperature properties
-  tempProperties: optionList[]
+  tempProperties: OptionList[]
 
   //watt properties
-  wattProperties: optionList[]
+  wattProperties: OptionList[]
 
   // text: string
 

@@ -30,11 +30,11 @@
         <div class="device">
             <mat-form-field appearance="outline" class="form">
                 <mat-label>Display on the device</mat-label>
-                <mat-select disableOptionCentering>
-                    <mat-option value="one">Iphone 11</mat-option>
-                    <mat-option value="two">Iphone 11 Pro Max</mat-option>
-                    <mat-option value="three">Sumsung s20</mat-option>
-                    <mat-option value="four">Sumsung s19</mat-option>
+                <mat-select #chosenPhoneSetting disableOptionCentering [(value)]="phoneSelected"
+                    (valueChange)="change(chosenPhoneSetting.value)">
+                    <mat-option *ngFor="let property of phoneOptionList" [value]="property.value">
+                        {{property.viewValue}}
+                    </mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
