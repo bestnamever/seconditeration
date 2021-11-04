@@ -1,8 +1,10 @@
+import { AssetFilter } from './../../../core/models/asset-filter';
 import {
   Component,
   OnInit
 } from '@angular/core';
 import { AssetType } from 'src/app/core/models/asset-type';
+import { AssetFilterService } from 'src/app/core/services/assetFilter.service';
 
 @Component({
   selector: 'app-layout-leftbar',
@@ -16,14 +18,19 @@ export class LayoutLeftbarComponent implements OnInit {
 
   assetTypeData : Array<string>; // All availible asset types
 
-  constructor() {
+  selectedFilter : AssetFilter | null;
+
+  constructor(private assetFiterService : AssetFilterService) {
     this.searchValue = '';
     this.selectedAssetType = '';
     this.assetTypeData = Object.values(AssetType);
+    this.selectedFilter = null;
   }
 
   ngOnInit(): void {
-
+    this.assetFiterService.currentAssetFilterState.subscribe(assetFilter => {
+      this.selectedFilter = assetFilter;
+    })
   }
 
   /* ---------------------------------------------- */
@@ -47,6 +54,7 @@ export class LayoutLeftbarComponent implements OnInit {
 
     // Filter the component browser
     this.filterComponents();
+    console.log(this.getAvailibleComponents());
   }
 
   /**
@@ -71,7 +79,29 @@ export class LayoutLeftbarComponent implements OnInit {
       else if (componentName?.toLowerCase()?.match(this.searchValue.toLowerCase()) && item.classList.contains('hidden')){
         item.classList.remove('hidden');
       }
+    });  
+    
+
+  }
+
+  getAvailibleComponents() : Array<string> | boolean {
+   
+    this.assetTypeData.forEach(assetType => {
+      switch (this.selectedAssetType) {
+        case assetType:
+          return false;
+          break;
+
+        case 'any':
+          return false;
+          break;
+
+        default:
+          return false;
+          break;
+      }
     });
-      
+
+    return false;
   }
 }
