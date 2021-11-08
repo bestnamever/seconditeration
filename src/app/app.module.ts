@@ -1,9 +1,10 @@
-// Angular imports
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { FormsModule } from '@angular/forms';
 
 // Material UI
 import { MatToolbarModule } from "@angular/material/toolbar";
@@ -23,7 +24,6 @@ import { MatListModule } from '@angular/material/list';
 
 // Other externally imported Libraries
 import { GridsterModule } from 'angular-gridster2'
-import { NgChartsModule } from "ng2-charts";
 
 // Self-made Util classes (REST, interceptors etc)
 import { HttpbaseurlInterceptor } from "./core/interceptors/httpbaseurl.interceptor";
@@ -48,13 +48,17 @@ import { PreviewTopbarComponent } from './features/components/preview-topbar/pre
 import { PreviewUpdatedtextComponent } from './features/components/preview-updatedtext/preview-updatedtext.component';
 import { SearchFormComponent } from './features/components/search-form/search-form.component';
 import { ComponentThumbnailComponent } from './features/components/component-thumbnail/component-thumbnail.component';
-import { WidgetLabelComponent } from './features/components/widget-label/widget-label.component';
-import { WidgetGraphComponent } from './features/components/widget-graph/widget-graph.component';
-import { WidgetBarchartComponent } from './features/components/widget-barchart/widget-barchart.component';
+
+// Lit Components
+import './features/litelements/vd-label/vd-label.component'
+import './features/litelements/vd-graph/vd-graph.component';
+import './features/litelements/vd-barchart/vd-barchart.component';
 
 
-  /* -------------------------------------------------------------- */
 
+/* -------------------------------------------------------------- */
+
+// @ts-ignore
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,10 +72,7 @@ import { WidgetBarchartComponent } from './features/components/widget-barchart/w
     PreviewGridComponent,
     PreviewParentwidgetComponent,
     PreviewTopbarComponent,
-    WidgetLabelComponent,
-    WidgetGraphComponent,
     PreviewUpdatedtextComponent,
-    WidgetBarchartComponent,
     LayoutTabComponent,
     LayoutRightbarComponentsComponent,
     LayoutComponentSettingComponent,
@@ -79,12 +80,12 @@ import { WidgetBarchartComponent } from './features/components/widget-barchart/w
     DeleteComfirmComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
     GridsterModule,
-    NgChartsModule,
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
@@ -98,11 +99,14 @@ import { WidgetBarchartComponent } from './features/components/widget-barchart/w
     MatChipsModule,
     MatCheckboxModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    FormsModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: HttpbaseurlInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: HttpbaseurlInterceptor, multi: true },
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

@@ -10,7 +10,8 @@
         <div class="Asset">
             <mat-form-field appearance="outline" class="form">
                 <mat-label>Select Asset type</mat-label>
-                <mat-select disableOptionCentering>
+                <mat-select #chosenAssetValue disableOptionCentering [(value)]="assetSelected"
+                    (valueChange)="change('asset',chosenAssetValue.value)">
                     <mat-option *ngFor="let asset of assets" [value]="asset.value">
                         {{asset.viewValue}}
                     </mat-option>
@@ -20,19 +21,22 @@
         <div class="Properties">
             <mat-form-field appearance="outline" class="form">
                 <mat-label>Select Properties</mat-label>
-                <mat-select disableOptionCentering>
-                    <mat-option *ngFor="let property of properties" [value]="property.value">
-                        {{property.viewValue}}
-                    </mat-option>
+                <mat-select #chosenMeasureValue disableOptionCentering [(value)]="measurementSelected"
+                    (valueChange)="change('measurement',chosenMeasureValue.value)">
+                    <div *ngIf="getPropertyType()">
+                        <mat-option *ngFor="let property of wattProperties" [value]="property.value">
+                            {{property.viewValue}}
+                        </mat-option>
+                    </div>
+                    <div *ngIf="!getPropertyType()">
+                        <mat-option *ngFor="let property of tempProperties" [value]="property.value">
+                            {{property.viewValue}}
+                        </mat-option>
+                    </div>
                 </mat-select>
             </mat-form-field>
         </div>
         <div class="title">Card settings</div>
-        <!-- test only -->
-        <div style="margin-bottom:20px;">
-            <button mat-raised-button (click)="setCardSetting('label')" style="margin-right: 20px;">Label</button>
-            <button mat-raised-button (click)="setCardSetting('graph')">Graph</button>
-        </div>
-        <app-layout-component-setting [type]="text"></app-layout-component-setting>
+        <app-layout-component-setting></app-layout-component-setting>
     </div>
 </div>
