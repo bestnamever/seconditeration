@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GridsterItem } from 'angular-gridster2';
 import { DesignPage } from 'src/app/core/models/design-page';
 import { DesignService } from 'src/app/core/services/design.service';
 import { PreviewService } from "../../../core/services/preview.service"
 import { OptionList } from 'src/app/core/models/option-list';
+import {skip} from "rxjs/operators";
 
 
 @Component({
@@ -19,7 +20,7 @@ export class LayoutRightbarComponentsComponent implements OnInit {
   // selected widget
   widget: GridsterItem | undefined
 
-  // selected asset 
+  // selected asset
   assetSelected: string | undefined
 
   // selected measurement
@@ -62,7 +63,7 @@ export class LayoutRightbarComponentsComponent implements OnInit {
       console.log("property is ::" + this.measurementSelected)
     ))
 
-    this.outputData.currentDesignState.subscribe(designpage => (
+    this.outputData.currentDesignState.pipe(skip(outputData.getHistorySize() - 1)).subscribe(designpage => (
       this.designPage = designpage
     ))
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {DesignService} from "../../../core/services/design.service";
 import {Design} from "../../../core/models/design";
+import {skip} from "rxjs/operators";
 
 @Component({
   selector: 'app-example-getdesigns',
@@ -17,7 +18,7 @@ export class ExampleGetdesignsComponent implements OnInit {
   constructor(private designService: DesignService) {
 
     // Here we subscribe to the currentDesign, so that we get updates whenever it changes
-    designService.currentDesignState.subscribe(design => {
+    designService.currentDesignState.pipe(skip(designService.getHistorySize() - 1)).subscribe(design => {
       console.log('Design updated! Now we can show it on the page!');
       // this.design = design;
     })

@@ -7,6 +7,7 @@ import { PreviewService } from "../../../core/services/preview.service";
 import { DesignPage } from "../../../core/models/design-page";
 import { DesignService } from "../../../core/services/design.service";
 import { PhoneService } from "../../../core/services/phone.service";
+import {skip, take, takeLast} from "rxjs/operators";
 
 
 
@@ -71,7 +72,7 @@ export class PreviewGridComponent implements OnInit {
       this.phoneOptions = phone;
     });
 
-    //subscribe to type of selected widght 
+    //subscribe to type of selected widght
     // this.message = ""
     // this.subscription = this.data.currentMessage.subscribe((message: string) => this.message = message)
   }
@@ -82,7 +83,7 @@ export class PreviewGridComponent implements OnInit {
   ngOnInit(): void {
 
     // Subscribe to changes of the Design
-    this.designService.currentDesignState.subscribe(design => {
+    this.designService.currentDesignState.pipe(skip(this.designService.getHistorySize() - 1)).subscribe(design => {
       console.log('Starting to render the design..');
       this.currentDesignPage = design;
       if (design != null) {

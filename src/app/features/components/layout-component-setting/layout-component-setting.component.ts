@@ -9,6 +9,7 @@ import { concat } from 'rxjs';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteComfirmComponent } from '../delete-comfirm/delete-comfirm.component';
+import {skip, take, takeLast} from "rxjs/operators";
 
 interface width {
   value: number
@@ -65,7 +66,7 @@ export class LayoutComponentSettingComponent implements OnInit {
       console.log("value is : " + this.value)
     ))
 
-    this.outputData.currentDesignState.subscribe(designpage => (
+    this.outputData.currentDesignState.pipe(skip(outputData.getHistorySize() - 1)).subscribe(designpage => (
       this.designPage = designpage
     ))
   }
