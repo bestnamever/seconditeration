@@ -6,9 +6,6 @@ import {
 import { AssetType } from 'src/app/core/models/asset-type';
 import { AssetFilterService } from 'src/app/core/services/assetFilter.service';
 import { ComponentType } from 'src/app/core/models/component-type';
-import { el } from 'date-fns/locale';
-import { AST } from '@angular/compiler';
-// import { timeStamp } from 'console';
 
 
 @Component({
@@ -37,9 +34,6 @@ export class LayoutLeftbarComponent implements OnInit {
     this.selectedFilter = null;
 
     this.components = this.getComponents()
-
-
-
   }
 
   ngOnInit(): void {
@@ -50,7 +44,8 @@ export class LayoutLeftbarComponent implements OnInit {
     this.selectedComponents = this.components
   }
 
-  /* ---------------------------------------------- */
+  /* -------------------Methods--------------------------- */
+  
   /**
    * Function that updates the searchvalue
    * @param {string} value Value of the linked searchform
@@ -67,16 +62,12 @@ export class LayoutLeftbarComponent implements OnInit {
    * Function that reads the new selected asset type whenever the dropdown value updates
    */
   updateAssetValue(): void {
-    console.log(`The dropdown value is: ${this.selectedAssetType}`); // DEBUG
-
-    // Filter the component browser
     if (this.selectedAssetType != null) {
       if (this.selectedAssetType !== "All")
         this.filterCompomentsByDropDown(this.selectedAssetType);
       else
         this.selectedComponents = this.getComponents()
     }
-    // console.log("what :::" + this.getAvailibleComponents());
   }
 
   /**
@@ -122,27 +113,6 @@ export class LayoutLeftbarComponent implements OnInit {
       item =>
         item.assetType.includes(assetType))
   }
-
-  // getAvailibleComponents(): Array<string> | boolean {
-
-  //   this.assetTypeData.forEach(assetType => {
-  //     switch (this.selectedAssetType) {
-  //       case assetType:
-  //         return false;
-  //         break;
-
-  //       case 'any':
-  //         return false;
-  //         break;
-
-  //       default:
-  //         return false;
-  //         break;
-  //     }
-  //   });
-
-  //   return false;
-  // }
 
 
   // init all components
