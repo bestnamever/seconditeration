@@ -6,6 +6,7 @@ import {
 import { AssetType } from 'src/app/core/models/asset-type';
 import { AssetFilterService } from 'src/app/core/services/assetFilter.service';
 import { ComponentType } from 'src/app/core/models/component-type';
+import { unescapeIdentifier } from '@angular/compiler';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { ComponentType } from 'src/app/core/models/component-type';
 export class LayoutLeftbarComponent implements OnInit {
 
   searchValue: string; // Value for the component searchbox
-  selectedAssetType: AssetType | undefined; // Value for the asset-type dropdown
+  selectedAssetType: AssetType; // Value for the asset-type dropdown
 
   assetTypeData: Array<AssetType>; // All availible asset types
 
@@ -32,7 +33,7 @@ export class LayoutLeftbarComponent implements OnInit {
     this.searchValue = '';
     this.assetTypeData = Object.values(AssetType);
     this.selectedFilter = null;
-
+    this.selectedAssetType = AssetType.ALL
     this.components = this.getComponents()
   }
 
@@ -45,7 +46,7 @@ export class LayoutLeftbarComponent implements OnInit {
   }
 
   /* -------------------Methods--------------------------- */
-  
+
   /**
    * Function that updates the searchvalue
    * @param {string} value Value of the linked searchform
@@ -53,67 +54,25 @@ export class LayoutLeftbarComponent implements OnInit {
   updateSearchValue(value: string): void {
     this.searchValue = value;
     console.log(`The searchbox value is: ${value}`); // DEBUG
-
-    // Filter the component browser
-    this.filterComponentsBySearchbox();
+    this.selectedComponents = this.filterComponent()
   }
 
   /**
    * Function that reads the new selected asset type whenever the dropdown value updates
    */
   updateAssetValue(): void {
-    if (this.selectedAssetType != null) {
-      if (this.selectedAssetType !== "All")
-        this.filterCompomentsByDropDown(this.selectedAssetType);
-      else
-        this.selectedComponents = this.getComponents()
-    }
+    this.selectedComponents = this.filterComponent()
   }
 
-  /**
-   * Function that uses the searchbox value together with the dropdown to filter the components in the browser
-   */
-  filterComponentsBySearchbox(): void {
-
-    this.selectedComponents = this.components.filter(item => item.componentTitle.toLowerCase().match(this.searchValue.toLowerCase()))
-
-    // Get the component thumbnail html-elements
-    // var components = (<HTMLScriptElement[]><any>document.getElementById('component-list')?.childNodes);
-
-    // console.log("here" + components.length)
-
-    // Check if there are components found
-    // if (!components) return;
-
-    // ==== Searchbox filtering ====
-    // Check for each component if it matches the search-term
-    // components.forEach(item => {
-    //   var componentName = item.getAttribute('componenttitle');
-    // Hide the elemnent if the strings don't match
-    // if (!componentName?.toLowerCase()?.match(this.searchValue.toLowerCase()) && !item.classList.contains('hidden')) {
-    //   item.classList.add('hidden');
-    // }
-    // Remove the hidden class if the string does match and the element was hidden
-    //   else if (componentName?.toLowerCase()?.match(this.searchValue.toLowerCase()) && item.classList.contains('hidden')) {
-    //     item.classList.remove('hidden');
-    //   }
-    // });
-
-    // this.components.forEach(element => {
-    //   element.
-
-    // });
+  // Function to filter the components
+  filterComponent(): ComponentType[] {
+    var component = this.getComponents()
+    component = component.filter(item => item.componentTitle.toLowerCase().match(this.searchValue.toLowerCase()))
+    if (this.selectedAssetType !== AssetType.ALL) (
+      component = component.filter(item => item.assetType.includes(this.selectedAssetType))
+    )
+    return component
   }
-
-  /**
-   * Function to filter the components by dropdown
-   */
-  filterCompomentsByDropDown(assetType: AssetType): void {
-    this.selectedComponents = this.components.filter(
-      item =>
-        item.assetType.includes(assetType))
-  }
-
 
   // init all components
   getComponents(): ComponentType[] {
@@ -125,5 +84,3 @@ export class LayoutLeftbarComponent implements OnInit {
     ]
   }
 }
-
-
