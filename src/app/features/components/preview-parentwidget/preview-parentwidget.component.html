@@ -1,8 +1,9 @@
 <div class="flex-one">
-  <div class="widget flex-two">
+  <ng-container #container class="widget flex-two"></ng-container>
+  <ng-template #content>
     <!--<app-widget-label class="childWidget" *ngIf="isLabel()" [widgetData]="this.widgetData" ></app-widget-label>-->
     <element-vd-label class="childWidget" *ngIf="isLabel()" [widgetData]="this.widgetData" ></element-vd-label>
     <element-vd-graph class="childWidget" *ngIf="isGraph()" [widgetData]="this.widgetData"></element-vd-graph>
     <element-vd-barchart class="childWidget" *ngIf="isBarChart()" [widgetData]="this.widgetData"></element-vd-barchart>
-  </div>
+  </ng-template>
 </div>

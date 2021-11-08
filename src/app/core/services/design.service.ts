@@ -42,24 +42,26 @@ export class DesignService {
   /* ----------------------------------------- */
 
   updateLocation(designPage: DesignPage): any {
+    console.log("Started updating the location in DesignService...");
     if(this.historySize < 5) { this.historySize++; }
-    this.currentDesignState.pipe(skip(this.getHistorySize() - 1)).subscribe(x => {
+/*    this.currentDesignState.pipe(skip(this.getHistorySize() - 1)).subscribe(x => {
       console.log("Look this is the OLD designPage:");
       console.log(x);
       console.log("Look this is the NEW designPage:");
       console.log(designPage);
-      // this.currentDesignSubject.next(designPage);
-    }).unsubscribe();
+    }).unsubscribe();*/
+    this.currentDesignSubject.next(designPage);
   }
   updateData(value: DesignPage): any {
+    console.log("Started updating the data in DesignService...");
     if(this.historySize < 5) { this.historySize++; }
-    this.currentDesignState.pipe(skip(this.getHistorySize() - 1)).subscribe(x => {
+/*    this.currentDesignState.pipe(skip(this.getHistorySize() - 1)).subscribe(x => {
       console.log("Look this is the OLD designPage:");
       console.log(x);
       console.log("Look this is the NEW designPage:");
       console.log(value);
-      // this.currentDesignSubject.next(value);
-    }).unsubscribe();
+    }).unsubscribe();*/
+    this.currentDesignSubject.next(value);
   }
 
   /* ----------------------------------------- */
