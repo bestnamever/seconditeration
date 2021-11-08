@@ -50,11 +50,11 @@ export class LayoutLeftbarComponent implements OnInit {
    * Function that reads the new selected asset type whenever the dropdown value updates
    */
   updateAssetValue(): void {
-    console.log(`The searchbox value is: ${this.selectedAssetType}`); // DEBUG
+    console.log(`The dropdown value is: ${this.selectedAssetType}`); // DEBUG
 
     // Filter the component browser
     this.filterComponents();
-    console.log(this.getAvailibleComponents());
+    console.log("what :::" + this.getAvailibleComponents());
   }
 
   /**
