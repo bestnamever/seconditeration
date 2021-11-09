@@ -5,7 +5,7 @@ import { PreviewService } from "../../../core/services/preview.service"
 import { DesignService } from "../../../core/services/design.service";
 import { GridsterItem } from 'angular-gridster2';
 import { DesignPage } from 'src/app/core/models/design-page';
-import { concat } from 'rxjs';
+import {concat, Subscription} from 'rxjs';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteComfirmComponent } from '../delete-comfirm/delete-comfirm.component';
@@ -21,7 +21,7 @@ interface width {
   templateUrl: './layout-component-setting.component.html',
   styleUrls: ['./layout-component-setting.component.scss']
 })
-export class LayoutComponentSettingComponent implements OnInit {
+export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
 
   //page value
   designPage: DesignPage | undefined
@@ -43,6 +43,9 @@ export class LayoutComponentSettingComponent implements OnInit {
   widths: width[];
   widthValue: number;
 
+  private selectedWidgetSub: Subscription;
+  private currentDesignSub: Subscription;
+
   constructor(private inputData: PreviewService, private outputData: DesignService, public dialog: MatDialog) {
 
     this.delete_component = "Component"
@@ -58,7 +61,7 @@ export class LayoutComponentSettingComponent implements OnInit {
     this.widthValue = 0
 
     // set value on right side bar
-    this.inputData.currentlySelectedWidgetState.subscribe(widget => (
+    this.selectedWidgetSub = this.inputData.currentlySelectedWidgetState.subscribe(widget => (
       this.widget = widget?.gridsterItem,
       this.type = widget?.widgetData.widgetType,
       this.text = widget?.widgetData.text,
@@ -66,13 +69,18 @@ export class LayoutComponentSettingComponent implements OnInit {
       console.log("value is : " + this.value)
     ))
 
-    this.outputData.currentDesignState.pipe(skip(outputData.getHistorySize() - 1)).subscribe(designpage => (
-      this.designPage = designpage
-    ))
+    this.currentDesignSub = this.outputData.currentDesignState.subscribe(designpage => {
+      this.designPage = JSON.parse(JSON.stringify(designpage))
+    });
   }
 
   ngOnInit() {
 
+  }
+
+  ngOnDestroy() {
+    this.selectedWidgetSub.unsubscribe();
+    this.currentDesignSub.unsubscribe();
   }
 
   // select width by chips

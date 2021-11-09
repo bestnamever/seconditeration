@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import {Observable, ReplaySubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import { DesignPage } from "../models/design-page";
 import { WidgetType } from "../models/widget-type";
 import { AssetType } from "../models/asset-type";
 import { environment } from "../../../environments/environment";
-import {skip, takeLast} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -12,56 +11,53 @@ import {skip, takeLast} from "rxjs/operators";
 export class DesignService {
 
   // Variables
-  private currentDesignSubject: ReplaySubject<DesignPage>; // The state which we can edit
+  private currentDesignSubject: BehaviorSubject<DesignPage>; // The state which we can edit
   public currentDesignState: Observable<DesignPage>; // The view-only state, where we can subscribe on to get updates.
-  private historySize: number;
+  private designHistory: DesignPage[]
 
   // Constructor
   constructor() {
-    this.historySize = 0;
 
     // Initialize variables
-    this.currentDesignSubject = new ReplaySubject<DesignPage>(5); // Set the 1st design on init
+    this.currentDesignSubject = new BehaviorSubject<DesignPage>(this.getFirstDesign()); // Set the 1st design on init
     this.currentDesignState = this.currentDesignSubject.asObservable(); // Make a clone of the state which is read-only
-
-    this.currentDesignSubject.next(this.getFirstDesign());
-    this.historySize++;
+    this.designHistory = [];
+    this.designHistory.push(this.getFirstDesign());
 
     // A method that sends a message to console when the Design gets updated
     if (environment.useLocalStorage) {
-      this.currentDesignState.pipe(skip(this.getHistorySize() - 1)).subscribe((design) => {
+      this.currentDesignState.subscribe((design) => {
         localStorage.setItem('savedDesign', JSON.stringify(design))
       });
     }
   }
 
-  public getHistorySize(): number {
-    return this.historySize;
+  public getHistoryByNumber(commitsAgo: number): DesignPage {
+    console.log("Current state of designHistory is:");
+    console.log(this.designHistory);
+    return this.designHistory[this.designHistory.length - commitsAgo];
+  }
+  public getHistoryLength(): number {
+    return this.designHistory.length;
   }
 
   /* ----------------------------------------- */
 
   updateLocation(designPage: DesignPage): any {
     console.log("Started updating the location in DesignService...");
-    if(this.historySize < 5) { this.historySize++; }
-/*    this.currentDesignState.pipe(skip(this.getHistorySize() - 1)).subscribe(x => {
-      console.log("Look this is the OLD designPage:");
-      console.log(x);
-      console.log("Look this is the NEW designPage:");
-      console.log(designPage);
-    }).unsubscribe();*/
-    this.currentDesignSubject.next(designPage);
+    const newDesignPage = JSON.stringify(designPage); // Duplicating the variable so it does not update here when frontend changes.
+    this.currentDesignSubject.next(JSON.parse(newDesignPage));
+    this.designHistory.push(JSON.parse(newDesignPage));
+    console.log("Current history is the following:");
+    console.log(this.designHistory);
   }
   updateData(value: DesignPage): any {
     console.log("Started updating the data in DesignService...");
-    if(this.historySize < 5) { this.historySize++; }
-/*    this.currentDesignState.pipe(skip(this.getHistorySize() - 1)).subscribe(x => {
-      console.log("Look this is the OLD designPage:");
-      console.log(x);
-      console.log("Look this is the NEW designPage:");
-      console.log(value);
-    }).unsubscribe();*/
-    this.currentDesignSubject.next(value);
+    const newDesignPage = JSON.stringify(value); // Duplicating the variable so it does not update here when frontend changes.
+    this.currentDesignSubject.next(JSON.parse(newDesignPage));
+    this.designHistory.push(JSON.parse(newDesignPage));
+    console.log("Current history is the following:");
+    console.log(this.designHistory);
   }
 
   /* ----------------------------------------- */

@@ -1,47 +1,83 @@
-import {AfterContentInit, Component, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef} from '@angular/core';
+import {
+  AfterContentInit, AfterViewChecked, AfterViewInit, ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import {WidgetType} from "../../../core/models/widget-type";
 import {DesignElement} from "../../../core/models/design-element";
-import {skip} from "rxjs/operators";
+import {concatAll, skip} from "rxjs/operators";
 import {DesignService} from "../../../core/services/design.service";
+import { DesignPage } from 'src/app/core/models/design-page';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-preview-parentwidget',
   templateUrl: './preview-parentwidget.component.html',
   styleUrls: ['./preview-parentwidget.component.scss']
 })
-export class PreviewParentwidgetComponent implements OnInit, AfterContentInit {
+export class PreviewParentwidgetComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Variables
   @Input('widgetId') widgetId: number | undefined;
   // @Input('widgetData') widgetData: DesignElement | undefined;
   widgetData: DesignElement | undefined;
+  amountOfTimesUpdated: number;
 
-  @ViewChild("container", {read: ViewContainerRef}) containerRef: ViewContainerRef | undefined;
-  @ViewChild("content", {read: TemplateRef}) contentRef: TemplateRef<any> | undefined;
+  @ViewChild("container", {read: ViewContainerRef, static: false}) containerRef: ViewContainerRef | undefined;
+  @ViewChild("content", {read: TemplateRef, static: false}) contentRef: TemplateRef<any> | undefined;
+
+  private currentDesignSub: Subscription | undefined;
 
   // Constructor
-  constructor(private designService: DesignService) {
+  constructor(private designService: DesignService, private changeDetectorRef: ChangeDetectorRef) {
+    this.amountOfTimesUpdated = 0;
   }
 
   ngOnInit(): void {
     console.log('Rendering PreviewParentWidget with the following data:');
-    // console.log(this.widgetData);
 
     // Subscribe to changes of the Design
-    this.designService.currentDesignState.pipe(skip(this.designService.getHistorySize() - 1)).subscribe(design => {
-      console.log("Updating the ParentWidget...");
-      this.widgetData = design.positions.find(x => { return x.id == this.widgetId})?.element;
-      if(this.containerRef != null && this.contentRef != null) {
-        this.containerRef.clear();
-        this.containerRef.createEmbeddedView(this.contentRef);
+    this.currentDesignSub = this.designService.currentDesignState.subscribe(design => {
+      const oldDesign = this.designService.getHistoryByNumber(1);
+      let oldWidgetData = null;
+      if(oldDesign != null) { oldWidgetData = oldDesign.positions.find(x => { return x.id == this.widgetId})?.element; }
+      const newWidgetData = design.positions.find(x => { return x.id == this.widgetId})?.element;
+      console.log("Old widget data is:");
+      console.log(JSON.stringify(oldWidgetData));
+      console.log("New widget data is:");
+      console.log(JSON.stringify(newWidgetData));
+      console.log("History length is " + this.designService.getHistoryLength());
+      console.log("History by number 2 returns: " + this.designService.getHistoryByNumber(2));
+      if(this.amountOfTimesUpdated == 0 || JSON.stringify(newWidgetData) !== JSON.stringify(oldWidgetData)) {
+        console.log("Updating the ParentWidget...");
+        this.amountOfTimesUpdated++;
+        // console.log(design);
+        this.widgetData = design.positions.find(x => { return x.id == this.widgetId})?.element;
+        console.log(this.widgetData);
+        console.log("onInit: [" + this.containerRef + "] [" + this.contentRef + "]");
+        if(this.containerRef != null && this.contentRef != null) {
+          this.containerRef.clear();
+          this.containerRef.createEmbeddedView(this.contentRef);
+        }
       }
     });
   }
 
-  ngAfterContentInit() {
+  ngAfterViewInit() {
+    console.log("onAfterContentInit: [" + this.containerRef + "] [" + this.contentRef + "]");
     if(this.containerRef != null && this.contentRef != null) {
       this.containerRef.createEmbeddedView(this.contentRef);
     }
+    this.changeDetectorRef.detectChanges();
+  }
+
+  ngOnDestroy() {
+    if(this.currentDesignSub != null) { this.currentDesignSub.unsubscribe(); }
   }
 
   /* -------------------------------- */

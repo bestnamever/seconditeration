@@ -83,7 +83,7 @@ export class PreviewGridComponent implements OnInit {
   ngOnInit(): void {
 
     // Subscribe to changes of the Design
-    this.designService.currentDesignState.pipe(skip(this.designService.getHistorySize() - 1)).subscribe(design => {
+    this.designService.currentDesignState.subscribe(design => {
       console.log('Starting to render the design..');
       this.currentDesignPage = design;
       if (design != null) {
@@ -100,7 +100,7 @@ export class PreviewGridComponent implements OnInit {
           };
 
           // Check if the component is already added with the same properties (width, height, x, y, etc)
-          if (this.dashboardComponents.filter(x => { return (x.widgetData == item.widgetData); }).length == 0) {
+          if (this.dashboardComponents.filter(x => { return x.gridsterItem.id == item.gridsterItem.id }).length == 0) {
             this.dashboardComponents.push(item);
           }
         });
