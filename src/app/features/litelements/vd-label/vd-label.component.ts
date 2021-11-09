@@ -10,6 +10,7 @@ interface DesignElementvalue {
   'asset': string;
   'time': Date;
   'value': string;
+  'measurement': string;
 }
 enum AssetType {
   THERMOSTAT,
@@ -24,6 +25,7 @@ export class VdLabelComponent extends LitElement {
   assetType: AssetType | undefined;
   value: string | undefined;
   text: string | undefined;
+  measurement: string | undefined;
 
   // Constructor
   constructor() {
@@ -40,6 +42,7 @@ export class VdLabelComponent extends LitElement {
     this.assetType = (this.widgetData?.assetType != null) ? this.widgetData?.assetType : AssetType.THERMOSTAT;
     this.value = (this.widgetData?.values[0].value != null) ? this.widgetData.values[0].value : 'NaN';
     this.text = (this.widgetData?.text != null) ? this.widgetData.text : 'Invalid Widget';
+    this.measurement = (this.widgetData?.values[0].measurement != null) ? this.widgetData.values[0].measurement : "";
     return html`
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <div style="height: 100%;">
@@ -49,10 +52,7 @@ export class VdLabelComponent extends LitElement {
         </div>
         <div class="flex-one">
           <div class="flex-two">
-            ${this.isThermostat()
-              ? html`<h1 style="text-align: center; color: #4D9D2A">${this.value}°c</h1>`
-              : html`<h1 style="text-align: center; color: #4D9D2A">${this.value}</h1>`
-            }
+            <h1 style="text-align: center; color: #4D9D2A">${this.value}${this.measurement}</h1>
             <p class="cardSubtext" style="text-align: center;">${this.text}</p>
           </div>
         </div>
