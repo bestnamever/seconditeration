@@ -66,7 +66,7 @@ export class DesignService {
     const savedDesign = localStorage.getItem('savedDesign');
     if (environment.useLocalStorage && savedDesign != null) {
       console.log('Got the design from local Storage!');
-      console.log(savedDesign);
+/*      console.log(savedDesign);*/
       return JSON.parse(savedDesign) as DesignPage;
     } else {
       return {
