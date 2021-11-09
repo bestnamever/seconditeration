@@ -1,8 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DesignService} from "../../../core/services/design.service";
 import {Design} from "../../../core/models/design";
-import {skip} from "rxjs/operators";
-import {Observable, Subscription} from "rxjs";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-example-getdesigns',

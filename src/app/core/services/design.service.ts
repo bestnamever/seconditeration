@@ -48,7 +48,7 @@ export class DesignService {
     const newDesignPage = JSON.stringify(designPage); // Duplicating the variable so it does not update here when frontend changes.
     this.currentDesignSubject.next(JSON.parse(newDesignPage));
     this.designHistory.push(JSON.parse(newDesignPage));
-    console.log("Current history is the following:");
+    console.log("Updated the location! New history is the following:");
     console.log(this.designHistory);
   }
   public updateData(value: DesignPage): any {
@@ -56,7 +56,7 @@ export class DesignService {
     const newDesignPage = JSON.stringify(value); // Duplicating the variable so it does not update here when frontend changes.
     this.currentDesignSubject.next(JSON.parse(newDesignPage));
     this.designHistory.push(JSON.parse(newDesignPage));
-    console.log("Current history is the following:");
+    console.log("Updated the data! New history is the following:");
     console.log(this.designHistory);
   }
 

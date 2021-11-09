@@ -44,7 +44,7 @@ export class PreviewParentwidgetComponent implements OnInit, AfterViewInit, OnDe
         console.log("Updating the ParentWidget...");
         this.amountOfTimesUpdated++;
         // console.log(design);
-        this.widgetData = design.positions.find(x => { return x.id == this.widgetId})?.element;
+        this.widgetData = newWidgetData;
         console.log(this.widgetData);
         if(this.containerRef != null && this.contentRef != null) {
           this.containerRef.clear();
