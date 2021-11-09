@@ -1,13 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GridsterConfig, GridsterItem, GridsterItemComponentInterface } from "angular-gridster2";
 import { WidgetComponent } from "../../../core/models/widget-component";
 import { PhoneProperties } from "../../../core/models/phone-properties";
-import { PhoneType } from "../../../core/models/phone-type";
 import { PreviewService } from "../../../core/services/preview.service";
 import { DesignPage } from "../../../core/models/design-page";
 import { DesignService } from "../../../core/services/design.service";
 import { PhoneService } from "../../../core/services/phone.service";
-import {skip, take, takeLast} from "rxjs/operators";
 
 
 

@@ -1,18 +1,7 @@
-import {
-  AfterContentInit, AfterViewChecked, AfterViewInit, ChangeDetectorRef,
-  Component,
-  Input,
-  OnDestroy,
-  OnInit,
-  TemplateRef,
-  ViewChild,
-  ViewContainerRef
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef} from '@angular/core';
 import {WidgetType} from "../../../core/models/widget-type";
 import {DesignElement} from "../../../core/models/design-element";
-import {concatAll, skip} from "rxjs/operators";
 import {DesignService} from "../../../core/services/design.service";
-import { DesignPage } from 'src/app/core/models/design-page';
 import {Subscription} from "rxjs";
 
 @Component({

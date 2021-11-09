@@ -12,8 +12,8 @@ export class DesignService {
 
   // Variables
   private currentDesignSubject: BehaviorSubject<DesignPage>; // The state which we can edit
-  public currentDesignState: Observable<DesignPage>; // The view-only state, where we can subscribe on to get updates.
-  private designHistory: DesignPage[]
+  public readonly currentDesignState: Observable<DesignPage>; // The view-only state, where we can subscribe on to get updates.
+  private readonly designHistory: DesignPage[] // List of all submitted Designs, to keep track of history (for undo-ing but also for checking whether it has changed)
 
   // Constructor
   constructor() {
@@ -43,7 +43,7 @@ export class DesignService {
 
   /* ----------------------------------------- */
 
-  updateLocation(designPage: DesignPage): any {
+  public updateLocation(designPage: DesignPage): any {
     console.log("Started updating the location in DesignService...");
     const newDesignPage = JSON.stringify(designPage); // Duplicating the variable so it does not update here when frontend changes.
     this.currentDesignSubject.next(JSON.parse(newDesignPage));
@@ -51,7 +51,7 @@ export class DesignService {
     console.log("Current history is the following:");
     console.log(this.designHistory);
   }
-  updateData(value: DesignPage): any {
+  public updateData(value: DesignPage): any {
     console.log("Started updating the data in DesignService...");
     const newDesignPage = JSON.stringify(value); // Duplicating the variable so it does not update here when frontend changes.
     this.currentDesignSubject.next(JSON.parse(newDesignPage));
@@ -62,7 +62,7 @@ export class DesignService {
 
   /* ----------------------------------------- */
 
-  getFirstDesign(): DesignPage {
+  private getFirstDesign(): DesignPage {
     const savedDesign = localStorage.getItem('savedDesign');
     if (environment.useLocalStorage && savedDesign != null) {
       console.log('Got the design from local Storage!');
@@ -170,39 +170,6 @@ export class DesignService {
                   measurement: "°C"
                 }
               ]
-            }
-          }
-        ]
-      }
-      //}
-    }
-  }
-  getSecondDesign(): DesignPage {
-    const savedDesign = localStorage.getItem('savedDesign');
-    if (environment.useLocalStorage && savedDesign != null) {
-      console.log('Got the design from local Storage!');
-      console.log(savedDesign);
-      return JSON.parse(savedDesign) as DesignPage;
-    } else {
-      return {
-        name: "Temporary Page",
-        positions: [
-          {
-            id: 0,
-            positionX: 0,
-            positionY: 0,
-            width: 1,
-            height: 1,
-            element: {
-              widgetType: WidgetType.LABEL,
-              assetType: AssetType.THERMOSTAT,
-              text: "Label for Thermostat",
-              values: [{
-                asset: "Thermostat 1",
-                time: new Date("2019-01-16"),
-                value: "25",
-                measurement: "°C"
-              }]
             }
           }
         ]
