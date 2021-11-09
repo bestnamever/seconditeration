@@ -22,9 +22,14 @@
                 <div class="component-browser-container">
                     <h3>Browse components</h3>
                     <div id="component-list" class="component-list-wrapper">
-                        <div *ngFor="let component of selectedComponents" class="component-card-wrapper">
-                            <div cdkDrag [cdkDragFreeDragPosition]="dragPosition" (mousedown)="onDragStart($event)"
-                                (mouseup)="onDrop($event)">
+                        <div *ngFor="let component of selectedComponents" class="component-card-wrapper" >
+                            <div cdkDrag [cdkDragFreeDragPosition]="dragPosition" style="z-index: 1000"
+                                (mousedown)="onDragStart($event,component)" (mouseup)="onDrop($event)">
+                                <app-component-thumbnail componentTitle={{component.componentTitle}}
+                                    iconCode={{component.iconCode}} componentType={{component.componentType}}>
+                                </app-component-thumbnail>
+                            </div>
+                            <div *ngIf="component.isdragging" style="position: absolute; z-index: 999">
                                 <app-component-thumbnail componentTitle={{component.componentTitle}}
                                     iconCode={{component.iconCode}} componentType={{component.componentType}}>
                                 </app-component-thumbnail>

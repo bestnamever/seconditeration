@@ -1,10 +1,12 @@
-<div style="width: 100vw; height: 100vh;">
+<div style="width: 100vw; height: 100vh;" CdkDropListGroup>
   <div class="top">
     <mat-toolbar style="height: 100%; background-color: #FFFFFF;">
       <app-layout-header></app-layout-header>
     </mat-toolbar>
   </div>
-  <app-layout-leftbar class="left"></app-layout-leftbar>
+  <div class="left" id="list-one">
+    <app-layout-leftbar></app-layout-leftbar>
+  </div>
   <div class="right">
     <app-layout-rightbar></app-layout-rightbar>
   </div>
@@ -14,4 +16,3 @@
     <app-preview-grid></app-preview-grid>
   </div>
 </div>
-

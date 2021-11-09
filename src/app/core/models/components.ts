@@ -6,4 +6,5 @@ export interface Components {
     iconCode: string,
     componentType: WidgetType,
     assetType: AssetType[],
+    isdragging: Boolean
 }

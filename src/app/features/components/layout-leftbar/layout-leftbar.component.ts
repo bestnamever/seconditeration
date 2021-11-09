@@ -12,6 +12,8 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { DragAndDropService } from 'src/app/core/services/dragAnddrop.service';
 import { GridsterItemComponentInterface } from 'angular-gridster2';
 import { ComponentType } from '@angular/cdk/portal';
+import { ComponentOptions } from 'vue';
+import { tr } from 'date-fns/locale';
 
 
 
@@ -33,6 +35,8 @@ export class LayoutLeftbarComponent implements OnInit {
 
   dragPosition: { x: 0, y: 0 };
 
+  isDragging = false
+
   //array for components
   components: Components[]
 
@@ -49,6 +53,7 @@ export class LayoutLeftbarComponent implements OnInit {
     this.selectedComponents = this.components
     this.isSelected = false
     this.dragPosition = { x: 0, y: 0 };
+    this.isDragging = false
   }
 
   ngOnInit(): void {
@@ -91,10 +96,10 @@ export class LayoutLeftbarComponent implements OnInit {
   // init all components
   getComponents(): Components[] {
     return [
-      { componentTitle: "Data card", iconCode: "crop_3_2", componentType: WidgetType.LABEL, assetType: [AssetType.AIR, AssetType.SOLAR, AssetType.THERMOSTAT] },
-      { componentTitle: "Bar chart", iconCode: "insert_chart_outlined", componentType: WidgetType.BARCHART, assetType: [AssetType.AIR, AssetType.SOLAR] },
-      { componentTitle: "Pie chart", iconCode: "pie_chart", componentType: WidgetType.PIECHART, assetType: [AssetType.AIR, AssetType.SOLAR] },
-      { componentTitle: "Graph", iconCode: "show_chart", componentType: WidgetType.GRAPH, assetType: [AssetType.AIR, AssetType.HUE] },
+      { componentTitle: "Data card", iconCode: "crop_3_2", componentType: WidgetType.LABEL, assetType: [AssetType.AIR, AssetType.SOLAR, AssetType.THERMOSTAT], isdragging: false },
+      { componentTitle: "Bar chart", iconCode: "insert_chart_outlined", componentType: WidgetType.BARCHART, assetType: [AssetType.AIR, AssetType.SOLAR], isdragging: false },
+      { componentTitle: "Pie chart", iconCode: "pie_chart", componentType: WidgetType.PIECHART, assetType: [AssetType.AIR, AssetType.SOLAR], isdragging: false },
+      { componentTitle: "Graph", iconCode: "show_chart", componentType: WidgetType.GRAPH, assetType: [AssetType.AIR, AssetType.HUE], isdragging: false },
     ]
   }
 
@@ -119,9 +124,14 @@ export class LayoutLeftbarComponent implements OnInit {
     this.dragdropService.gridOption(this.isSelected)
   }
 
-  onDragStart(event: MouseEvent): void {
+  onDragStart(event: MouseEvent, component: Components): void {
     console.log(event);
     console.log('Picking up a Component!');
+
+    var index = this.components.indexOf(component)
+    this.components[index].isdragging = true
+    console.log(component)
+
     this.isSelected = true
     this.dragdropService.gridOption(this.isSelected)
   }
