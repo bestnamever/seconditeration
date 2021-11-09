@@ -52,7 +52,7 @@ export class VdLabelComponent extends LitElement {
         </div>
         <div class="flex-one">
           <div class="flex-two">
-            <h1 style="text-align: center; color: #4D9D2A">${this.value}${this.measurement}</h1>
+            <h1 style="text-align: center; color: #4D9D2A; word-wrap: break-word">${this.value}${this.measurement}</h1>
             <p class="cardSubtext" style="text-align: center;">${this.text}</p>
           </div>
         </div>
