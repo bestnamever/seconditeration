@@ -72,7 +72,7 @@ export class PreviewGridComponent implements OnInit {
       pushResizeItems: true,
       disableScrollHorizontal: true,
       displayGrid: 'onDrag&Resize',
-      itemInitCallback: (item, itemComponent) => { this.itemInit(item, itemComponent); },
+      itemInitCallback: (item, itemComponent) => { this.itemChange(item, itemComponent); },
       itemChangeCallback: (item, itemComponent) => { this.itemChange(item, itemComponent); },
       // itemResizeCallback: PreviewGridComponent.itemResize,
     };
@@ -142,6 +142,8 @@ export class PreviewGridComponent implements OnInit {
       this.selectedWidget = widget;
     });
 
+    this.dragDropService.sendGridItemCoordinates(this.gridItemCoordinates)
+
 
 
   }
@@ -178,7 +180,15 @@ export class PreviewGridComponent implements OnInit {
       })
     }
 
-
+    console.log('itemChanged', item, itemComponent);
+    // const itemComponent = this.gridOptions.api.getItemComponent(item);
+    const domRect = itemComponent.el.getBoundingClientRect();
+    const clientX = domRect.left;
+    const clientY = domRect.top;
+    const width = domRect.width;
+    const height = domRect.height;
+    this.gridItemCoordinates.set(itemComponent, { x: clientX, y: clientY, width, height });
+    console.log(this.gridItemCoordinates);
   }
 
 

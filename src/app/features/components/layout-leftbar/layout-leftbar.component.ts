@@ -112,14 +112,22 @@ export class LayoutLeftbarComponent implements OnInit {
   }
 
   onDrop(event: MouseEvent, component: Components): void {
+
+    // get coordinates
+    this.dragdropService.gridItemCoordinatesState.subscribe(gridItemCoordinates => {
+      this.gridItemCoordinates = gridItemCoordinates
+    })
+    console.log(this.gridItemCoordinates)
     console.log("droping ");
-    // const firstItem = this.gridItemCoordinates.keys().next().value as GridsterItemComponentInterface;
-    // const xLocInGrid = (event.screenX - firstItem.gridster.el.getBoundingClientRect().left);
-    // const yLocInGrid = (event.screenY - firstItem.gridster.el.getBoundingClientRect().top);
-    // const column = firstItem.gridster.pixelsToPositionX(xLocInGrid, (x) => Math.floor(x));
-    // const row = (firstItem.gridster.pixelsToPositionY((yLocInGrid + firstItem.gridster.el.scrollTop), (y) => Math.floor(y)) - 1);
-    // console.log('X to pixels returns [' + column + ']');
-    // console.log('Y to pixels returns [' + row + ']');
+
+    // Check if user is dropping it onto the grid
+    const firstItem = this.gridItemCoordinates.keys().next().value as GridsterItemComponentInterface;
+    const xLocInGrid = (event.screenX - firstItem.gridster.el.getBoundingClientRect().left);
+    const yLocInGrid = (event.screenY - firstItem.gridster.el.getBoundingClientRect().top);
+    const column = firstItem.gridster.pixelsToPositionX(xLocInGrid, (x) => Math.floor(x));
+    const row = (firstItem.gridster.pixelsToPositionY((yLocInGrid + firstItem.gridster.el.scrollTop), (y) => Math.floor(y)) - 1);
+    console.log('X to pixels returns [' + column + ']');
+    console.log('Y to pixels returns [' + row + ']');
     this.isSelected = false
     this.dragdropService.gridOption(this.isSelected)
     this.dragPosition = { x: 0, y: 0 }
@@ -128,6 +136,8 @@ export class LayoutLeftbarComponent implements OnInit {
     this.components[index].isdragging = false
 
 
+
+    this.dragdropService.sendEvent(component.componentType)
   }
 
   onDragStart(event: MouseEvent, component: Components): void {

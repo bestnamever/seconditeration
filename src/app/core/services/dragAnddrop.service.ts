@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { GridsterItemComponentInterface } from 'angular-gridster2';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { WidgetType } from '../models/widget-type';
 
@@ -12,11 +13,17 @@ export class DragAndDropService {
   private isOptionShown: BehaviorSubject<Boolean | null>;
   public isOptionShownState: Observable<Boolean | null>;
 
+  private gridItemCoordinates: BehaviorSubject<any>;
+  public gridItemCoordinatesState: Observable<any>;
+
   constructor() {
 
     this.subject = new Subject<any>()
     this.isOptionShown = new BehaviorSubject<Boolean | null>(false)
     this.isOptionShownState = this.isOptionShown.asObservable()
+
+    this.gridItemCoordinates = new BehaviorSubject<any>(null)
+    this.gridItemCoordinatesState = this.gridItemCoordinates.asObservable()
 
   }
 
@@ -30,6 +37,10 @@ export class DragAndDropService {
 
   gridOption(widgetIn: Boolean) {
     this.isOptionShown.next(widgetIn)
+  }
+
+  sendGridItemCoordinates(gridItemCoordinates: Map<GridsterItemComponentInterface, { x: number, y: number, width: number, height: number }>) {
+    this.gridItemCoordinates.next(gridItemCoordinates)
   }
 
 }
