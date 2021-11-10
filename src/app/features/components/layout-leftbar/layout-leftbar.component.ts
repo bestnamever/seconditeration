@@ -6,14 +6,9 @@ import {
 import { AssetType } from 'src/app/core/models/asset-type';
 import { AssetFilterService } from 'src/app/core/services/assetFilter.service';
 import { Components } from 'src/app/core/models/components';
-import { unescapeIdentifier } from '@angular/compiler';
 import { WidgetType } from 'src/app/core/models/widget-type';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { DragAndDropService } from 'src/app/core/services/dragAnddrop.service';
 import { GridsterItemComponentInterface } from 'angular-gridster2';
-import { ComponentType } from '@angular/cdk/portal';
-import { ComponentOptions } from 'vue';
-import { tr } from 'date-fns/locale';
 
 
 
