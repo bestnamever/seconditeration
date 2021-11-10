@@ -21,6 +21,8 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatInputModule } from "@angular/material/input";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatListModule } from '@angular/material/list';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 // Other externally imported Libraries
 import { GridsterModule } from 'angular-gridster2'
@@ -100,7 +102,9 @@ import './features/litelements/vd-barchart/vd-barchart.component';
     MatCheckboxModule,
     MatInputModule,
     MatDialogModule,
-    FormsModule
+    FormsModule,
+    DragDropModule,
+    MatGridListModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpbaseurlInterceptor, multi: true },
