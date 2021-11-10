@@ -83,7 +83,7 @@ export class PreviewGridComponent implements OnInit {
     });
 
     this.dragEventSubscription = this.dragDropService.getEvent().subscribe(param => {
-      this.addItem(param.type, param.x, param.y)
+      this.addItem(param)
     })
 
     this.dragDropService.isOptionShownState.subscribe(isShown => {
@@ -143,7 +143,6 @@ export class PreviewGridComponent implements OnInit {
       this.selectedWidget = widget;
     });
 
-    // Pass the gridItemCoordinates
     this.dragDropService.sendGridItemCoordinates(this.gridItemCoordinates)
 
 
@@ -261,9 +260,9 @@ export class PreviewGridComponent implements OnInit {
   /**
    * add an item into preivew
    */
-  public addItem(value: WidgetType, x: number, y: number) {
+  public addItem(value: WidgetType) {
     this.dashboardComponents.push({
-      gridsterItem: { cols: 1, rows: 1, x, y, minItemCols: 1, minItemRows: 1 },
+      gridsterItem: { cols: 1, rows: 1, x: 1, y: 0, minItemCols: 1, minItemRows: 1 },
       widgetData: this.generateWidgetData(value)
     })
   }
