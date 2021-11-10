@@ -1,9 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { GridsterItem } from 'angular-gridster2';
 import { DesignPage } from 'src/app/core/models/design-page';
 import { DesignService } from 'src/app/core/services/design.service';
 import { PreviewService } from "../../../core/services/preview.service"
 import { OptionList } from 'src/app/core/models/option-list';
+import {skip} from "rxjs/operators";
+import {Subscription} from "rxjs";
 
 
 @Component({
@@ -11,7 +13,7 @@ import { OptionList } from 'src/app/core/models/option-list';
   templateUrl: './layout-rightbar-components.component.html',
   styleUrls: ['./layout-rightbar-components.component.scss']
 })
-export class LayoutRightbarComponentsComponent implements OnInit {
+export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
 
   //page value
   designPage: DesignPage | undefined
@@ -19,7 +21,7 @@ export class LayoutRightbarComponentsComponent implements OnInit {
   // selected widget
   widget: GridsterItem | undefined
 
-  // selected asset 
+  // selected asset
   assetSelected: string | undefined
 
   // selected measurement
@@ -34,6 +36,9 @@ export class LayoutRightbarComponentsComponent implements OnInit {
   wattProperties: OptionList[]
 
   // text: string
+
+  private selectedWidgetSub: Subscription;
+  private currentDesignSub: Subscription;
 
   constructor(private data: PreviewService, private outputData: DesignService) {
     this.assets = [
@@ -55,22 +60,27 @@ export class LayoutRightbarComponentsComponent implements OnInit {
     ]
 
     // set value on right side bar
-    this.data.currentlySelectedWidgetState.subscribe(widget => (
+    this.selectedWidgetSub = this.data.currentlySelectedWidgetState.subscribe(widget => (
       this.widget = widget?.gridsterItem,
       this.assetSelected = widget?.widgetData.values[0].asset,
       this.measurementSelected = widget?.widgetData.values[0].measurement,
       console.log("property is ::" + this.measurementSelected)
     ))
 
-    this.outputData.currentDesignState.subscribe(designpage => (
-      this.designPage = designpage
-    ))
+    this.currentDesignSub = this.outputData.currentDesignState.subscribe(designpage => {
+      this.designPage = JSON.parse(JSON.stringify(designpage));
+    })
 
     // this.text = "example"
 
   }
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy(): void {
+    this.selectedWidgetSub.unsubscribe();
+    this.currentDesignSub.unsubscribe();
   }
 
   //get type of properties
