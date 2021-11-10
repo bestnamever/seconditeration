@@ -111,27 +111,38 @@ export class LayoutLeftbarComponent implements OnInit {
     this.dragdropService.sendEvent(type)
   }
 
-  onDrop(event: MouseEvent): void {
+  onDrop(event: MouseEvent, component: Components): void {
     console.log("droping ");
-    const firstItem = this.gridItemCoordinates.keys().next().value as GridsterItemComponentInterface;
-    const xLocInGrid = (event.screenX - firstItem.gridster.el.getBoundingClientRect().left);
-    const yLocInGrid = (event.screenY - firstItem.gridster.el.getBoundingClientRect().top);
-    const column = firstItem.gridster.pixelsToPositionX(xLocInGrid, (x) => Math.floor(x));
-    const row = (firstItem.gridster.pixelsToPositionY((yLocInGrid + firstItem.gridster.el.scrollTop), (y) => Math.floor(y)) - 1);
-    console.log('X to pixels returns [' + column + ']');
-    console.log('Y to pixels returns [' + row + ']');
+    // const firstItem = this.gridItemCoordinates.keys().next().value as GridsterItemComponentInterface;
+    // const xLocInGrid = (event.screenX - firstItem.gridster.el.getBoundingClientRect().left);
+    // const yLocInGrid = (event.screenY - firstItem.gridster.el.getBoundingClientRect().top);
+    // const column = firstItem.gridster.pixelsToPositionX(xLocInGrid, (x) => Math.floor(x));
+    // const row = (firstItem.gridster.pixelsToPositionY((yLocInGrid + firstItem.gridster.el.scrollTop), (y) => Math.floor(y)) - 1);
+    // console.log('X to pixels returns [' + column + ']');
+    // console.log('Y to pixels returns [' + row + ']');
     this.isSelected = false
     this.dragdropService.gridOption(this.isSelected)
+    this.dragPosition = { x: 0, y: 0 }
+
+    var index = this.components.indexOf(component)
+    this.components[index].isdragging = false
+
+
   }
 
   onDragStart(event: MouseEvent, component: Components): void {
     console.log(event);
     console.log('Picking up a Component!');
 
+    /**
+     * set selected component's isdragging to ture
+     * create a duplicated component 
+     */
     var index = this.components.indexOf(component)
     this.components[index].isdragging = true
-    console.log(component)
+    console.log(this.components)
 
+    // for showing grid 
     this.isSelected = true
     this.dragdropService.gridOption(this.isSelected)
   }

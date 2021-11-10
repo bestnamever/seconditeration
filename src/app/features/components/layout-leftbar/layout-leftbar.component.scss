@@ -1,35 +1,38 @@
-.left-bar-wrapper{
+.left-bar-wrapper {
     height: 100%;
-    
-    .tab-wrapper{
-        padding: 30px ;
 
-        h3{
+
+    .tab-wrapper {
+        padding: 30px;
+
+        h3 {
             font-weight: 500;
         }
     }
 
-    .tab-component-browser{
-        .search-container{
+    .tab-component-browser {
+        overflow: visible;
+        z-index: 999;
+        .search-container {
             margin-bottom: 20px;
         }
 
-        .asset-filter-container{
+        .asset-filter-container {
             margin-bottom: 20px;
 
-            .asset-filter{
+            .asset-filter {
                 width: 100%;
             }
         }
 
-        .component-browser-container{
-            #component-list{
+        .component-browser-container {
+            #component-list {
                 display: flex;
                 flex-direction: row;
                 justify-content: flex-start;
                 flex-wrap: wrap;
 
-                .component-card-wrapper{
+                .component-card-wrapper {
                     flex-basis: 33%;
                     aspect-ratio: 1/1;
                 }
@@ -37,43 +40,43 @@
         }
     }
 
-    .tab-layers{
+    .tab-layers {
         padding: 0;
 
-        .heading-container{
+        .heading-container {
             padding: 30px 30px 10px 30px;
         }
 
-        .layer-item{
+        .layer-item {
             display: flex;
             justify-content: flex-start;
             padding: 5px 15px;
 
-            .component-icon{
+            .component-icon {
                 margin-right: 15px;
                 font-size: 24px !important;
             }
 
-            &[aria-selected="true"]{
-                background: rgba($color: #4D9D2A, $alpha: 0.25);
+            &[aria-selected="true"] {
+                background: rgba($color: #4d9d2a, $alpha: 0.25);
 
-                span{
-                    color: #4D9D2A;
+                span {
+                    color: #4d9d2a;
                 }
 
-                .component-icon{
-                    color: #4D9D2A;
+                .component-icon {
+                    color: #4d9d2a;
                 }
             }
         }
     }
 }
 
-::ng-deep mat-list-option.mat-list-item{
-    .mat-list-item-content{
+::ng-deep mat-list-option.mat-list-item {
+    .mat-list-item-content {
         width: 100% !important;
 
-        .mat-list-text{
+        .mat-list-text {
             flex-direction: row !important;
             width: 100%;
         }
@@ -81,35 +84,58 @@
 }
 
 // Material Tabs
-::ng-deep.mat-tab-group{
-
+::ng-deep.mat-tab-group {
     height: 100%;
-  
-    .mat-tab-body-wrapper{
-      height: 100%;
+
+    .mat-tab-body-wrapper {
+        height: 100%;
     }
-  
-    .mat-tab-header{
-      box-shadow: 0px 5px 5px 2px rgba($color: #000000, $alpha: 0.25);
-      border-bottom: unset;
-  
-      .mat-tab-label {
-        width: 50%;
-        height: max-content;
-        background: #4d9d2a;
+
+    .mat-tab-header {
+        box-shadow: 0px 5px 5px 2px rgba($color: #000000, $alpha: 0.25);
+        border-bottom: unset;
+
+        .mat-tab-label {
+            width: 50%;
+            height: max-content;
+            background: #4d9d2a;
+            opacity: 1;
+            color: white;
+            font-size: 16px;
+            padding: 15px 0px;
+        }
+    }
+
+    .mat-ink-bar {
+        background-color: white !important;
         opacity: 1;
-        color: white;
-        font-size: 16px;
-        padding: 15px 0px;
-      }
-    }
-  
-    .mat-ink-bar{
-      background-color: white !important;
-      opacity: 1;
     }
 }
 
-.hidden{
+.hidden {
     display: none !important;
 }
+
+
+.draggableComponent {
+    color: rgba(0, 0, 0, 0.87);
+    cursor: move;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: #fff;
+    border-radius: 4px;
+    transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.draggableComponent:active {
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+        0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.mat-grid-tile {
+    overflow: visible;
+}
+
