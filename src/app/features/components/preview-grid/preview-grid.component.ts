@@ -266,4 +266,13 @@ export class PreviewGridComponent implements OnInit {
       widgetData: this.generateWidgetData(value)
     })
   }
+
+
+  /**
+   * drag and drop
+   * entered
+   */
+  enter(event: CdkDragEnter<any>) {
+    console.log('entered');
+  }
 }
