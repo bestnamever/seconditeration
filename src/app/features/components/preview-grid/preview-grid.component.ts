@@ -1,8 +1,8 @@
+
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DisplayGrid, GridsterConfig, GridsterItem, GridsterItemComponentInterface } from "angular-gridster2";
 import { WidgetComponent } from "../../../core/models/widget-component";
 import { PhoneProperties } from "../../../core/models/phone-properties";
-import { PhoneType } from "../../../core/models/phone-type";
 import { PreviewService } from "../../../core/services/preview.service";
 import { DesignPage } from "../../../core/models/design-page";
 import { DesignService } from "../../../core/services/design.service";
@@ -101,6 +101,7 @@ export class PreviewGridComponent implements OnInit {
 
 
     //subscribe to type of selected widght 
+
     // this.message = ""
     // this.subscription = this.data.currentMessage.subscribe((message: string) => this.message = message)
   }
@@ -128,7 +129,7 @@ export class PreviewGridComponent implements OnInit {
           };
 
           // Check if the component is already added with the same properties (width, height, x, y, etc)
-          if (this.dashboardComponents.filter(x => { return (x.widgetData == item.widgetData); }).length == 0) {
+          if (this.dashboardComponents.filter(x => { return x.gridsterItem.id == item.gridsterItem.id }).length == 0) {
             this.dashboardComponents.push(item);
           }
         });

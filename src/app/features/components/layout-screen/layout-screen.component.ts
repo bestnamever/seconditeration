@@ -1,9 +1,10 @@
-import { AfterContentChecked, Component, Inject, OnInit } from '@angular/core';
+import {AfterContentChecked, Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { OptionList } from 'src/app/core/models/option-list';
 import { PhoneProperties } from 'src/app/core/models/phone-properties';
 import { PhoneService } from 'src/app/core/services/phone.service';
 import { DeleteComfirmComponent } from '../delete-comfirm/delete-comfirm.component'
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-layout-screen',
@@ -12,7 +13,7 @@ import { DeleteComfirmComponent } from '../delete-comfirm/delete-comfirm.compone
 })
 
 
-export class LayoutScreenComponent implements OnInit {
+export class LayoutScreenComponent implements OnInit, OnDestroy {
 
   // phone options
   phoneOptions: PhoneProperties | undefined;
@@ -41,6 +42,8 @@ export class LayoutScreenComponent implements OnInit {
   // phone screen options
   phoneOptionList: OptionList[]
 
+  private currentPhoneSub: Subscription;
+
 
   constructor(public dialog: MatDialog, private phoneSetting: PhoneService) {
 
@@ -61,7 +64,7 @@ export class LayoutScreenComponent implements OnInit {
     ]
 
 
-    this.phoneSetting.currentPhoneState.subscribe(phone => (
+    this.currentPhoneSub = this.phoneSetting.currentPhoneState.subscribe(phone => (
       this.phoneOptions = phone,
       this.phoneSelected = this.phoneOptions.phoneType === 0 ? "0" : "1",
       console.log(this.phoneSelected)
@@ -70,6 +73,10 @@ export class LayoutScreenComponent implements OnInit {
 
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy(): void {
+    this.currentPhoneSub.unsubscribe();
   }
 
 

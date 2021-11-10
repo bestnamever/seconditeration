@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import { DesignPage } from "../models/design-page";
 import { WidgetType } from "../models/widget-type";
 import { AssetType } from "../models/asset-type";
@@ -12,8 +12,8 @@ export class DesignService {
 
   // Variables
   private currentDesignSubject: BehaviorSubject<DesignPage>; // The state which we can edit
-  public currentDesignState: Observable<DesignPage>; // The view-only state, where we can subscribe on to get updates.
-
+  public readonly currentDesignState: Observable<DesignPage>; // The view-only state, where we can subscribe on to get updates.
+  private readonly designHistory: DesignPage[] // List of all submitted Designs, to keep track of history (for undo-ing but also for checking whether it has changed)
 
   // Constructor
   constructor() {
@@ -21,6 +21,8 @@ export class DesignService {
     // Initialize variables
     this.currentDesignSubject = new BehaviorSubject<DesignPage>(this.getFirstDesign()); // Set the 1st design on init
     this.currentDesignState = this.currentDesignSubject.asObservable(); // Make a clone of the state which is read-only
+    this.designHistory = [];
+    this.designHistory.push(this.getFirstDesign());
 
     // A method that sends a message to console when the Design gets updated
     if (environment.useLocalStorage) {
@@ -30,19 +32,41 @@ export class DesignService {
     }
   }
 
-  /* ----------------------------------------- */
-
-  updateLocation(designPage: DesignPage): any {
-    this.currentDesignSubject.next(designPage);
+  public getHistoryByNumber(commitsAgo: number): DesignPage {
+    console.log("Current state of designHistory is:");
+    console.log(this.designHistory);
+    return this.designHistory[this.designHistory.length - commitsAgo];
+  }
+  public getHistoryLength(): number {
+    return this.designHistory.length;
   }
 
   /* ----------------------------------------- */
 
-  getFirstDesign(): DesignPage {
+  public updateLocation(designPage: DesignPage): any {
+    console.log("Started updating the location in DesignService...");
+    const newDesignPage = JSON.stringify(designPage); // Duplicating the variable so it does not update here when frontend changes.
+    this.currentDesignSubject.next(JSON.parse(newDesignPage));
+    this.designHistory.push(JSON.parse(newDesignPage));
+    console.log("Updated the location! New history is the following:");
+    console.log(this.designHistory);
+  }
+  public updateData(value: DesignPage): any {
+    console.log("Started updating the data in DesignService...");
+    const newDesignPage = JSON.stringify(value); // Duplicating the variable so it does not update here when frontend changes.
+    this.currentDesignSubject.next(JSON.parse(newDesignPage));
+    this.designHistory.push(JSON.parse(newDesignPage));
+    console.log("Updated the data! New history is the following:");
+    console.log(this.designHistory);
+  }
+
+  /* ----------------------------------------- */
+
+  private getFirstDesign(): DesignPage {
     const savedDesign = localStorage.getItem('savedDesign');
     if (environment.useLocalStorage && savedDesign != null) {
       console.log('Got the design from local Storage!');
-      console.log(savedDesign);
+/*      console.log(savedDesign);*/
       return JSON.parse(savedDesign) as DesignPage;
     } else {
       return {
@@ -152,10 +176,6 @@ export class DesignService {
       }
       //}
     }
-  }
-
-  updateData(value: DesignPage): any {
-    this.currentDesignSubject.next(value);
   }
 }
 
