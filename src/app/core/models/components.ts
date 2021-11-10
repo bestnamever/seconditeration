@@ -5,6 +5,6 @@ export interface Components {
     componentTitle: string,
     iconCode: string,
     componentType: WidgetType,
-    assetType: AssetType[],
+    compatibleAssetTypes: AssetType[],
     isdragging: Boolean
 }
