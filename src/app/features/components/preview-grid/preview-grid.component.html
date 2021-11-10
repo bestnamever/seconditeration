@@ -5,7 +5,7 @@
         [ngStyle]="{'border-radius': phoneOptions?.borderRadius, 'border-width': phoneOptions?.borderThickness}">
         <app-preview-topbar></app-preview-topbar>
         <div class="gridContainer">
-          <gridster [options]="gridOptions" class="customGrid" cdkDropList (cdkDropListEntered)="enter($event)">
+          <gridster [options]="gridOptions" class="customGrid">
             <gridster-item class="item" [item]="component.gridsterItem" *ngFor="let component of dashboardComponents"
               (click)="selectItem(component)">
               <div class="widgetContainer" [ngStyle]="{'box-shadow': getBorderState(component)}">
