@@ -4,17 +4,10 @@ import {
   OnInit
 } from '@angular/core';
 import { AssetType } from 'src/app/core/models/asset-type';
-import { AssetFilterService } from 'src/app/core/services/assetFilter.service';
 import { Components } from 'src/app/core/models/components';
-import { unescapeIdentifier } from '@angular/compiler';
 import { WidgetType } from 'src/app/core/models/widget-type';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { DragAndDropService } from 'src/app/core/services/dragAnddrop.service';
 import { GridsterItemComponentInterface } from 'angular-gridster2';
-import { ComponentType } from '@angular/cdk/portal';
-import { ComponentOptions } from 'vue';
-import { tr } from 'date-fns/locale';
-
 
 
 @Component({
@@ -29,13 +22,14 @@ export class LayoutLeftbarComponent implements OnInit {
 
   assetTypeData: Array<AssetType>; // All availible asset types
 
-  selectedFilter: AssetFilter | null;
-
+  // whether a component has been selected
   isSelected: Boolean | null;
 
+  // the origin position of each component
   dragPosition: { x: 0, y: 0 };
 
-  isDragging = false
+  // whether a component is being dragged
+  isDragging: boolean
 
   //array for components
   components: Components[]
@@ -44,10 +38,9 @@ export class LayoutLeftbarComponent implements OnInit {
   selectedComponents: Components[]
   gridItemCoordinates: any;
 
-  constructor(private assetFiterService: AssetFilterService, private dragdropService: DragAndDropService) {
+  constructor(private dragdropService: DragAndDropService) {
     this.searchValue = '';
     this.assetTypeData = Object.values(AssetType);
-    this.selectedFilter = null;
     this.selectedAssetType = AssetType.ALL
     this.components = this.getComponents()
     this.selectedComponents = this.components
@@ -57,11 +50,6 @@ export class LayoutLeftbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.assetFiterService.currentAssetFilterState.subscribe(assetFilter => {
-      this.selectedFilter = assetFilter;
-    })
-
-
   }
 
   /* -------------------Methods--------------------------- */
@@ -81,6 +69,7 @@ export class LayoutLeftbarComponent implements OnInit {
    */
   updateAssetValue(): void {
     this.selectedComponents = this.filterComponent()
+    console.log(this.selectedComponents)
   }
 
   // Function to filter the components
@@ -105,12 +94,10 @@ export class LayoutLeftbarComponent implements OnInit {
 
   /**
    * drag and drop 
-   *  FUNCTIONS
+   * FUNCTIONS
    */
-  onclick(type: WidgetType) {
-    this.dragdropService.sendEvent(type)
-  }
 
+  // mouse key up
   onDrop(event: MouseEvent, component: Components): void {
 
     // get coordinates
@@ -132,14 +119,18 @@ export class LayoutLeftbarComponent implements OnInit {
     this.dragdropService.gridOption(this.isSelected)
     this.dragPosition = { x: 0, y: 0 }
 
-    var index = this.components.indexOf(component)
-    this.components[index].isdragging = false
+    /**
+     * set selected component's isdragging to false
+     * let duplicated component vanish
+     */
+    var index = this.selectedComponents.indexOf(component)
+    this.selectedComponents[index].isdragging = false
 
-
-
-    this.dragdropService.sendEvent(component.componentType)
+    // invoking the addItem methond in preview
+    this.dragdropService.sendEvent(component.componentType, column, row)
   }
 
+  // mouse key down 
   onDragStart(event: MouseEvent, component: Components): void {
     console.log(event);
     console.log('Picking up a Component!');
@@ -148,8 +139,8 @@ export class LayoutLeftbarComponent implements OnInit {
      * set selected component's isdragging to ture
      * create a duplicated component 
      */
-    var index = this.components.indexOf(component)
-    this.components[index].isdragging = true
+    var index = this.selectedComponents.indexOf(component)
+    this.selectedComponents[index].isdragging = true
     console.log(this.components)
 
     // for showing grid 
