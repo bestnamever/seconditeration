@@ -27,8 +27,11 @@ export class DragAndDropService {
 
   }
 
-  sendEvent(type: WidgetType) {
-    this.subject.next(type)
+   /* ---------------------------------------------- */
+
+  // Methods
+  sendEvent(type: WidgetType, x: number, y: number) {
+    this.subject.next({ type, x, y })
   }
 
   getEvent(): Observable<any> {

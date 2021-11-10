@@ -107,10 +107,6 @@ export class LayoutLeftbarComponent implements OnInit {
    * drag and drop 
    *  FUNCTIONS
    */
-  onclick(type: WidgetType) {
-    this.dragdropService.sendEvent(type)
-  }
-
   onDrop(event: MouseEvent, component: Components): void {
 
     // get coordinates
@@ -132,12 +128,12 @@ export class LayoutLeftbarComponent implements OnInit {
     this.dragdropService.gridOption(this.isSelected)
     this.dragPosition = { x: 0, y: 0 }
 
-    var index = this.components.indexOf(component)
-    this.components[index].isdragging = false
+    var index = this.selectedComponents.indexOf(component)
+    this.selectedComponents[index].isdragging = false
 
 
 
-    this.dragdropService.sendEvent(component.componentType)
+    this.dragdropService.sendEvent(component.componentType, column, row)
   }
 
   onDragStart(event: MouseEvent, component: Components): void {
@@ -148,8 +144,8 @@ export class LayoutLeftbarComponent implements OnInit {
      * set selected component's isdragging to ture
      * create a duplicated component 
      */
-    var index = this.components.indexOf(component)
-    this.components[index].isdragging = true
+    var index = this.selectedComponents.indexOf(component)
+    this.selectedComponents[index].isdragging = true
     console.log(this.components)
 
     // for showing grid 
