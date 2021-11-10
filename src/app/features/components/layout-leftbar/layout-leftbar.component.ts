@@ -88,7 +88,7 @@ export class LayoutLeftbarComponent implements OnInit {
     var component = this.getComponents()
     component = component.filter(item => item.componentTitle.toLowerCase().match(this.searchValue.toLowerCase()))
     if (this.selectedAssetType !== AssetType.ALL) (
-      component = component.filter(item => item.assetType.includes(this.selectedAssetType))
+      component = component.filter(item => item.compatibleAssetTypes.includes(this.selectedAssetType))
     )
     return component
   }
@@ -96,10 +96,10 @@ export class LayoutLeftbarComponent implements OnInit {
   // init all components
   getComponents(): Components[] {
     return [
-      { componentTitle: "Data card", iconCode: "crop_3_2", componentType: WidgetType.LABEL, assetType: [AssetType.AIR, AssetType.SOLAR, AssetType.THERMOSTAT], isdragging: false },
-      { componentTitle: "Bar chart", iconCode: "insert_chart_outlined", componentType: WidgetType.BARCHART, assetType: [AssetType.AIR, AssetType.SOLAR], isdragging: false },
-      { componentTitle: "Pie chart", iconCode: "pie_chart", componentType: WidgetType.PIECHART, assetType: [AssetType.AIR, AssetType.SOLAR], isdragging: false },
-      { componentTitle: "Graph", iconCode: "show_chart", componentType: WidgetType.GRAPH, assetType: [AssetType.AIR, AssetType.HUE], isdragging: false },
+      { componentTitle: "Data card", iconCode: "crop_3_2", componentType: WidgetType.LABEL, compatibleAssetTypes: [AssetType.AIR, AssetType.SOLAR, AssetType.THERMOSTAT], isdragging: false },
+      { componentTitle: "Bar chart", iconCode: "insert_chart_outlined", componentType: WidgetType.BARCHART, compatibleAssetTypes: [AssetType.AIR, AssetType.SOLAR], isdragging: false },
+      { componentTitle: "Pie chart", iconCode: "pie_chart", componentType: WidgetType.PIECHART, compatibleAssetTypes: [AssetType.AIR, AssetType.SOLAR], isdragging: false },
+      { componentTitle: "Graph", iconCode: "show_chart", componentType: WidgetType.GRAPH, compatibleAssetTypes: [AssetType.AIR, AssetType.HUE], isdragging: false },
     ]
   }
 
