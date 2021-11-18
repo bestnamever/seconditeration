@@ -9,6 +9,7 @@ import { Components } from 'src/app/core/models/components';
 import { WidgetType } from 'src/app/core/models/widget-type';
 import { DragAndDropService } from 'src/app/core/services/dragAnddrop.service';
 import { GridsterItemComponentInterface } from 'angular-gridster2';
+import { DeletionService } from 'src/app/core/services/deletion.service';
 
 
 
@@ -125,8 +126,6 @@ export class LayoutLeftbarComponent implements OnInit {
 
     var index = this.selectedComponents.indexOf(component)
     this.selectedComponents[index].isdragging = false
-
-
 
     this.dragdropService.sendEvent(component.componentType, column, row)
   }

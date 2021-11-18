@@ -5,11 +5,13 @@ import { PreviewService } from "../../../core/services/preview.service"
 import { DesignService } from "../../../core/services/design.service";
 import { GridsterItem } from 'angular-gridster2';
 import { DesignPage } from 'src/app/core/models/design-page';
-import {concat, Subscription} from 'rxjs';
+import { concat, Subscription } from 'rxjs';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteComfirmComponent } from '../delete-comfirm/delete-comfirm.component';
-import {skip, take, takeLast} from "rxjs/operators";
+import { skip, take, takeLast } from "rxjs/operators";
+import { WidgetType } from 'src/app/core/models/widget-type';
+import { DeletionService } from 'src/app/core/services/deletion.service';
 
 interface width {
   value: number
@@ -27,7 +29,10 @@ export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
   designPage: DesignPage | undefined
 
   // selected widget
-  widget: GridsterItem | undefined
+  selectedWidget: WidgetComponent | null
+
+  // selected widget's GridsterItem
+  selectedGridsterItem: GridsterItem | undefined
 
   // selected widget type
   type: number | undefined;
@@ -46,7 +51,9 @@ export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
   private selectedWidgetSub: Subscription;
   private currentDesignSub: Subscription;
 
-  constructor(private inputData: PreviewService, private outputData: DesignService, public dialog: MatDialog) {
+  constructor(private inputData: PreviewService, private outputData: DesignService, public dialog: MatDialog, private deletionService: DeletionService) {
+
+    this.selectedWidget = null
 
     this.delete_component = "Component"
     this.delete_title = "component"
@@ -62,7 +69,8 @@ export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
 
     // set value on right side bar
     this.selectedWidgetSub = this.inputData.currentlySelectedWidgetState.subscribe(widget => (
-      this.widget = widget?.gridsterItem,
+      this.selectedWidget = widget,
+      this.selectedGridsterItem = widget?.gridsterItem,
       this.type = widget?.widgetData.widgetType,
       this.text = widget?.widgetData.text,
       this.value = widget?.widgetData.values[0].value,
@@ -94,7 +102,7 @@ export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
 
     // change value in designpage
     this.designPage?.positions.forEach(element => {
-      if (element.id == this.widget?.id) {
+      if (element.id == this.selectedGridsterItem?.id) {
         if (key === "value") {
           element.element.values[0].value = value
           this.value = value
@@ -138,10 +146,19 @@ export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
 
   //open delete dialog
   openDeleteDialog() {
-    const dialogRef = this.dialog.open(DeleteComfirmComponent, { width: '30%', data: { title: this.delete_title, component: this.delete_component } });
+    const data = {
+      selectedWidget: this.selectedWidget,
+      title: this.delete_title,
+      component: this.delete_component
+    }
+    const dialogRef = this.dialog.open(DeleteComfirmComponent, { width: '30%', data });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      if (result === "true") {
+        //todo: new subscription's send event and let preview call it to delete
+        console.log(result)
+        this.deletionService.sendEvent(data.selectedWidget)
+      }
     });
   }
 }
