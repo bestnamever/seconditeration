@@ -62,16 +62,6 @@ export class LayoutLeftbarComponent implements OnInit {
   /* -------------------Methods--------------------------- */
 
   /**
-   * Function that updates the searchvalue
-   * @param {string} value Value of the linked searchform
-   */
-  updateSearchValue(value: string): void {
-    this.searchValue = value;
-    console.log(`The searchbox value is: ${value}`); // DEBUG
-    this.selectedComponents = this.filterComponent()
-  }
-
-  /**
    * Function that reads the new selected asset type whenever the dropdown value updates
    */
   updateAssetValue(): void {
@@ -81,7 +71,7 @@ export class LayoutLeftbarComponent implements OnInit {
   // Function to filter the components
   filterComponent(): Components[] {
     var component = this.getComponents()
-    component = component.filter(item => item.componentTitle.toLowerCase().match(this.searchValue.toLowerCase()))
+    //component = component.filter(item => item.componentTitle.toLowerCase().match(this.searchValue.toLowerCase()))
     if (this.selectedAssetType !== AssetType.ALL) (
       component = component.filter(item => item.compatibleAssetTypes.includes(this.selectedAssetType))
     )
