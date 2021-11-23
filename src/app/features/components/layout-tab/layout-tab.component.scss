@@ -1,3 +1,24 @@
 :host ::ng-deep .mat-tab-body-wrapper {
     height: 100%;
 }
+
+::ng-deep .mat-tab-labels{
+
+    .mat-tab-label{
+        background: white;
+
+        .mat-tab-label-content{
+            color: #4d9d2a;
+        }
+    }
+}
+
+::ng-deep mat-slide-toggle.mat-slide-toggle.mat-checked{
+    .mat-slide-toggle-bar{
+        background-color: lighten($color: #4d9d2a, $amount: 10%);
+    }
+
+    .mat-slide-toggle-thumb{
+        background-color: #4d9d2a;
+    }
+}
