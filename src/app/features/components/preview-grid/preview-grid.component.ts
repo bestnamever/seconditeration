@@ -267,9 +267,7 @@ export class PreviewGridComponent implements OnInit {
    * add an item into preivew
    */
   public addItem(value: WidgetType, x: number, y: number) {
-    var maxCurrentId
-    var currentIds = this.currentDesignPage?.positions.map(function (element) { return element.id })
-    if (currentIds != null) { maxCurrentId = Math.max.apply(Math, currentIds) }
+    var maxCurrentId = this.currentDesignPage?.positions[this.currentDesignPage.positions.length - 1].id
     if (maxCurrentId != null) {
       const designpostion: DesignPosition = {
         id: maxCurrentId + 1,
