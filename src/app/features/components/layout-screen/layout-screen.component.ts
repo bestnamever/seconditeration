@@ -42,6 +42,9 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
   // phone screen options
   phoneOptionList: OptionList[]
 
+  // Advanced settings enabled
+  showAdvanced : boolean | null;
+
   private currentPhoneSub: Subscription;
 
 
@@ -57,6 +60,7 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
     this.isInNavigation = "Show in navigation"
     this.delete_component = "Homepage"
     this.delete_title = "page"
+    this.showAdvanced = null;
 
     this.phoneOptionList = [
       { value: "0", viewValue: "SAMSUNG_S20" },
