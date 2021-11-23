@@ -267,22 +267,26 @@ export class PreviewGridComponent implements OnInit {
    * add an item into preivew
    */
   public addItem(value: WidgetType, x: number, y: number) {
-
-    const designpostion: DesignPosition = {
-      id: this.dashboardComponents.length,
-      positionX: x,
-      positionY: y,
-      width: 1,
-      height: 1,
-      element: this.generateWidgetData(value)
-    }
-    // this.dashboardComponents.push({
-    //   gridsterItem: { cols: 1, rows: 1, x, y, minItemCols: 1, minItemRows: 1 },
-    //   widgetData: this.generateWidgetData(value)
-    // })
-    if (this.currentDesignPage != null) {
-      this.currentDesignPage?.positions.push(designpostion)
-      this.designService.updateData(this.currentDesignPage)
+    var maxCurrentId
+    var currentIds = this.currentDesignPage?.positions.map(function (element) { return element.id })
+    if (currentIds != null) { maxCurrentId = Math.max.apply(Math, currentIds) }
+    if (maxCurrentId != null) {
+      const designpostion: DesignPosition = {
+        id: maxCurrentId + 1,
+        positionX: x,
+        positionY: y,
+        width: 1,
+        height: 1,
+        element: this.generateWidgetData(value)
+      }
+      // this.dashboardComponents.push({
+      //   gridsterItem: { cols: 1, rows: 1, x, y, minItemCols: 1, minItemRows: 1 },
+      //   widgetData: this.generateWidgetData(value)
+      // })
+      if (this.currentDesignPage != null) {
+        this.currentDesignPage?.positions.push(designpostion)
+        this.designService.updateData(this.currentDesignPage)
+      }
     }
   }
 
