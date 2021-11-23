@@ -1,6 +1,18 @@
 .left-bar-wrapper {
     height: 100%;
 
+    .toolbar-header{
+        background-color: #4d9d2a;
+
+        .toolbar-row{
+            text-align: center;
+
+            span{
+                margin: auto;
+            }
+        }
+    }
+
     .tab-wrapper {
         padding: 30px;
 
