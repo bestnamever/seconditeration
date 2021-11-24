@@ -1,8 +1,7 @@
 <div class="flex-one">
   <div class="flex-two">
-    <div *ngIf="fullscreen == false else screen" class="phoneContainer">
-      <div class="phone"
-        [ngStyle]="{'border-radius': phoneOptions?.borderRadius, 'border-width': phoneOptions?.borderThickness}">
+    <div *ngIf="fullscreen == false else screen" class="phoneContainer" [ngStyle]="{'aspect-ratio': this.phoneOptions?.aspectRatio}">
+      <div class="phone" [ngStyle]="{'border-radius': this.phoneOptions?.borderRadius, 'border-width': this.phoneOptions?.borderThickness}">
         <app-preview-topbar toptext="Homepage" [fullscreen]="false"></app-preview-topbar>
         <div class="gridContainer">
           <gridster [options]="gridOptions" class="customGrid">

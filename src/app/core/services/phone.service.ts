@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from "rxjs";
-import { environment } from 'src/environments/environment';
-import { PhoneProperties } from "../models/phone-properties";
-import { PhoneType } from "../models/phone-type";
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, Observable} from "rxjs";
+import {environment} from 'src/environments/environment';
+import {PhoneProperties} from "../models/phone-properties";
+import {PhoneType} from "../models/phone-type";
 
 @Injectable({
   providedIn: 'root'
@@ -34,9 +34,9 @@ export class PhoneService {
   changePhone(phoneType: PhoneType): void {
     switch (phoneType) {
 
-      case PhoneType.SAMSUNG_S20: {
+      case PhoneType["Samsung S20"]: {
         this.currentPhoneSubject.next({
-          phoneType: PhoneType.SAMSUNG_S20,
+          phoneType: PhoneType["Samsung S20"],
           borderThickness: '4px',
           borderRadius: '30px',
           notch: true,
@@ -45,16 +45,26 @@ export class PhoneService {
         });
         break;
       }
-      case PhoneType.SAMSUNG_S10: {
+      case PhoneType["Samsung S10"]: {
         this.currentPhoneSubject.next({
-          phoneType: PhoneType.SAMSUNG_S10,
-          borderThickness: '4px',
-          borderRadius: '30px',
+          phoneType: PhoneType["Samsung S10"],
+          borderThickness: '5px',
+          borderRadius: '60px',
           notch: true,
           notchRadius: '4px',
-          aspectRatio: '9/17.5'
+          aspectRatio: '9/15'
         });
         break;
+      }
+      case PhoneType["IPad Pro 12.9 - Landscape"]: {
+        this.currentPhoneSubject.next({
+          phoneType: PhoneType["IPad Pro 12.9 - Landscape"],
+          borderThickness: '8px',
+          borderRadius: '24px',
+          notch: false,
+          notchRadius: '0px',
+          aspectRatio: '4/3'
+        })
       }
     }
   }
@@ -71,7 +81,7 @@ export class PhoneService {
       return JSON.parse(savedPhone) as PhoneProperties;
     } else {
       return {
-        phoneType: PhoneType.SAMSUNG_S20,
+        phoneType: PhoneType["Samsung S20"],
         borderThickness: '4px',
         borderRadius: '30px',
         notch: true,

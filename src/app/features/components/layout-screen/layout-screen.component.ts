@@ -5,6 +5,7 @@ import { PhoneProperties } from 'src/app/core/models/phone-properties';
 import { PhoneService } from 'src/app/core/services/phone.service';
 import { DeleteComfirmComponent } from '../delete-comfirm/delete-comfirm.component'
 import {Subscription} from "rxjs";
+import {PhoneType} from "../../../core/models/phone-type";
 
 @Component({
   selector: 'app-layout-screen',
@@ -62,10 +63,15 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
     this.delete_title = "page"
     this.showAdvanced = null;
 
-    this.phoneOptionList = [
-      { value: "0", viewValue: "SAMSUNG_S20" },
+    this.phoneOptionList = []
+/*      { value: "0", viewValue: "SAMSUNG_S20" },
       { value: "1", viewValue: "SAMSUNG_S10" },
-    ]
+    ]*/
+    for(const phoneString in Object.keys(PhoneType)) {
+      if(PhoneType[phoneString] != null) {
+        this.phoneOptionList.push({ value: phoneString, viewValue: PhoneType[phoneString]});
+      }
+    }
 
 
     this.currentPhoneSub = this.phoneSetting.currentPhoneState.subscribe(phone => (

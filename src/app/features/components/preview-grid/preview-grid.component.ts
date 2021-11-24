@@ -1,5 +1,5 @@
 
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { DisplayGrid, GridsterConfig, GridsterItem, GridsterItemComponentInterface } from "angular-gridster2";
 import { WidgetComponent } from "../../../core/models/widget-component";
 import { PhoneProperties } from "../../../core/models/phone-properties";
@@ -16,6 +16,7 @@ import { empty, Subscription } from 'rxjs';
 import { DesignPosition } from 'src/app/core/models/design-position';
 import { DeletionService } from 'src/app/core/services/deletion.service';
 import { el } from 'date-fns/locale';
+import {NgStyle} from "@angular/common";
 
 
 
@@ -50,7 +51,7 @@ export class PreviewGridComponent implements OnInit {
   /* ---------------------------------------------------------- */
 
   // Constructor
-  constructor(private previewService: PreviewService, private designService: DesignService, private phoneService: PhoneService, private dragDropService: DragAndDropService, private deletionService: DeletionService) {
+  constructor(private previewService: PreviewService, private designService: DesignService, private phoneService: PhoneService, private dragDropService: DragAndDropService, private deletionService: DeletionService, private changeDetectorRef: ChangeDetectorRef) {
     this.selectedWidget = null;
     this.currentDesignPage = null;
     this.dashboardComponents = new Array<WidgetComponent>();
@@ -86,11 +87,6 @@ export class PreviewGridComponent implements OnInit {
       // itemResizeCallback: PreviewGridComponent.itemResize,
     };
 
-    // Apply phone options
-    this.phoneService.currentPhoneState.subscribe(phone => {
-      this.phoneOptions = phone;
-    });
-
     this.dragEventSubscription = this.dragDropService.getEvent().subscribe(param => {
       this.addItem(param.type, param.x, param.y)
     })
@@ -108,7 +104,7 @@ export class PreviewGridComponent implements OnInit {
         this.gridOptions.displayGrid = 'onDrag&Resize'
         this.changedOptions()
       }
-    })
+    });
 
 
 
@@ -122,6 +118,14 @@ export class PreviewGridComponent implements OnInit {
 
   // Method called on init of the page
   ngOnInit(): void {
+
+    // Apply phone options
+    this.phoneService.currentPhoneState.subscribe(phone => {
+      this.phoneOptions = phone;
+      if (this.gridOptions.api && this.gridOptions.api.resize) {
+        this.gridOptions.api.resize();
+      }
+    });
 
     this.gridOptions.draggable = {
       enabled: this.editMode
