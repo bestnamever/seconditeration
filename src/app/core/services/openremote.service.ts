@@ -1,3 +1,4 @@
+import { AssetType } from 'src/app/core/models/asset-type';
 import { Injectable } from '@angular/core';
 import openremote, {Auth} from "@openremote/core/dist";
 import {HttpClient} from "@angular/common/http";
@@ -9,7 +10,11 @@ import {AssetQueryAccess} from "@openremote/model";
 })
 export class OpenremoteService {
 
+  private assetTypes : Array<string> | any;
+
   constructor(private httpClient: HttpClient) {
+
+    this.assetTypes = [];
 
     openremote.init({
       managerUrl: "http://martinaeytesting.nl:8080",
@@ -30,16 +35,25 @@ export class OpenremoteService {
       if (success) {
         console.log("Connection to OpenRemote server was a success!");
 
-        // Getting the currently logged on User:
+        //Getting the currently logged on User:
         httpClient.get('/api/master/user/user').subscribe(result => {
           console.log("Logged into OpenRemote Servers with the following user:");
           console.log(result);
           const userResponse = result as OrUserresponse;
-
+          
           // Getting a list of assets depending on the query filter.
           openremote.rest.api.AssetResource.queryAssets({}).then(result => {
+            console.log('Data', result.data);
             console.log("OpenRemote REST API queryAssets() returned the following:");
             console.log(result);
+
+                result.data.forEach(element => {
+                if (element.type){
+                  if (!this.assetTypes.includes(element.type)){
+                    this.assetTypes.push(element.type);
+                  }
+                }
+            });
           }).catch(error => {
             console.log("OpenRemote REST API request returned an error!");
             console.error(error.message);
@@ -58,5 +72,9 @@ export class OpenremoteService {
         // Something has gone wrong
       }
     });
+  }
+
+  public getAssetTypes() : Array<string> {
+      return this.assetTypes;
   }
 }

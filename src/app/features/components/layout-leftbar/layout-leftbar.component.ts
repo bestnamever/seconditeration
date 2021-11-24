@@ -10,6 +10,7 @@ import { WidgetType } from 'src/app/core/models/widget-type';
 import { DragAndDropService } from 'src/app/core/services/dragAnddrop.service';
 import { GridsterItemComponentInterface } from 'angular-gridster2';
 import { DeletionService } from 'src/app/core/services/deletion.service';
+import { OpenremoteService } from 'src/app/core/services/openremote.service';
 
 @Component({
   selector: 'app-layout-leftbar',
@@ -38,7 +39,7 @@ export class LayoutLeftbarComponent implements OnInit {
   selectedComponents: Components[]
   gridItemCoordinates: any;
 
-  constructor(private assetFiterService: AssetFilterService, private dragdropService: DragAndDropService) {
+  constructor(private assetFiterService: AssetFilterService, private dragdropService: DragAndDropService, private openremoteService : OpenremoteService) {
     this.searchValue = '';
     this.assetTypeData = Object.values(AssetType);
     this.selectedFilter = null;
@@ -54,6 +55,8 @@ export class LayoutLeftbarComponent implements OnInit {
     this.assetFiterService.currentAssetFilterState.subscribe(assetFilter => {
       this.selectedFilter = assetFilter;
     })
+
+    console.log('[LEFT BAR]', this.openremoteService.getAssetTypes());
   }
 
   /* -------------------Methods--------------------------- */
