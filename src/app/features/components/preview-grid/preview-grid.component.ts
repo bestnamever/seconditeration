@@ -247,9 +247,16 @@ export class PreviewGridComponent implements OnInit {
 
   getPreviewHeight(): any {
     if(this.phoneOrientation == PhoneDirection.PORTRAIT) {
-      return '80vh';
+      return '80%';
     } else {
-      return '30vh';
+      return undefined;
+    }
+  }
+  getPreviewWidth(): any {
+    if(this.phoneOrientation == PhoneDirection.PORTRAIT) {
+      return undefined;
+    } else {
+      return '70%';
     }
   }
 

@@ -52,7 +52,7 @@ export class PhoneService {
           borderRadius: '30px',
           notch: true,
           notchRadius: '4px',
-          aspectRatio: '9/17.5'
+          aspectRatio: '9/17'
         });
         break;
       }
@@ -67,14 +67,14 @@ export class PhoneService {
         });
         break;
       }
-      case PhoneType["IPad Pro 12.9 - Landscape"]: {
+      case PhoneType["IPad Pro 12.9"]: {
         this.currentPhoneSubject.next({
-          phoneType: PhoneType["IPad Pro 12.9 - Landscape"],
+          phoneType: PhoneType["IPad Pro 12.9"],
           borderThickness: '8px',
           borderRadius: '24px',
           notch: false,
           notchRadius: '0px',
-          aspectRatio: '4/3'
+          aspectRatio: '3/4'
         })
       }
     }
@@ -100,7 +100,7 @@ export class PhoneService {
         borderRadius: '30px',
         notch: true,
         notchRadius: '4px',
-        aspectRatio: '9/17.5'
+        aspectRatio: '9/17'
       } as PhoneProperties;
     }
   }
