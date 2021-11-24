@@ -1,23 +1,20 @@
-
-import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
-import { DisplayGrid, GridsterConfig, GridsterItem, GridsterItemComponentInterface } from "angular-gridster2";
-import { WidgetComponent } from "../../../core/models/widget-component";
-import { PhoneProperties } from "../../../core/models/phone-properties";
-import { PreviewService } from "../../../core/services/preview.service";
-import { DesignPage } from "../../../core/models/design-page";
-import { DesignService } from "../../../core/services/design.service";
-import { PhoneService } from "../../../core/services/phone.service";
-import { DesignElement } from 'src/app/core/models/design-element';
-import { WidgetType } from 'src/app/core/models/widget-type';
-import { AssetType } from 'src/app/core/models/asset-type';
-import { DragAndDropService } from 'src/app/core/services/dragAnddrop.service';
-import { CdkDragDrop, CdkDragEnter } from '@angular/cdk/drag-drop';
-import { empty, Subscription } from 'rxjs';
-import { DesignPosition } from 'src/app/core/models/design-position';
-import { DeletionService } from 'src/app/core/services/deletion.service';
-import { el } from 'date-fns/locale';
-import {NgStyle} from "@angular/common";
-
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {GridsterConfig, GridsterItem, GridsterItemComponentInterface} from "angular-gridster2";
+import {WidgetComponent} from "../../../core/models/widget-component";
+import {PhoneProperties} from "../../../core/models/phone-properties";
+import {PreviewService} from "../../../core/services/preview.service";
+import {DesignPage} from "../../../core/models/design-page";
+import {DesignService} from "../../../core/services/design.service";
+import {PhoneService} from "../../../core/services/phone.service";
+import {DesignElement} from 'src/app/core/models/design-element';
+import {WidgetType} from 'src/app/core/models/widget-type';
+import {AssetType} from 'src/app/core/models/asset-type';
+import {DragAndDropService} from 'src/app/core/services/dragAnddrop.service';
+import {CdkDragEnter} from '@angular/cdk/drag-drop';
+import {Subscription} from 'rxjs';
+import {DesignPosition} from 'src/app/core/models/design-position';
+import {DeletionService} from 'src/app/core/services/deletion.service';
+import {PhoneDirection} from "../../../core/models/phone-direction";
 
 
 @Component({
@@ -34,6 +31,7 @@ export class PreviewGridComponent implements OnInit {
   // Variables
   gridOptions: GridsterConfig;
   phoneOptions: PhoneProperties | undefined;
+  phoneOrientation: PhoneDirection | undefined;
   dashboardComponents: Array<WidgetComponent>;
 
   currentDesignPage: DesignPage | null;
@@ -126,6 +124,13 @@ export class PreviewGridComponent implements OnInit {
         this.gridOptions.api.resize();
       }
     });
+
+    this.phoneService.currentOrientationState.subscribe(orientation => {
+      this.phoneOrientation = orientation;
+      if (this.gridOptions.api && this.gridOptions.api.resize) {
+        this.gridOptions.api.resize();
+      }
+    })
 
     this.gridOptions.draggable = {
       enabled: this.editMode
@@ -222,6 +227,30 @@ export class PreviewGridComponent implements OnInit {
   selectItem(component: WidgetComponent): void {
     this.previewService.selectWidget(component);
     // console.log(this.previewService.currentlySelectedWidgetState)
+  }
+
+  getAspectRatio(): any {
+    if(this.phoneOrientation == PhoneDirection.PORTRAIT) {
+      return this.phoneOptions?.aspectRatio;
+    } else {
+      let aspectRatio = this.phoneOptions?.aspectRatio;
+      const splittedRatio = aspectRatio?.split('/');
+      console.log(splittedRatio);
+      if(splittedRatio != null) {
+        aspectRatio = splittedRatio[1] + "/" + splittedRatio[0];
+      }
+      console.log("Aspect Ratio is now [" + aspectRatio + "]");
+      return aspectRatio;
+    }
+    return undefined;
+  }
+
+  getPreviewHeight(): any {
+    if(this.phoneOrientation == PhoneDirection.PORTRAIT) {
+      return '80vh';
+    } else {
+      return '30vh';
+    }
   }
 
   getBorderState(component: WidgetComponent): any {
