@@ -14,6 +14,8 @@ import { DragAndDropService } from 'src/app/core/services/dragAnddrop.service';
 import { CdkDragDrop, CdkDragEnter } from '@angular/cdk/drag-drop';
 import { empty, Subscription } from 'rxjs';
 import { DesignPosition } from 'src/app/core/models/design-position';
+import { DeletionService } from 'src/app/core/services/deletion.service';
+import { el } from 'date-fns/locale';
 
 
 
@@ -34,6 +36,8 @@ export class PreviewGridComponent implements OnInit {
 
   dragEventSubscription: Subscription
 
+  deletionEventSubscription: Subscription
+
   gridItemCoordinates: Map<GridsterItemComponentInterface, { x: number, y: number, width: number, height: number }>;
   //selected type
   // message: string;
@@ -42,7 +46,7 @@ export class PreviewGridComponent implements OnInit {
   /* ---------------------------------------------------------- */
 
   // Constructor
-  constructor(private previewService: PreviewService, private designService: DesignService, private phoneService: PhoneService, private dragDropService: DragAndDropService) {
+  constructor(private previewService: PreviewService, private designService: DesignService, private phoneService: PhoneService, private dragDropService: DragAndDropService, private deletionService: DeletionService) {
     this.selectedWidget = null;
     this.currentDesignPage = null;
     this.dashboardComponents = new Array<WidgetComponent>();
@@ -87,8 +91,11 @@ export class PreviewGridComponent implements OnInit {
       this.addItem(param.type, param.x, param.y)
     })
 
+    this.deletionEventSubscription = this.deletionService.getEvent().subscribe(data => {
+      this.removeItem(data)
+    })
+
     this.dragDropService.isOptionShownState.subscribe(isShown => {
-      console.log(isShown)
       if (isShown) {
         this.gridOptions.displayGrid = 'always'
         this.changedOptions()
@@ -145,8 +152,6 @@ export class PreviewGridComponent implements OnInit {
     });
 
     this.dragDropService.sendGridItemCoordinates(this.gridItemCoordinates)
-
-
 
   }
 
@@ -262,25 +267,34 @@ export class PreviewGridComponent implements OnInit {
    * add an item into preivew
    */
   public addItem(value: WidgetType, x: number, y: number) {
-
-    const designpostion: DesignPosition = {
-      id: this.dashboardComponents.length,
-      positionX: x,
-      positionY: y,
-      width: 1,
-      height: 1,
-      element: this.generateWidgetData(value)
-    }
-    // this.dashboardComponents.push({
-    //   gridsterItem: { cols: 1, rows: 1, x, y, minItemCols: 1, minItemRows: 1 },
-    //   widgetData: this.generateWidgetData(value)
-    // })
-    if (this.currentDesignPage != null) {
-      this.currentDesignPage?.positions.push(designpostion)
-      this.designService.updateData(this.currentDesignPage)
+    var maxCurrentId = this.currentDesignPage?.positions[this.currentDesignPage.positions.length - 1].id
+    if (maxCurrentId != null) {
+      const designpostion: DesignPosition = {
+        id: maxCurrentId + 1,
+        positionX: x,
+        positionY: y,
+        width: 1,
+        height: 1,
+        element: this.generateWidgetData(value)
+      }
+      // this.dashboardComponents.push({
+      //   gridsterItem: { cols: 1, rows: 1, x, y, minItemCols: 1, minItemRows: 1 },
+      //   widgetData: this.generateWidgetData(value)
+      // })
+      if (this.currentDesignPage != null) {
+        this.currentDesignPage?.positions.push(designpostion)
+        this.designService.updateData(this.currentDesignPage)
+      }
     }
   }
 
+  public removeItem(widget: WidgetComponent) {
+    if (this.currentDesignPage != null) {
+      this.currentDesignPage.positions = this.currentDesignPage.positions.filter(obj => JSON.stringify(obj.element) !== JSON.stringify(widget.widgetData))
+      console.log(this.currentDesignPage)
+      this.designService.updateData(this.currentDesignPage)
+    }
+  }
 
   /**
    * drag and drop
