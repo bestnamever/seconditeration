@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-preview-topbar',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./preview-topbar.component.scss']
 })
 export class PreviewTopbarComponent implements OnInit {
+
+  @Input() toptext: string | undefined;
 
   constructor() { }
 

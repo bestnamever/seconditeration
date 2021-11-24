@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import openremote, {Auth} from "@openremote/core/dist";
 import {HttpClient} from "@angular/common/http";
 import {OrUserresponse} from "../models/or-userresponse";
-import {AssetQueryAccess} from "@openremote/model";
 
 @Injectable({
   providedIn: 'root'

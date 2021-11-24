@@ -1,5 +1,5 @@
 
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { DisplayGrid, GridsterConfig, GridsterItem, GridsterItemComponentInterface } from "angular-gridster2";
 import { WidgetComponent } from "../../../core/models/widget-component";
 import { PhoneProperties } from "../../../core/models/phone-properties";
@@ -25,6 +25,9 @@ import { el } from 'date-fns/locale';
   styleUrls: ['./preview-grid.component.scss']
 })
 export class PreviewGridComponent implements OnInit {
+
+  // Input
+  @Input('fullscreen') fullscreen: boolean | undefined
 
   // Variables
   gridOptions: GridsterConfig;
@@ -108,7 +111,7 @@ export class PreviewGridComponent implements OnInit {
 
 
 
-    //subscribe to type of selected widght 
+    //subscribe to type of selected widght
 
     // this.message = ""
     // this.subscription = this.data.currentMessage.subscribe((message: string) => this.message = message)
