@@ -27,7 +27,8 @@ import { el } from 'date-fns/locale';
 export class PreviewGridComponent implements OnInit {
 
   // Input
-  @Input('fullscreen') fullscreen: boolean | undefined
+  @Input('fullscreen') fullscreen: boolean | undefined;
+  @Input('editMode') editMode: boolean | undefined;
 
   // Variables
   gridOptions: GridsterConfig;
@@ -60,10 +61,10 @@ export class PreviewGridComponent implements OnInit {
       isMobile: true,
       mobileBreakpoint: 1,
       draggable: {
-        enabled: true
+        enabled: false
       },
       resizable: {
-        enabled: true
+        enabled: false
       },
       pushItems: true,
       margin: 12,
@@ -121,6 +122,15 @@ export class PreviewGridComponent implements OnInit {
 
   // Method called on init of the page
   ngOnInit(): void {
+
+    this.gridOptions.draggable = {
+      enabled: this.editMode
+    };
+    this.gridOptions.resizable = {
+      enabled: this.editMode
+    }
+    this.changedOptions();
+
 
     // Subscribe to changes of the Design
     this.designService.currentDesignState.subscribe(design => {
@@ -211,7 +221,7 @@ export class PreviewGridComponent implements OnInit {
   }
 
   getBorderState(component: WidgetComponent): any {
-    if (this.isWidgetSelected(component)) {
+    if (this.isWidgetSelected(component) && this.editMode) {
       return 'inset 0px 0px 0px 2px #4D9D2A';
     } else {
       return 'inset 0px 0px 0px 2px #E0E0E0';

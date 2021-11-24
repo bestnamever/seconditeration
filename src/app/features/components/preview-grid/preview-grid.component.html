@@ -1,9 +1,9 @@
 <div class="flex-one">
-  <div *ngIf="fullscreen == false else screen" class="flex-two">
-    <div class="phoneContainer">
+  <div class="flex-two">
+    <div *ngIf="fullscreen == false else screen" class="phoneContainer">
       <div class="phone"
         [ngStyle]="{'border-radius': phoneOptions?.borderRadius, 'border-width': phoneOptions?.borderThickness}">
-        <app-preview-topbar toptext="Homepage"></app-preview-topbar>
+        <app-preview-topbar toptext="Homepage" [fullscreen]="false"></app-preview-topbar>
         <div class="gridContainer">
           <gridster [options]="gridOptions" class="customGrid">
             <gridster-item class="item" [item]="component.gridsterItem" *ngFor="let component of dashboardComponents"
@@ -17,20 +17,20 @@
         </div>
       </div>
     </div>
-    <app-preview-updatedtext style="margin-top: 1.5em;"></app-preview-updatedtext>
+    <ng-template #screen>
+      <app-preview-topbar toptext="Homepage" [fullscreen]="true"></app-preview-topbar>
+      <div class="gridContainer" style="width: 100vw">
+        <gridster [options]="gridOptions" class="customGrid">
+          <gridster-item class="item" [item]="component.gridsterItem" *ngFor="let component of dashboardComponents"
+                         (click)="selectItem(component)">
+            <div class="widgetContainer" [ngStyle]="{'box-shadow': getBorderState(component)}">
+              <!--<p>Test {{component.widgetData}}</p>-->
+              <app-preview-parentwidget [widgetId]="component.gridsterItem.id"></app-preview-parentwidget>
+            </div>
+          </gridster-item>
+        </gridster>
+      </div>
+    </ng-template>
+    <app-preview-updatedtext *ngIf="fullscreen == false" style="margin-top: 1.5em;"></app-preview-updatedtext>
   </div>
-  <ng-template #screen>
-    <app-preview-topbar toptext="Homepage"></app-preview-topbar>
-    <div class="gridContainer">
-      <gridster [options]="gridOptions" class="customGrid">
-        <gridster-item class="item" [item]="component.gridsterItem" *ngFor="let component of dashboardComponents"
-                       (click)="selectItem(component)">
-          <div class="widgetContainer" [ngStyle]="{'box-shadow': getBorderState(component)}">
-            <!--<p>Test {{component.widgetData}}</p>-->
-            <app-preview-parentwidget [widgetId]="component.gridsterItem.id"></app-preview-parentwidget>
-          </div>
-        </gridster-item>
-      </gridster>
-    </div>
-  </ng-template>
 </div>
