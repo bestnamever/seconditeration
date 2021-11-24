@@ -89,25 +89,15 @@
     overflow: visible;
 }
 
-
-// Material grid tiles
-::ng-deep.mat-grid-tile{
-    transition: all 250ms ease-out;
-
-    .draggableComponent{
-        background: none;
-
-        .component-subtitle{
-            p{
-                margin: 0;
-            }
-        }
-    }
-
-    &:hover{
-        background: darken($color: white, $amount: 5%);
-        box-shadow: 0px 0px 10px 2px rgba($color: black, $alpha: 0.15);
-        border-radius: 5px;
-        cursor: move;
-    }
+.Components {
+    background-color: #4d9d2a;
+    height: 55px;
+    text-align: center;
+    line-height: 55px;
+    color: white;
+    letter-spacing: 0px;
+    opacity: 1;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: "Roboto", sans-serif;
 }

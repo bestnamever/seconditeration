@@ -4,6 +4,7 @@ import { DesignPage } from "../models/design-page";
 import { WidgetType } from "../models/widget-type";
 import { AssetType } from "../models/asset-type";
 import { environment } from "../../../environments/environment";
+import {OpenremoteService} from "./openremote.service";
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,15 @@ export class DesignService {
   private readonly designHistory: DesignPage[] // List of all submitted Designs, to keep track of history (for undo-ing but also for checking whether it has changed)
 
   // Constructor
-  constructor() {
+  constructor(private openremoteService: OpenremoteService) {
 
     // Initialize variables
     this.currentDesignSubject = new BehaviorSubject<DesignPage>(this.getFirstDesign()); // Set the 1st design on init
     this.currentDesignState = this.currentDesignSubject.asObservable(); // Make a clone of the state which is read-only
     this.designHistory = [];
     this.designHistory.push(this.getFirstDesign());
+
+    // openremote impl
 
     // A method that sends a message to console when the Design gets updated
     if (environment.useLocalStorage) {

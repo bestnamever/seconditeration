@@ -29,7 +29,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { GridsterModule } from 'angular-gridster2'
 
 // Self-made Util classes (REST, interceptors etc)
-import { HttpbaseurlInterceptor } from "./core/interceptors/httpbaseurl.interceptor";
+import { OpenremoterequestInterceptor } from "./core/interceptors/openremoterequest.interceptor";
 
 // Self-made pages
 import { AppComponent } from './app.component';
@@ -106,10 +106,10 @@ import './features/litelements/vd-barchart/vd-barchart.component';
     MatSlideToggleModule,
     FormsModule,
     DragDropModule,
-    MatGridListModule
+    MatGridListModule,
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: HttpbaseurlInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: OpenremoterequestInterceptor, multi: true },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
