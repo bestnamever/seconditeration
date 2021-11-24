@@ -11,8 +11,6 @@ import { DragAndDropService } from 'src/app/core/services/dragAnddrop.service';
 import { GridsterItemComponentInterface } from 'angular-gridster2';
 import { DeletionService } from 'src/app/core/services/deletion.service';
 
-
-
 @Component({
   selector: 'app-layout-leftbar',
   templateUrl: './layout-leftbar.component.html',
@@ -56,8 +54,6 @@ export class LayoutLeftbarComponent implements OnInit {
     this.assetFiterService.currentAssetFilterState.subscribe(assetFilter => {
       this.selectedFilter = assetFilter;
     })
-
-
   }
 
   /* -------------------Methods--------------------------- */
