@@ -23,6 +23,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatListModule } from '@angular/material/list';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 // Other externally imported Libraries
 import { GridsterModule } from 'angular-gridster2'
@@ -102,6 +103,7 @@ import './features/litelements/vd-barchart/vd-barchart.component';
     MatCheckboxModule,
     MatInputModule,
     MatDialogModule,
+    MatSlideToggleModule,
     FormsModule,
     DragDropModule,
     MatGridListModule,

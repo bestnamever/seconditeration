@@ -1,117 +1,132 @@
 .screen_body {
-    position: relative;
-    margin-left: 40px;
-    max-width: 340px;
+  position: relative;
+  padding: 0px 40px;
 }
+
 .top_info {
-    margin-left: 25px;
-    margin-top: 30px;
-    width: 340px;
-    font-weight: 500;
-    font-size: medium;
+  padding: 0 25px;
+  margin-top: 30px;
+  width: 340px;
+  font-weight: 500;
+  font-size: medium;
 }
 
 .icon {
-    display: flex;
-    align-items: center;
-    size: 16px;
+  display: flex;
+  align-items: center;
+  size: 16px;
 }
 
 .home_icon {
-    margin-right: 10px;
-    transform: scale(0.7);
+  margin-right: 10px;
+  transform: scale(0.7);
 }
 
 .material-devider {
-    margin-top: 10px;
-    margin-left: 30px;
-    width: 340px;
-    border-top-width: 2.5px;
+  margin-top: 10px;
+  margin-left: 30px;
+  width: 340px;
+  border-top-width: 2.5px;
 }
 
 .title {
-    margin-top: 20px;
-    font-weight: 500;
-    font-size: 16px;
-    color: black;
+  margin-top: 20px;
+  font-weight: 500;
+  font-size: 16px;
+  color: black;
 }
 
 .form {
-    margin-top: 20px;
-    width: 300px;
-    height: 60px;
+  margin: 20px 0px 10px 0px;
+  width: 100%;
+  height: 60px;
 }
 
 .page_name {
-    width: 300px;
-}
-
-.screen_body {
-    height: 500px;
-    width: 360px;
+  width: 100%;
 }
 
 .set_homepage {
-    margin-top: 0px;
+  margin-top: 0px;
 }
 
 .in_navigation {
-    margin-top: 0px;
+  margin-top: 0px;
 }
 
 .checkboxlist {
-    text-align: left;
-    size: 16px;
+  text-align: left;
+  size: 16px;
 }
 
 .mat-checkbox {
-    height: 35px;
-    display: flex;
-    align-items: center;
+  height: 35px;
+  width: 100%;
+  margin: 5px 0px;
 }
 
 ::ng-deep .mat-checkbox-layout {
-    display: flex;
-    width: 90%;
-    justify-content: space-between;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }
 
 :host ::ng-deep .mat-checkbox-label-before .mat-checkbox-inner-container {
-    margin-right: 0;
+  margin-right: 0;
 }
 
 .custom_size {
-    text-align: justify;
-    margin-top: 10px;
+  text-align: justify;
+  margin-top: 10px;
 }
 
 .custom_height {
-    float: left;
-    max-width: 120px;
+  float: left;
+  max-width: 120px;
 }
 
 .custom_width {
-    float: right;
-    max-width: 120px;
-    margin-right: 40px;
+  float: right;
+  max-width: 120px;
+  margin-right: 40px;
 }
 
 .delete {
-    position: fixed;
-    bottom: 0;
-    margin-bottom: 30px;
+  position: fixed;
+  bottom: 0;
+  margin-bottom: 30px;
 }
 
 .delete a {
-    color: red;
-    font-size: 18px;
+  color: red;
+  font-size: 18px;
 }
 
 .safe_space_form {
-    width: 300px;
-    height: 60px;
+  width: 100%;
+  height: 60px;
 }
 
-.customize_screen{
-    margin-top: 10px;
+.customize_screen {
+  margin-top: 10px;
+}
+
+.advanced-toggle {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+
+  span {
+    font-weight: 500;
+    font-size: 16px;
+    color: black;
+  }
+}
+
+::ng-deep mat-checkbox.mat-checkbox-checked{
+    .mat-checkbox-inner-container{
+        span.mat-checkbox-background{
+            background-color: #4d9d2a;
+        }
+    }
 }
