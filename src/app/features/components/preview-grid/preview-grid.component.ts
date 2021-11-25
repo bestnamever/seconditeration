@@ -265,6 +265,22 @@ export class PreviewGridComponent implements OnInit {
       return '70%';
     }
   }
+  getMarginTop(): string | undefined {
+    if(this.phoneOrientation == PhoneDirection.PORTRAIT) { return this.phoneOptions?.marginTop; }
+    else { return undefined; }
+  }
+  getMarginBottom(): string | undefined {
+    if(this.phoneOrientation == PhoneDirection.PORTRAIT) { return this.phoneOptions?.marginBottom }
+    else { return undefined; }
+  }
+  getMarginLeft(): string | undefined {
+    if(this.phoneOrientation == PhoneDirection.LANDSCAPE) { return this.phoneOptions?.marginTop; }
+    else { return undefined; }
+  }
+  getMarginRight(): string | undefined {
+    if(this.phoneOrientation == PhoneDirection.LANDSCAPE) { return this.phoneOptions?.marginBottom; }
+    else { return undefined; }
+  }
 
   getBorderState(component: WidgetComponent): any {
     if (this.isWidgetSelected(component) && this.editMode) {

@@ -1,10 +1,9 @@
 <div class="flex-one">
   <div class="flex-two">
     <div *ngIf="fullscreen == false else screen" class="phoneContainer" [ngStyle]="{'aspect-ratio': this.getAspectRatio(), 'min-height': this.getPreviewHeight(), 'min-width': this.getPreviewWidth()}">
-      <div></div>
-      <div class="phone" [ngStyle]="{'border-radius': this.phoneOptions?.borderRadius, 'border-width': this.phoneOptions?.borderThickness}">
-        <app-preview-topbar toptext="Homepage" [fullscreen]="false" [phoneOptions]="this.phoneOptions" [phoneOrientation]="this.phoneOrientation" [ngStyle]="{'margin-top': this.phoneOptions?.marginTop}"></app-preview-topbar>
-        <div class="gridContainer" [ngStyle]="{'padding-bottom': phoneOptions?.marginBottom}">
+      <div class="phone" [ngStyle]="{'border-radius': this.phoneOptions?.borderRadius, 'border-width': this.phoneOptions?.borderThickness, 'padding-left': this.getMarginLeft(), 'padding-right': this.getMarginRight()}">
+        <app-preview-topbar toptext="Homepage" [fullscreen]="false" [phoneOptions]="this.phoneOptions" [phoneOrientation]="this.phoneOrientation" [ngStyle]="{'margin-top': getMarginTop()}"></app-preview-topbar>
+        <div class="gridContainer" [ngStyle]="{'padding-bottom': getMarginBottom()}">
           <gridster [options]="gridOptions" class="customGrid">
             <gridster-item class="item" [item]="component.gridsterItem" *ngFor="let component of dashboardComponents"
               (click)="selectItem(component)">
