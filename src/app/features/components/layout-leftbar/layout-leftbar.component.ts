@@ -34,7 +34,7 @@ export class LayoutLeftbarComponent implements OnInit {
 
   //array for components
   components: Components[]
-  assetTypes: String[]
+  assetTypes: any[]
 
   //array for selected components
   selectedComponents: Components[]

@@ -10,11 +10,13 @@ import {AssetQueryAccess} from "@openremote/model";
 })
 export class OpenremoteService {
 
-  private usedAssetTypes : Array<string> | any;
+  private usedAssetTypes : Array<any> | any;
+  private assetTypes : Array<any> | any;
 
   constructor(private httpClient: HttpClient) {
 
     this.usedAssetTypes = [];
+    this.assetTypes = [];
 
     openremote.init({
       managerUrl: "http://martinaeytesting.nl:8080",
@@ -37,7 +39,8 @@ export class OpenremoteService {
 
         // Getting the list of all asset types
         httpClient.get('/api/master/model/assetDescriptors').subscribe(result => {
-          console.log('DESCRIPTORS', result);
+          this.assetTypes = result;
+          console.log('DESCRIPTORS', this.assetTypes);
         })
 
         //Getting the currently logged on User:
@@ -52,12 +55,17 @@ export class OpenremoteService {
             console.log("OpenRemote REST API queryAssets() returned the following:");
             console.log(result);
 
+              // Filtering the list of components to get a list of unique asset types
                 result.data.forEach(element => {
-                  let assetType = element.type?.replace("Asset", "");
+                  let assetType = element.type;
                 if (assetType){
-                  if (!this.usedAssetTypes.includes(assetType)){
-                    this.usedAssetTypes.push(assetType);
-                  }
+                  this.assetTypes.forEach((type : any) => {
+                    if (type.name == assetType){
+                      if (!this.usedAssetTypes.includes(type)){
+                        this.usedAssetTypes.push(type);
+                      }
+                    }
+                  });
                 }
             });
           }).catch(error => {
@@ -80,7 +88,11 @@ export class OpenremoteService {
     });
   }
 
-  public getAssetTypes() : Array<string> {
+  /**
+   * Function for returning the list of currently used asset types
+   * @returns {Array<string>} List of asset types
+   */
+  public getAssetTypes() : Array<any> {
       return this.usedAssetTypes;
   }
 }

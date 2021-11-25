@@ -14,7 +14,10 @@
                 <mat-label>Choose an asset type</mat-label>
                 <mat-select disableOptionCentering [(value)]='selectedAssetType' (selectionChange)="updateAssetValue()">
                     <mat-option *ngFor="let type of assetTypes" [value]="type">
-                        {{type}}
+                        <div class="option">
+                            <mat-icon aria-hidden="false" aria-label="Component icon" class="component-icon">{{type.icon}}</mat-icon>
+                            {{type.name.replace("Asset", "")}}
+                        </div>
                     </mat-option>
                 </mat-select>
             </mat-form-field>
