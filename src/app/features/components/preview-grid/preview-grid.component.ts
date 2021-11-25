@@ -235,11 +235,11 @@ export class PreviewGridComponent implements OnInit {
     } else {
       let aspectRatio = this.phoneOptions?.aspectRatio;
       const splittedRatio = aspectRatio?.split('/');
-      console.log(splittedRatio);
+      // console.log(splittedRatio);
       if(splittedRatio != null) {
         aspectRatio = splittedRatio[1] + "/" + splittedRatio[0];
       }
-      console.log("Aspect Ratio is now [" + aspectRatio + "]");
+      // console.log("Aspect Ratio is now [" + aspectRatio + "]");
       return aspectRatio;
     }
     return undefined;

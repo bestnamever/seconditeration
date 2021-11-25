@@ -43,40 +43,55 @@ export class PhoneService {
   }
 
   changePhone(phoneType: PhoneType): void {
-    switch (phoneType) {
+    const properties = this.getPhone(phoneType);
+    if(properties != null) {
+      this.currentPhoneSubject.next(properties);
+    }
+  }
 
+  getPhone(phoneType: PhoneType): PhoneProperties | undefined {
+    switch (phoneType) {
       case PhoneType["Samsung S20"]: {
-        this.currentPhoneSubject.next({
+        return {
           phoneType: PhoneType["Samsung S20"],
           borderThickness: '4px',
           borderRadius: '30px',
-          notch: true,
-          notchRadius: '4px',
-          aspectRatio: '9/17'
-        });
-        break;
+          smallNotch: true,
+          smallNotchRadius: '6px',
+          smallNotchWidth: '12px',
+          largeNotch: false,
+          largeNotchWidth: '0px',
+          aspectRatio: '9/20'
+        };
       }
       case PhoneType["Samsung S10"]: {
-        this.currentPhoneSubject.next({
+        return {
           phoneType: PhoneType["Samsung S10"],
           borderThickness: '5px',
           borderRadius: '60px',
-          notch: true,
-          notchRadius: '4px',
+          smallNotch: true,
+          smallNotchRadius: '6px',
+          smallNotchWidth: '12px',
+          largeNotch: false,
+          largeNotchWidth: '0px',
           aspectRatio: '9/15'
-        });
-        break;
+        };
       }
       case PhoneType["IPad Pro 12.9"]: {
-        this.currentPhoneSubject.next({
+        return {
           phoneType: PhoneType["IPad Pro 12.9"],
           borderThickness: '8px',
           borderRadius: '24px',
-          notch: false,
-          notchRadius: '0px',
+          smallNotch: false,
+          smallNotchRadius: '0px',
+          smallNotchWidth: '0px',
+          largeNotch: true,
+          largeNotchWidth: '0px',
           aspectRatio: '3/4'
-        })
+        };
       }
+      default:
+        return undefined;
     }
   }
 
@@ -94,14 +109,7 @@ export class PhoneService {
       console.log(savedPhone);
       return JSON.parse(savedPhone) as PhoneProperties;
     } else {
-      return {
-        phoneType: PhoneType["Samsung S20"],
-        borderThickness: '4px',
-        borderRadius: '30px',
-        notch: true,
-        notchRadius: '4px',
-        aspectRatio: '9/17'
-      } as PhoneProperties;
+      return this.getPhone(PhoneType["Samsung S20"]);
     }
   }
 }

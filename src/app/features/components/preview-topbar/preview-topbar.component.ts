@@ -1,4 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {PhoneProperties} from "../../../core/models/phone-properties";
+import {PhoneDirection} from "../../../core/models/phone-direction";
 
 @Component({
   selector: 'app-preview-topbar',
@@ -9,6 +11,8 @@ export class PreviewTopbarComponent implements OnInit {
 
   @Input() toptext: string | undefined;
   @Input() fullscreen: boolean | undefined;
+  @Input() phoneOptions: PhoneProperties | undefined;
+  @Input() phoneOrientation: PhoneDirection | undefined;
 
   constructor() { }
 
@@ -23,6 +27,10 @@ export class PreviewTopbarComponent implements OnInit {
       default:
         return "100%";
     }
+  }
+
+  isInPortraitMode(): boolean {
+    return this.phoneOrientation == PhoneDirection.PORTRAIT;
   }
 
 }

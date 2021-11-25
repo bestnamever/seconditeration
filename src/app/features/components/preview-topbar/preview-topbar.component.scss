@@ -5,3 +5,25 @@
   width: 100%;
   height: 100%;
 }
+
+.flex-two {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.largeNotch {
+  left: 50%;
+  width: 140px;
+  height: 21px;
+  background-color: black;
+  border-radius: 0 0 14px 14px;
+}
+
+.smallNotch {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  left: 50%;
+  background-color: black;
+}

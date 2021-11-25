@@ -5,8 +5,11 @@ export interface PhoneProperties {
   aspectRatio: string;
   borderThickness: string;
   borderRadius: string;
-  notch: boolean;
-  notchRadius: string;
+  smallNotch: boolean;
+  smallNotchRadius: string;
+  smallNotchWidth: string;
+  largeNotch: boolean;
+  largeNotchWidth: string;
 
   customWidth?: number;
   customHeight?: number;

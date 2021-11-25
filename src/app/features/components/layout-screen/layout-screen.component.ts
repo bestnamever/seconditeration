@@ -76,11 +76,13 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
     }
 
 
-    this.currentPhoneSub = this.phoneSetting.currentPhoneState.subscribe(phone => (
-      this.phoneOptions = phone,
-      this.phoneSelected = this.phoneOptions.phoneType === 0 ? "0" : "1",
+    this.currentPhoneSub = this.phoneSetting.currentPhoneState.subscribe(phone => {
+      this.phoneOptions = phone;
+      this.phoneSelected = phone.phoneType.toString();
+      console.log("Now selected [" + phone.phoneType.toString() + "]");
+      // this.phoneSelected = this.phoneOptions.phoneType === 0 ? "0" : "1";
       console.log(this.phoneSelected)
-    ))
+    });
   }
 
 
