@@ -17,7 +17,7 @@ export class DesignService {
   private readonly designHistory: DesignPage[] // List of all submitted Designs, to keep track of history (for undo-ing but also for checking whether it has changed)
 
   // Constructor
-  constructor(private openremoteService: OpenremoteService) {
+  constructor(/*private openremoteService: OpenremoteService*/) {
 
     // Initialize variables
     this.currentDesignSubject = new BehaviorSubject<DesignPage>(this.getFirstDesign()); // Set the 1st design on init

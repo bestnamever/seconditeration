@@ -10,11 +10,11 @@ import {AssetQueryAccess} from "@openremote/model";
 })
 export class OpenremoteService {
 
-  private assetTypes : Array<string> | any;
+  private usedAssetTypes : Array<string> | any;
 
   constructor(private httpClient: HttpClient) {
 
-    this.assetTypes = [];
+    this.usedAssetTypes = [];
 
     openremote.init({
       managerUrl: "http://martinaeytesting.nl:8080",
@@ -35,12 +35,17 @@ export class OpenremoteService {
       if (success) {
         console.log("Connection to OpenRemote server was a success!");
 
+        // Getting the list of all asset types
+        httpClient.get('/api/master/model/assetDescriptors').subscribe(result => {
+          console.log('DESCRIPTORS', result);
+        })
+
         //Getting the currently logged on User:
         httpClient.get('/api/master/user/user').subscribe(result => {
           console.log("Logged into OpenRemote Servers with the following user:");
           console.log(result);
           const userResponse = result as OrUserresponse;
-          
+
           // Getting a list of assets depending on the query filter.
           openremote.rest.api.AssetResource.queryAssets({}).then(result => {
             console.log('Data', result.data);
@@ -48,9 +53,10 @@ export class OpenremoteService {
             console.log(result);
 
                 result.data.forEach(element => {
-                if (element.type){
-                  if (!this.assetTypes.includes(element.type)){
-                    this.assetTypes.push(element.type);
+                  let assetType = element.type?.replace("Asset", "");
+                if (assetType){
+                  if (!this.usedAssetTypes.includes(assetType)){
+                    this.usedAssetTypes.push(assetType);
                   }
                 }
             });
@@ -75,6 +81,6 @@ export class OpenremoteService {
   }
 
   public getAssetTypes() : Array<string> {
-      return this.assetTypes;
+      return this.usedAssetTypes;
   }
 }

@@ -13,7 +13,7 @@
             <mat-form-field class="asset-filter" appearance="fill">
                 <mat-label>Choose an asset type</mat-label>
                 <mat-select disableOptionCentering [(value)]='selectedAssetType' (selectionChange)="updateAssetValue()">
-                    <mat-option *ngFor="let type of assetTypeData" [value]="type">
+                    <mat-option *ngFor="let type of assetTypes" [value]="type">
                         {{type}}
                     </mat-option>
                 </mat-select>

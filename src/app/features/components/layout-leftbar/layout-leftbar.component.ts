@@ -34,6 +34,7 @@ export class LayoutLeftbarComponent implements OnInit {
 
   //array for components
   components: Components[]
+  assetTypes: String[]
 
   //array for selected components
   selectedComponents: Components[]
@@ -49,14 +50,16 @@ export class LayoutLeftbarComponent implements OnInit {
     this.isSelected = false
     this.dragPosition = { x: 0, y: 0 };
     this.isDragging = false
+    this.assetTypes = this.openremoteService.getAssetTypes();
   }
 
   ngOnInit(): void {
     this.assetFiterService.currentAssetFilterState.subscribe(assetFilter => {
       this.selectedFilter = assetFilter;
     })
-
+    
     console.log('[LEFT BAR]', this.openremoteService.getAssetTypes());
+    console.log('[LEFT BAR]', this.assetTypes);
   }
 
   /* -------------------Methods--------------------------- */
