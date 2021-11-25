@@ -29,7 +29,7 @@ export class OpenremoteService {
       },*/
       loadDescriptors: false,
       realm: "master",
-      loadIcons: false,
+      loadIcons: true,
       configureTranslationsOptions: (options) => {
         options.lng = "nl"; // Change initial language to dutch rather than english
       }

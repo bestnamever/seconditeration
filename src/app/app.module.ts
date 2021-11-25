@@ -56,6 +56,7 @@ import { ComponentThumbnailComponent } from './features/components/component-thu
 import './features/litelements/vd-label/vd-label.component'
 import './features/litelements/vd-graph/vd-graph.component';
 import './features/litelements/vd-barchart/vd-barchart.component';
+import './features/litelements/or-icon/or-icon.component'
 
 
 
@@ -80,7 +81,7 @@ import './features/litelements/vd-barchart/vd-barchart.component';
     LayoutRightbarComponentsComponent,
     LayoutComponentSettingComponent,
     LayoutScreenComponent,
-    DeleteComfirmComponent
+    DeleteComfirmComponent,
   ],
   imports: [
     CommonModule,
