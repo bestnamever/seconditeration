@@ -77,6 +77,13 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
 
 
     this.currentPhoneSub = this.phoneSetting.currentPhoneState.subscribe(phone => {
+      if(this.phoneSelected != phone.phoneType.toString()) {
+        if(PhoneType[phone.phoneType].includes('Desktop')) {
+          this.changeOrientation('LANDSCAPE');
+        } else {
+          this.changeOrientation('PORTRAIT');
+        }
+      }
       this.phoneOptions = phone;
       this.phoneSelected = phone.phoneType.toString();
       console.log("Now selected [" + phone.phoneType.toString() + "]");

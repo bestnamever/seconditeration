@@ -1,10 +1,10 @@
 <div [ngStyle]="{'width': this.getWidth()}">
     <div style="width: 100%; background-color: black">
-      <div *ngIf="phoneOptions?.largeNotch && isInPortraitMode()" style="width: 100%; background-color: rgba(77, 157, 42, 0.8);" class="flex-two">
-        <div class="largeNotch" [ngStyle]="{'width': phoneOptions?.largeNotchWidth}"></div>
+      <div *ngIf="phoneOptions?.largeNotch && isInPortraitMode()" style="width: 100%; background-color: rgba(77, 157, 42, 0.8);" class="flex-two" [ngStyle]="{'justify-content': getNotchPosition()}">
+        <div class="largeNotch" [ngStyle]="{'width': phoneOptions?.largeNotchWidth, 'height': phoneOptions?.largeNotchHeight, 'border-radius': phoneOptions?.largeNotchRadius}"></div>
       </div>
-      <div style="width: 100%; background-color: rgba(77, 157, 42, 0.8);" class="flex-two">
-        <div class="smallNotch" [ngStyle]="{'width': phoneOptions?.smallNotchWidth, 'height': phoneOptions?.smallNotchWidth, 'border-radius': phoneOptions?.smallNotchRadius}"></div>
+      <div *ngIf="phoneOptions?.smallNotch && isInPortraitMode()" style="width: 100%; background-color: rgba(77, 157, 42, 0.8);" class="flex-two" [ngStyle]="{'justify-content': getNotchPosition(), 'padding-left': phoneOptions?.smallNotchCustomLeftMargin, 'padding-right': phoneOptions?.smallNotchCustomRightMargin}">
+        <div class="smallNotch" [ngStyle]="{'width': phoneOptions?.smallNotchWidth, 'height': phoneOptions?.smallNotchWidth, 'border-radius': phoneOptions?.smallNotchRadius, 'margin-top': getNotchMarginTop()}"></div>
       </div>
       <mat-toolbar style="background-color: #4d9d2a">
       <div class="flex">

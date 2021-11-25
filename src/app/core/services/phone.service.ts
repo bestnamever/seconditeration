@@ -51,43 +51,188 @@ export class PhoneService {
 
   getPhone(phoneType: PhoneType): PhoneProperties | undefined {
     switch (phoneType) {
+      case PhoneType["Apple IPhone SE 2020"]: {
+        return {
+          phoneType: PhoneType["Apple IPhone SE 2020"],
+          borderThickness: '9px',
+          borderRadius: '54px',
+          smallNotch: false,
+          largeNotch: false,
+          aspectRatio: '9/16',
+          marginTop: '52px',
+          marginBottom: '52px',
+          customWidth: '55%',
+          customHeight: '65%'
+        }
+      }
+      case PhoneType["Apple IPhone 13"]: {
+        return {
+          phoneType: PhoneType["Apple IPhone 13"],
+          borderThickness: '7px',
+          borderRadius: '40px',
+          smallNotch: false,
+          largeNotch: true,
+          largeNotchWidth: '120px',
+          largeNotchHeight: '22px',
+          largeNotchRadius: '0 0 12px 12px',
+          aspectRatio: '9/19.5'
+        }
+      }
+      case PhoneType["Apple IPad Pro 12.9"]: {
+        return {
+          phoneType: PhoneType["Apple IPad Pro 12.9"],
+          borderThickness: '9px',
+          borderRadius: '24px',
+          smallNotch: false,
+          largeNotch: false,
+          aspectRatio: '3/4'
+        };
+      }
+      case PhoneType["Desktop 16:9"]: {
+        return {
+          phoneType: PhoneType["Desktop 16:9"],
+          borderThickness: '6px',
+          borderRadius: '12px',
+          smallNotch: false,
+          largeNotch: false,
+          aspectRatio: '9/16',
+          customWidth: '80%',
+        }
+      }
+      case PhoneType["Desktop 16:10"]: {
+        return {
+          phoneType: PhoneType["Desktop 16:10"],
+          borderThickness: '6px',
+          borderRadius: '12px',
+          smallNotch: false,
+          largeNotch: false,
+          aspectRatio: '10/16',
+          customWidth: '80%',
+        }
+      }
+      case PhoneType["Desktop 21:9"]: {
+        return {
+          phoneType: PhoneType["Desktop 21:9"],
+          borderThickness: '6px',
+          borderRadius: '12px',
+          smallNotch: false,
+          largeNotch: false,
+          aspectRatio: '9/21',
+          customWidth: '85%',
+        }
+      }
+      case PhoneType["Google Pixel 6"]: {
+        return {
+          phoneType: PhoneType["Google Pixel 6"],
+          borderThickness: '6px',
+          borderRadius: '22px',
+          smallNotch: true,
+          smallNotchRadius: '8px',
+          smallNotchWidth: '16px',
+          largeNotch: false,
+          aspectRatio: '9/19.5'
+        }
+      }
+      case PhoneType["LENOVO Tab M10 Plus"]: {
+        return {
+          phoneType: PhoneType["LENOVO Tab M10 Plus"],
+          borderThickness: '16px',
+          borderRadius: '18px',
+          smallNotch: false,
+          largeNotch: false,
+          aspectRatio: '10/16'
+        };
+      }
+      case PhoneType["OnePlus 9"]: {
+        return {
+          phoneType: PhoneType["OnePlus 9"],
+          borderThickness: '6px',
+          borderRadius: '26px',
+          smallNotch: true,
+          smallNotchRadius: '7px',
+          smallNotchWidth: '14px',
+          smallNotchCustomTopMargin: '9px',
+          smallNotchCustomLeftMargin: '14px',
+          largeNotch: false,
+          aspectRatio: '9/20',
+          customPosition: 'start',
+        };
+      }
+      case PhoneType["OnePlus Nord"]: {
+        return {
+          phoneType: PhoneType["OnePlus Nord"],
+          borderThickness: '7px',
+          borderRadius: '26px',
+          smallNotch: true,
+          smallNotchRadius: '7px',
+          smallNotchWidth: '14px',
+          smallNotchCustomTopMargin: '9px',
+          smallNotchCustomLeftMargin: '14px',
+          largeNotch: false,
+          aspectRatio: '9/20',
+          customPosition: 'start',
+        };
+      }
+      case PhoneType["POCO X3"]: {
+        return {
+          phoneType: PhoneType["POCO X3"],
+          borderThickness: '8px',
+          borderRadius: '32px',
+          smallNotch: true,
+          smallNotchRadius: '8px',
+          smallNotchWidth: '16px',
+          smallNotchCustomTopMargin: '7px',
+          largeNotch: false,
+          aspectRatio: '9/20',
+        };
+      }
       case PhoneType["Samsung S20"]: {
         return {
           phoneType: PhoneType["Samsung S20"],
-          borderThickness: '4px',
+          borderThickness: '6px',
           borderRadius: '30px',
           smallNotch: true,
           smallNotchRadius: '6px',
           smallNotchWidth: '12px',
           largeNotch: false,
-          largeNotchWidth: '0px',
           aspectRatio: '9/20'
         };
       }
-      case PhoneType["Samsung S10"]: {
+      case PhoneType["Samsung S21"]: {
         return {
-          phoneType: PhoneType["Samsung S10"],
+          phoneType: PhoneType["Samsung S21"],
           borderThickness: '5px',
-          borderRadius: '60px',
+          borderRadius: '30px',
           smallNotch: true,
-          smallNotchRadius: '6px',
-          smallNotchWidth: '12px',
+          smallNotchRadius: '5px',
+          smallNotchWidth: '10px',
           largeNotch: false,
-          largeNotchWidth: '0px',
-          aspectRatio: '9/15'
+          aspectRatio: '9/20'
         };
       }
-      case PhoneType["IPad Pro 12.9"]: {
+      case PhoneType["Samsung Galaxy Tab S7 Plus"]: {
         return {
-          phoneType: PhoneType["IPad Pro 12.9"],
-          borderThickness: '8px',
-          borderRadius: '24px',
+          phoneType: PhoneType["Samsung Galaxy Tab S7 Plus"],
+          borderThickness: '14px',
+          borderRadius: '14px',
           smallNotch: false,
-          smallNotchRadius: '0px',
-          smallNotchWidth: '0px',
-          largeNotch: true,
-          largeNotchWidth: '0px',
-          aspectRatio: '3/4'
+          largeNotch: false,
+          aspectRatio: '10/16'
+        };
+      }
+      case PhoneType["XIAOMI Mi 11"]: {
+        return {
+          phoneType: PhoneType["XIAOMI Mi 11"],
+          borderThickness: '4px',
+          borderRadius: '36px',
+          smallNotch: true,
+          smallNotchRadius: '7px',
+          smallNotchWidth: '14px',
+          smallNotchCustomTopMargin: '10px',
+          smallNotchCustomLeftMargin: '18px',
+          largeNotch: false,
+          aspectRatio: '9/20',
+          customPosition: 'start'
         };
       }
       default:

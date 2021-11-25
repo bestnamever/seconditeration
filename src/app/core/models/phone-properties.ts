@@ -5,12 +5,23 @@ export interface PhoneProperties {
   aspectRatio: string;
   borderThickness: string;
   borderRadius: string;
-  smallNotch: boolean;
-  smallNotchRadius: string;
-  smallNotchWidth: string;
-  largeNotch: boolean;
-  largeNotchWidth: string;
 
-  customWidth?: number;
-  customHeight?: number;
+  smallNotch: boolean;
+  smallNotchRadius?: string;
+  smallNotchWidth?: string;
+  smallNotchCustomTopMargin?: string;
+  smallNotchCustomLeftMargin?: string;
+  smallNotchCustomRightMargin?: string;
+
+  largeNotch: boolean;
+  largeNotchWidth?: string;
+  largeNotchHeight?: string;
+  largeNotchRadius?: string;
+
+  marginTop?: string;
+  marginBottom?: string;
+
+  customWidth?: string;
+  customHeight?: string;
+  customPosition?: string;
 }

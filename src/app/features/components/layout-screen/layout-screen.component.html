@@ -32,7 +32,7 @@
             <!-- Screen selection -->
             <mat-form-field appearance="outline" class="form">
               <mat-label>Display on the device</mat-label>
-              <mat-select #chosenPhoneSetting disableOptionCentering [(value)]="phoneSelected"
+              <mat-select #chosenPhoneSetting disableOptionCentering [value]="phoneSelected"
                           (valueChange)="change(chosenPhoneSetting.value)">
                 <mat-option *ngFor="let property of phoneOptionList" [value]="property.value">
                   {{property.viewValue}}

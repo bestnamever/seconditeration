@@ -3,8 +3,8 @@
     <div *ngIf="fullscreen == false else screen" class="phoneContainer" [ngStyle]="{'aspect-ratio': this.getAspectRatio(), 'min-height': this.getPreviewHeight(), 'min-width': this.getPreviewWidth()}">
       <div></div>
       <div class="phone" [ngStyle]="{'border-radius': this.phoneOptions?.borderRadius, 'border-width': this.phoneOptions?.borderThickness}">
-        <app-preview-topbar toptext="Homepage" [fullscreen]="false" [phoneOptions]="this.phoneOptions" [phoneOrientation]="this.phoneOrientation"></app-preview-topbar>
-        <div class="gridContainer">
+        <app-preview-topbar toptext="Homepage" [fullscreen]="false" [phoneOptions]="this.phoneOptions" [phoneOrientation]="this.phoneOrientation" [ngStyle]="{'margin-top': this.phoneOptions?.marginTop}"></app-preview-topbar>
+        <div class="gridContainer" [ngStyle]="{'padding-bottom': phoneOptions?.marginBottom}">
           <gridster [options]="gridOptions" class="customGrid">
             <gridster-item class="item" [item]="component.gridsterItem" *ngFor="let component of dashboardComponents"
               (click)="selectItem(component)">
@@ -31,6 +31,6 @@
         </gridster>
       </div>
     </ng-template>
-    <app-preview-updatedtext *ngIf="fullscreen == false" style="margin-top: 1.5em;"></app-preview-updatedtext>
+    <app-preview-updatedtext *ngIf="fullscreen == false" style="margin-top: 2.5em;"></app-preview-updatedtext>
   </div>
 </div>

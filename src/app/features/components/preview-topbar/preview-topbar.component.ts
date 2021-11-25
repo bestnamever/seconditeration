@@ -33,4 +33,19 @@ export class PreviewTopbarComponent implements OnInit {
     return this.phoneOrientation == PhoneDirection.PORTRAIT;
   }
 
+  getNotchPosition(): string {
+    if(this.phoneOptions?.customPosition != null) {
+      return this.phoneOptions?.customPosition;
+    } else {
+      return 'center'
+    }
+  }
+  getNotchMarginTop(): string {
+    if(this.phoneOptions?.smallNotchCustomTopMargin != null) {
+      return this.phoneOptions?.smallNotchCustomTopMargin;
+    } else {
+      return '4px';
+    }
+  }
+
 }

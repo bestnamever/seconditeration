@@ -247,6 +247,9 @@ export class PreviewGridComponent implements OnInit {
 
   getPreviewHeight(): any {
     if(this.phoneOrientation == PhoneDirection.PORTRAIT) {
+      if(this.phoneOptions?.customHeight != null) {
+        return this.phoneOptions?.customHeight;
+      }
       return '80%';
     } else {
       return undefined;
@@ -256,6 +259,9 @@ export class PreviewGridComponent implements OnInit {
     if(this.phoneOrientation == PhoneDirection.PORTRAIT) {
       return undefined;
     } else {
+      if(this.phoneOptions?.customWidth != null) {
+        return this.phoneOptions?.customWidth;
+      }
       return '70%';
     }
   }
