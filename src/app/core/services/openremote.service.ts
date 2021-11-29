@@ -14,11 +14,11 @@ export class OpenremoteService {
       managerUrl: "http://martinaeytesting.nl:8080",
       keycloakUrl: "http://martinaeytesting.nl:8080/auth",
       auth: Auth.KEYCLOAK,
-      autoLogin: false,
-/*      credentials: {
+      autoLogin: true,
+      credentials: {
         username: "admin",
         password: "secret",
-      },*/
+      },
       loadDescriptors: false,
       realm: "master",
       loadIcons: false,
