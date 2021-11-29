@@ -329,4 +329,9 @@ export class PreviewGridComponent implements OnInit {
   // onDrop(event: CdkDragDrop<WidgetComponent[]>) {
   //   this.dragDropService.drop(event);
   // }
+
+  //hotkey for deletion
+  deletion() {
+    console.log("key pressed")
+  }
 }

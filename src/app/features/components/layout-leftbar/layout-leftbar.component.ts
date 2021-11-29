@@ -1,7 +1,8 @@
 import { AssetFilter } from './../../../core/models/asset-filter';
 import {
   Component,
-  OnInit
+  OnInit,
+  Optional
 } from '@angular/core';
 import { AssetType } from 'src/app/core/models/asset-type';
 import { AssetFilterService } from 'src/app/core/services/assetFilter.service';
@@ -10,6 +11,8 @@ import { WidgetType } from 'src/app/core/models/widget-type';
 import { DragAndDropService } from 'src/app/core/services/dragAnddrop.service';
 import { GridsterItemComponentInterface } from 'angular-gridster2';
 import { DeletionService } from 'src/app/core/services/deletion.service';
+import { first } from 'rxjs/operators';
+import { ConditionalExpr } from '@angular/compiler';
 
 
 
@@ -112,12 +115,16 @@ export class LayoutLeftbarComponent implements OnInit {
       const yLocInGrid = (event.screenY - firstItem.gridster.el.getBoundingClientRect().top);
       column = firstItem.gridster.pixelsToPositionX(xLocInGrid, (x) => Math.floor(x));
       row = (firstItem.gridster.pixelsToPositionY((yLocInGrid + firstItem.gridster.el.scrollTop), (y) => Math.floor(y)) - 1);
+
+      console.log("item is" + firstItem)
       console.log('X to pixels returns [' + column + ']');
       console.log('Y to pixels returns [' + row + ']');
     }
     else {
-      column = 0
-      row = 0
+      var preview = document.getElementsByClassName("phoneContainer")[0].getBoundingClientRect()
+      column = Math.floor((event.screenX - preview.left) / 160)
+      row = Math.floor((event.screenY - preview.top - 104) / 160) -1
+      console.log("x: " + column, " y: " + row)
     }
     this.isSelected = false
     this.dragdropService.gridOption(this.isSelected)
