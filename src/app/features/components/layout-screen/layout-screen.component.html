@@ -1,105 +1,109 @@
-<div class="top_info">
+<div style="overflow-x: hidden; height: 100%;">
+  <div class="top_info">
     <div class="icon">
-        <mat-icon aria-hidden="false" aria-label="Example home icon" class="home_icon">home</mat-icon>
-        Homepage
-        <!-- <Homepage> as name will be the paramter sent by preview -->
+      <mat-icon aria-hidden="false" aria-label="Example home icon" class="home_icon">home</mat-icon>
+      Homepage
+      <!-- <Homepage> as name will be the paramter sent by preview -->
     </div>
-</div>
-<mat-divider class="material-devider"></mat-divider>
-<div class="screen_body">
+  </div>
+  <mat-divider class="material-devider"></mat-divider>
+  <div class="screen_body">
     <div class="content">
-        <div class="title">Page properties</div>
-        <form class="form">
-            <mat-form-field class="page_name" appearance="outline">
-                <mat-label>Page name</mat-label>
-                <input matInput disabled placeholder="Ex. Homepage" value={{homepage}}>
+      <div class="title">Page properties</div>
+      <form class="form">
+        <mat-form-field class="page_name" appearance="outline">
+          <mat-label>Page name</mat-label>
+          <input matInput disabled placeholder="Ex. Homepage" value={{homepage}}>
+          <!-- value will be passed by the preview -->
+        </mat-form-field>
+      </form>
+      <div class="set_homepage">
+        <mat-checkbox disabled="true" [labelPosition]="'before'">
+          {{ setHomepage }}
+        </mat-checkbox>
+      </div>
+      <div class="in_navigation">
+        <mat-checkbox disabled="true" [labelPosition]="'before'">
+          {{ isInNavigation }}
+        </mat-checkbox>
+      </div>
+      <div class="title">Screen properties</div>
+      <div class="device">
+        <div>
+          <!-- Screen selection -->
+          <mat-form-field appearance="outline" class="form">
+            <mat-label>Display on the device</mat-label>
+            <mat-select #chosenPhoneSetting disableOptionCentering [value]="phoneSelected"
+                        (valueChange)="change(chosenPhoneSetting.value)">
+              <mat-option *ngFor="let property of phoneOptionList" [value]="property.value">
+                {{property.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <div class="flex">
+            <div>
+              <p>Phone Orientation</p>
+            </div>
+            <div>
+              <mat-button-toggle-group [(ngModel)]="phoneOrientation">
+                <mat-button-toggle [value]="0" (change)="this.changeOrientation('PORTRAIT')">
+                  <mat-icon>stay_current_portrait</mat-icon>
+                </mat-button-toggle>
+                <mat-button-toggle [value]="1" (change)="this.changeOrientation('LANDSCAPE')" style="padding: -4px">
+                  <mat-icon>stay_current_landscape</mat-icon>
+                </mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top: 48px;">
+        <div class="advanced-toggle">
+          <span>Advanced settings</span><mat-slide-toggle [(ngModel)]="showAdvanced"></mat-slide-toggle>
+        </div>
+        <div *ngIf="showAdvanced" id="advanced-options" class="advanced-options-container">
+          <div class="customize_screen">
+            <mat-checkbox (click)='showHideCustom()' [labelPosition]="'before'">
+              {{ customScreenSize }}
+            </mat-checkbox>
+            <div [hidden]='isHidden' class="custom_size">
+              <mat-form-field class="custom_height" appearance="outline">
+                <mat-label>Height</mat-label>
+                <input matInput placeholder="Height" value={{height}}>
                 <!-- value will be passed by the preview -->
-            </mat-form-field>
-        </form>
-        <div class="set_homepage">
-            <mat-checkbox disabled="true" [labelPosition]="'before'">
-                {{ setHomepage }}
-            </mat-checkbox>
-        </div>
-        <div class="in_navigation">
-            <mat-checkbox disabled="true" [labelPosition]="'before'">
-                {{ isInNavigation }}
-            </mat-checkbox>
-        </div>
-        <div class="title">Screen properties</div>
-        <div class="device">
+              </mat-form-field>
+              <mat-form-field class="custom_width" appearance="outline">
+                <mat-label>Width</mat-label>
+                <input matInput placeholder="Width" value={{height}}>
+                <!-- value will be passed by the preview -->
+              </mat-form-field>
+            </div>
+          </div>
           <div>
-            <!-- Screen selection -->
-            <mat-form-field appearance="outline" class="form">
-              <mat-label>Display on the device</mat-label>
-              <mat-select #chosenPhoneSetting disableOptionCentering [value]="phoneSelected"
-                          (valueChange)="change(chosenPhoneSetting.value)">
-                <mat-option *ngFor="let property of phoneOptionList" [value]="property.value">
-                  {{property.viewValue}}
-                </mat-option>
+            <mat-form-field appearance="outline" class="safe_space_form">
+              <mat-label>Screen safe space(padding)</mat-label>
+              <mat-select disabled disableOptionCentering>
+                <mat-option value="one">2px</mat-option>
+                <mat-option value="two">4px</mat-option>
+                <mat-option value="three">6px</mat-option>
+                <mat-option value="four">8px</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
-          <div>
-            <div class="flex">
-              <div>
-                <p>Phone Orientation</p>
-              </div>
-              <div>
-                <mat-button-toggle-group [(ngModel)]="phoneOrientation">
-                  <mat-button-toggle [value]="0" (change)="this.changeOrientation('PORTRAIT')">
-                    <mat-icon>stay_current_portrait</mat-icon>
-                  </mat-button-toggle>
-                  <mat-button-toggle [value]="1" (change)="this.changeOrientation('LANDSCAPE')" style="padding: -4px">
-                    <mat-icon>stay_current_landscape</mat-icon>
-                  </mat-button-toggle>
-                </mat-button-toggle-group>
-              </div>
-            </div>
+          <div class="safe_space">
+            <mat-checkbox disabled [labelPosition]="'before'">
+              {{ safeSpace }}
+            </mat-checkbox>
           </div>
         </div>
-        <div style="margin-top: 48px;">
-          <div class="advanced-toggle">
-            <span>Advanced settings</span><mat-slide-toggle [(ngModel)]="showAdvanced"></mat-slide-toggle>
-          </div>
-          <div *ngIf="showAdvanced" id="advanced-options" class="advanced-options-container">
-            <div class="customize_screen">
-              <mat-checkbox (click)='showHideCustom()' [labelPosition]="'before'">
-                {{ customScreenSize }}
-              </mat-checkbox>
-              <div [hidden]='isHidden' class="custom_size">
-                <mat-form-field class="custom_height" appearance="outline">
-                  <mat-label>Height</mat-label>
-                  <input matInput placeholder="Height" value={{height}}>
-                  <!-- value will be passed by the preview -->
-                </mat-form-field>
-                <mat-form-field class="custom_width" appearance="outline">
-                  <mat-label>Width</mat-label>
-                  <input matInput placeholder="Width" value={{height}}>
-                  <!-- value will be passed by the preview -->
-                </mat-form-field>
-              </div>
-            </div>
-            <div>
-              <mat-form-field appearance="outline" class="safe_space_form">
-                <mat-label>Screen safe space(padding)</mat-label>
-                <mat-select disableOptionCentering>
-                  <mat-option value="one">2px</mat-option>
-                  <mat-option value="two">4px</mat-option>
-                  <mat-option value="three">6px</mat-option>
-                  <mat-option value="four">8px</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="safe_space">
-              <mat-checkbox [labelPosition]="'before'">
-                {{ safeSpace }}
-              </mat-checkbox>
-            </div>
-          </div>
-        </div>
+      </div>
     </div>
-    <div class="delete" style="cursor: pointer;">
-        <a (click)="openDeleteDialog()">Delete Page</a>
+  </div>
+  <div class="delete" style="height: 6vh; width: 100%;">
+    <div style="cursor: pointer;">
+      <a (click)="openDeleteDialog()">Delete Page</a>
     </div>
+  </div>
 </div>
