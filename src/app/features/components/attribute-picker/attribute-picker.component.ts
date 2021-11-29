@@ -26,4 +26,8 @@ export class AttributePickerComponent implements OnInit {
     console.log('[ATTRIBUTE PICKER]', "USED ASSETS:", this.usedAssets);
   }
 
+  closePicker() : void {
+    this.attributePickerControl.setIsOpened(false);
+  }
+
 }

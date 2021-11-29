@@ -1,10 +1,33 @@
 <div *ngIf="isOpened" class="attribute-picker-wrapper">
+  <mat-toolbar color="primary" class="toolbar-header">
+    <mat-toolbar-row class="toolbar-row">
+      <span>Attribute Picker</span>
+    </mat-toolbar-row>
+  </mat-toolbar>
   <div class="container">
-    <div class="left-tab">
-
+    <div class="top-bar">
     </div>
-    <div class="right-tab">
-
+    <div class="picker-container">
+      <div class="tabs">
+        <div class="left-tab tab">
+          <mat-toolbar color="primary" class="sub-header">
+            <mat-toolbar-row class="toolbar-row">
+              <span>Asset</span>
+            </mat-toolbar-row>
+          </mat-toolbar>
+        </div>
+        <div class="right-tab tab">
+          <mat-toolbar color="primary" class="sub-header">
+            <mat-toolbar-row class="toolbar-row">
+              <span>Attribute</span>
+            </mat-toolbar-row>
+          </mat-toolbar>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <a (click)="closePicker()">CANCEL</a>
+        <a href="#">SELECT ATTRIBUTE</a>
+      </div>
     </div>
   </div>
 </div>
