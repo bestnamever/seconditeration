@@ -21,7 +21,7 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
   phoneOptions: PhoneProperties | undefined;
 
   // phone selection
-  phoneSelected: string | undefined
+  phoneSelected: string | undefined;
 
   //page name and setHomepge
   homepage: string;
@@ -66,6 +66,7 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
     this.showAdvanced = null;
 
     this.phoneOptionList = []
+    // this.phoneSelected = "Apple IPhone 13";
 /*      { value: "0", viewValue: "SAMSUNG_S20" },
       { value: "1", viewValue: "SAMSUNG_S10" },
     ]*/
@@ -77,7 +78,8 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
 
 
     this.currentPhoneSub = this.phoneSetting.currentPhoneState.subscribe(phone => {
-      if(this.phoneSelected != phone.phoneType.toString()) {
+      console.log(this.phoneSelected);
+      if(this.phoneSelected != phone.phoneType.toString() && this.phoneSelected != null) {
         if(PhoneType[phone.phoneType].includes('Desktop')) {
           this.changeOrientation('LANDSCAPE');
         } else {
