@@ -102,14 +102,23 @@ export class LayoutLeftbarComponent implements OnInit {
     console.log(this.gridItemCoordinates)
     console.log("droping ");
 
+    var column
+    var row
+
     // Check if user is dropping it onto the grid
     const firstItem = this.gridItemCoordinates.keys().next().value as GridsterItemComponentInterface;
-    const xLocInGrid = (event.screenX - firstItem.gridster.el.getBoundingClientRect().left);
-    const yLocInGrid = (event.screenY - firstItem.gridster.el.getBoundingClientRect().top);
-    const column = firstItem.gridster.pixelsToPositionX(xLocInGrid, (x) => Math.floor(x));
-    const row = (firstItem.gridster.pixelsToPositionY((yLocInGrid + firstItem.gridster.el.scrollTop), (y) => Math.floor(y)) - 1);
-    console.log('X to pixels returns [' + column + ']');
-    console.log('Y to pixels returns [' + row + ']');
+    if (firstItem != undefined) {
+      const xLocInGrid = (event.screenX - firstItem.gridster.el.getBoundingClientRect().left);
+      const yLocInGrid = (event.screenY - firstItem.gridster.el.getBoundingClientRect().top);
+      column = firstItem.gridster.pixelsToPositionX(xLocInGrid, (x) => Math.floor(x));
+      row = (firstItem.gridster.pixelsToPositionY((yLocInGrid + firstItem.gridster.el.scrollTop), (y) => Math.floor(y)) - 1);
+      console.log('X to pixels returns [' + column + ']');
+      console.log('Y to pixels returns [' + row + ']');
+    }
+    else {
+      column = 0
+      row = 0
+    }
     this.isSelected = false
     this.dragdropService.gridOption(this.isSelected)
     this.dragPosition = { x: 0, y: 0 }
@@ -118,6 +127,7 @@ export class LayoutLeftbarComponent implements OnInit {
     this.selectedComponents[index].isdragging = false
 
     this.dragdropService.sendEvent(component.componentType, column, row)
+
   }
 
   onDragStart(event: MouseEvent, component: Components): void {
