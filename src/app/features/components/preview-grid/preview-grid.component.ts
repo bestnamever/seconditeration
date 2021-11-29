@@ -36,6 +36,7 @@ export class PreviewGridComponent implements OnInit {
 
   currentDesignPage: DesignPage | null;
   selectedWidget: WidgetComponent | null;
+  isDragging: boolean | null;
 
   dragEventSubscription: Subscription
 
@@ -52,6 +53,7 @@ export class PreviewGridComponent implements OnInit {
   constructor(private previewService: PreviewService, private designService: DesignService, private phoneService: PhoneService, private dragDropService: DragAndDropService, private deletionService: DeletionService, private changeDetectorRef: ChangeDetectorRef) {
     this.selectedWidget = null;
     this.currentDesignPage = null;
+    this.isDragging = false;
     this.dashboardComponents = new Array<WidgetComponent>();
 
     this.gridItemCoordinates = new Map<GridsterItemComponentInterface, { x: number, y: number, width: number, height: number }>();
@@ -130,6 +132,10 @@ export class PreviewGridComponent implements OnInit {
       if (this.gridOptions.api && this.gridOptions.api.resize) {
         this.gridOptions.api.resize();
       }
+    })
+
+    this.dragDropService.isOptionShownState.subscribe(data => {
+      this.isDragging = data;
     })
 
     this.gridOptions.draggable = {

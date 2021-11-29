@@ -27,7 +27,7 @@ export class LayoutLeftbarComponent implements OnInit {
 
   selectedFilter: AssetFilter | null;
 
-  isSelected: Boolean | null;
+  isSelected: boolean | null;
 
   dragPosition: { x: 0, y: 0 };
 
@@ -90,7 +90,7 @@ export class LayoutLeftbarComponent implements OnInit {
   }
 
   /**
-   * drag and drop 
+   * drag and drop
    *  FUNCTIONS
    */
   onDrop(event: MouseEvent, component: Components): void {
@@ -126,13 +126,13 @@ export class LayoutLeftbarComponent implements OnInit {
 
     /**
      * set selected component's isdragging to ture
-     * create a duplicated component 
+     * create a duplicated component
      */
     var index = this.selectedComponents.indexOf(component)
     this.selectedComponents[index].isdragging = true
     console.log(this.components)
 
-    // for showing grid 
+    // for showing grid
     this.isSelected = true
     this.dragdropService.gridOption(this.isSelected)
   }

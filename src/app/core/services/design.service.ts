@@ -75,7 +75,7 @@ export class DesignService {
       return {
         name: "Temporary Page",
         positions: [
-          {
+          /*{
             id: 0,
             positionX: 0,
             positionY: 0,
@@ -174,7 +174,7 @@ export class DesignService {
                 }
               ]
             }
-          }
+          }*/
         ]
       }
       //}

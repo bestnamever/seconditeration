@@ -4,7 +4,7 @@
       <div class="phone" [ngStyle]="{'border-radius': this.phoneOptions?.borderRadius, 'border-width': this.phoneOptions?.borderThickness, 'padding-left': this.getMarginLeft(), 'padding-right': this.getMarginRight()}">
         <app-preview-topbar toptext="Homepage" [fullscreen]="false" [phoneOptions]="this.phoneOptions" [phoneOrientation]="this.phoneOrientation" [ngStyle]="{'margin-top': getMarginTop()}"></app-preview-topbar>
         <div class="gridContainer" [ngStyle]="{'padding-bottom': getMarginBottom()}">
-          <gridster *ngIf="dashboardComponents.length > 0 else listisempty" [options]="gridOptions" class="customGrid">
+          <gridster *ngIf="(dashboardComponents.length > 0 || isDragging) else listisempty" [options]="gridOptions" class="customGrid">
             <gridster-item class="item" [item]="component.gridsterItem" *ngFor="let component of dashboardComponents"
               (click)="selectItem(component)">
               <div class="widgetContainer" [ngStyle]="{'box-shadow': getBorderState(component)}">
@@ -14,8 +14,8 @@
             </gridster-item>
           </gridster>
           <ng-template #listisempty>
-            <div class="customGrid flex-two" style="height: 100%; text-align: center">
-              <img src="assets/move.png" style="width: 4vw; aspect-ratio: 1; margin-bottom: 24px;" />
+            <div class="flex-two" style="height: 100%; text-align: center; background-color: #FFFFFF;">
+              <img src="assets/move.png" style="width: 3vw; aspect-ratio: 1; margin-bottom: 24px;" />
               <p style="font-weight: 500">Get started building your App.</p>
               <p>
                 Use the component browser on the left<br />
