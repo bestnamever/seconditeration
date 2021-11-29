@@ -22,7 +22,7 @@ export class LayoutLeftbarComponent implements OnInit {
   searchValue: string; // Value for the component searchbox
   selectedAssetType: AssetType; // Value for the asset-type dropdown
 
-  assetTypeData: Array<AssetType>; // All availible asset types
+  //assetTypeData: Array<AssetType>; // All availible asset types
 
   selectedFilter: AssetFilter | null;
 
@@ -42,7 +42,7 @@ export class LayoutLeftbarComponent implements OnInit {
 
   constructor(private assetFiterService: AssetFilterService, private dragdropService: DragAndDropService, private openremoteService : OpenremoteService) {
     this.searchValue = '';
-    this.assetTypeData = Object.values(AssetType);
+    //this.assetTypeData = Object.values(AssetType);
     this.selectedFilter = null;
     this.selectedAssetType = AssetType.ALL
     this.components = this.getComponents()
@@ -74,20 +74,19 @@ export class LayoutLeftbarComponent implements OnInit {
   // Function to filter the components
   filterComponent(): Components[] {
     var component = this.getComponents()
-    //component = component.filter(item => item.componentTitle.toLowerCase().match(this.searchValue.toLowerCase()))
-    if (this.selectedAssetType !== AssetType.ALL) (
-      component = component.filter(item => item.compatibleAssetTypes.includes(this.selectedAssetType))
-    )
+    if (this.selectedAssetType !== AssetType['ALL']) {
+        component = component.filter(item => item.compatibleAssetTypes.includes(this.selectedAssetType));
+    }
     return component
   }
 
   // init all components
   getComponents(): Components[] {
     return [
-      { componentTitle: "Data card", iconCode: "crop_3_2", componentType: WidgetType.LABEL, compatibleAssetTypes: [AssetType.AIR, AssetType.SOLAR, AssetType.THERMOSTAT], isdragging: false },
-      { componentTitle: "Bar chart", iconCode: "insert_chart_outlined", componentType: WidgetType.BARCHART, compatibleAssetTypes: [AssetType.AIR, AssetType.SOLAR], isdragging: false },
-      { componentTitle: "Pie chart", iconCode: "pie_chart", componentType: WidgetType.PIECHART, compatibleAssetTypes: [AssetType.AIR, AssetType.SOLAR], isdragging: false },
-      { componentTitle: "Graph", iconCode: "show_chart", componentType: WidgetType.GRAPH, compatibleAssetTypes: [AssetType.AIR, AssetType.HUE], isdragging: false },
+      { componentTitle: "Data card", iconCode: "crop_3_2", componentType: WidgetType.LABEL, compatibleAssetTypes: [AssetType.CONSOLE, AssetType.ROOM], isdragging: false },
+      { componentTitle: "Bar chart", iconCode: "insert_chart_outlined", componentType: WidgetType.BARCHART, compatibleAssetTypes: [AssetType.GROUP, AssetType.ROOM, AssetType.CITY, AssetType.BUILDING], isdragging: false },
+      { componentTitle: "Pie chart", iconCode: "pie_chart", componentType: WidgetType.PIECHART, compatibleAssetTypes: [AssetType.ROOM, AssetType.CITY, AssetType.BUILDING], isdragging: false },
+      { componentTitle: "Graph", iconCode: "show_chart", componentType: WidgetType.GRAPH, compatibleAssetTypes: [AssetType.ROOM, AssetType.CITY, AssetType.BUILDING], isdragging: false },
     ]
   }
 
