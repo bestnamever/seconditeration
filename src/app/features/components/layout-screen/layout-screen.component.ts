@@ -53,7 +53,7 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
 
   constructor(public dialog: MatDialog, private phoneSetting: PhoneService) {
 
-    this.homepage = "homepage"
+    this.homepage = "Homepage"
     this.height = 0
     this.width = 0
     this.customScreenSize = "Use custom screen size";

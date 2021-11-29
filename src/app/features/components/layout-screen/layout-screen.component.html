@@ -12,17 +12,17 @@
         <form class="form">
             <mat-form-field class="page_name" appearance="outline">
                 <mat-label>Page name</mat-label>
-                <input matInput placeholder="Ex. Homepage" value={{homepage}}>
+                <input matInput disabled placeholder="Ex. Homepage" value={{homepage}}>
                 <!-- value will be passed by the preview -->
             </mat-form-field>
         </form>
         <div class="set_homepage">
-            <mat-checkbox [labelPosition]="'before'">
+            <mat-checkbox disabled="true" [labelPosition]="'before'">
                 {{ setHomepage }}
             </mat-checkbox>
         </div>
         <div class="in_navigation">
-            <mat-checkbox [labelPosition]="'before'">
+            <mat-checkbox disabled="true" [labelPosition]="'before'">
                 {{ isInNavigation }}
             </mat-checkbox>
         </div>
