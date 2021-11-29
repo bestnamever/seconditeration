@@ -4,6 +4,7 @@ import openremote, {Auth} from "@openremote/core/dist";
 import {HttpClient} from "@angular/common/http";
 import {OrUserresponse} from "../models/or-userresponse";
 import {AssetQueryAccess} from "@openremote/model";
+import { isThisQuarter } from 'date-fns';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,13 @@ export class OpenremoteService {
 
   private usedAssetTypes : Array<any> | any;
   private assetTypes : Array<any> | any;
+  private usedAssets : Array<any> | any;
 
   constructor(private httpClient: HttpClient) {
 
     this.usedAssetTypes = [];
     this.assetTypes = [];
+    this.usedAssets = [];
 
     openremote.init({
       managerUrl: "http://martinaeytesting.nl:8080",
@@ -51,12 +54,15 @@ export class OpenremoteService {
 
           // Getting a list of assets depending on the query filter.
           openremote.rest.api.AssetResource.queryAssets({}).then(result => {
+
+            // Debug
             console.log('Data', result.data);
             console.log("OpenRemote REST API queryAssets() returned the following:");
             console.log(result);
 
               // Filtering the list of components to get a list of unique asset types
                 result.data.forEach(element => {
+                  this.usedAssets.push(element);
                   let assetType = element.type;
                 if (assetType){
                   this.assetTypes.forEach((type : any) => {
@@ -68,6 +74,10 @@ export class OpenremoteService {
                   });
                 }
             });
+
+            //this.usedAssets = result.data;
+            console.log('usedassets', this.usedAssets);
+
           }).catch(error => {
             console.log("OpenRemote REST API request returned an error!");
             console.error(error.message);
@@ -88,11 +98,21 @@ export class OpenremoteService {
     });
   }
 
+/**
+ * Function to get all the currently used assets
+ * @returns {Array} An array containing all the assets used in the current manager platoform realm
+ */
+  public  getAssets() : Array<any> {
+    console.log("Returning", this.usedAssets);
+    return this.usedAssets;
+  }
+
   /**
    * Function for returning the list of currently used asset types
    * @returns {Array<string>} List of asset types
    */
   public getAssetTypes() : Array<any> {
+      console.log("Returning", this.usedAssetTypes);
       return this.usedAssetTypes;
   }
 }

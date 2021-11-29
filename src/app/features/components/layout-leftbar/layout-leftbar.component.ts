@@ -56,10 +56,11 @@ export class LayoutLeftbarComponent implements OnInit {
   ngOnInit(): void {
     this.assetFiterService.currentAssetFilterState.subscribe(assetFilter => {
       this.selectedFilter = assetFilter;
+      console.log(this.openremoteService.getAssets());
     })
     
-    console.log('[LEFT BAR]', this.openremoteService.getAssetTypes());
-    console.log('[LEFT BAR]', this.assetTypes);
+    //console.log('[LEFT BAR]', this.openremoteService.getAssetTypes());
+    //console.log('[LEFT BAR]', this.assetTypes);
   }
 
   /* -------------------Methods--------------------------- */

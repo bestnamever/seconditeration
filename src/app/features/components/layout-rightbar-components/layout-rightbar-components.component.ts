@@ -6,6 +6,7 @@ import { PreviewService } from "../../../core/services/preview.service"
 import { OptionList } from 'src/app/core/models/option-list';
 import {skip} from "rxjs/operators";
 import {Subscription} from "rxjs";
+import { AttributePickerControlService } from 'src/app/core/services/attributePickerControl.service';
 
 
 @Component({
@@ -35,12 +36,13 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
   //watt properties
   wattProperties: OptionList[]
 
+
   // text: string
 
   private selectedWidgetSub: Subscription;
   private currentDesignSub: Subscription;
 
-  constructor(private data: PreviewService, private outputData: DesignService) {
+  constructor(private data: PreviewService, private outputData: DesignService, private attributePicker: AttributePickerControlService) {
     this.assets = [
       { value: "ALTA Wireless Temperature Sensor", viewValue: "ALTA Wireless Temperature Sensor" },
       { value: "Govee Thermometer", viewValue: "Govee Thermometer" },
@@ -110,6 +112,11 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
   change(chosenkey: string, chosenValue: string) {
     console.log(chosenValue)
     this.setValue(chosenkey, chosenValue)
+  }
+
+  openPicker() : void {
+    console.log('open picker');
+    this.attributePicker.setIsOpened(true);
   }
 
   // setCardSetting(message: string) {
