@@ -115,4 +115,8 @@ export class AttributePickerComponent implements OnInit {
 
   hasChild = (_: number, node: FlatNode) => node.expandable;
 
+  onAssetSelect(asset? : any) : void {
+    console.log("[AssetSelectEvent]", "An asset was selected", asset? asset : undefined);
+  }
+
 }

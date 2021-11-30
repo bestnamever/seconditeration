@@ -40,6 +40,7 @@
         .tabs{
             flex-grow: 1;
             display: flex;
+            max-height: calc(100% - 50px);
 
             .tab{
                 flex: 1;
@@ -72,6 +73,15 @@
 
                 &.left-tab, .left-tab .sub-header{
                     border-right: solid 1px darken($color: white, $amount: 15%);
+                }
+
+                .picker{
+                    max-height: calc(100% - 50px);
+                    overflow-y: scroll;
+
+                    .cdk-tree-node{
+                        max-height: 100%;
+                    }
                 }
             }
         }
