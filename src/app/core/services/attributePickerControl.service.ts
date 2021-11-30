@@ -22,5 +22,4 @@ constructor() {
 setIsOpened(value : boolean){
   this.isOpenedChange.next(value);
 }
-
 }

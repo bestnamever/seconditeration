@@ -24,6 +24,7 @@ import { MatListModule } from '@angular/material/list';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTreeModule } from '@angular/material/tree';
 
 // Other externally imported Libraries
 import { GridsterModule } from 'angular-gridster2'
@@ -110,6 +111,7 @@ import './features/litelements/or-icon/or-icon.component'
     FormsModule,
     DragDropModule,
     MatGridListModule,
+    MatTreeModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: OpenremoterequestInterceptor, multi: true },

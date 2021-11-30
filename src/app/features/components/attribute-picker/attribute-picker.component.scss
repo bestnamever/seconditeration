@@ -66,16 +66,12 @@
                     }
                 }
 
-                &.right-tab{
-                    .sub-header{
-                        border-left: solid 1px darken($color: white, $amount: 15%);
-                    }
+                &.right-tab, .right-tab .sub-header{
+                    border-left: solid 1px darken($color: white, $amount: 15%);
                 }
 
-                &.left-tab{
-                    .sub-header{
-                        border-right: solid 1px darken($color: white, $amount: 15%);
-                    }
+                &.left-tab, .left-tab .sub-header{
+                    border-right: solid 1px darken($color: white, $amount: 15%);
                 }
             }
         }
