@@ -9,7 +9,8 @@
   <mat-divider class="material-devider"></mat-divider>
   <div class="screen_body">
     <div class="content">
-      <div class="title">Page properties</div>
+      <div class="title" style="margin-top: 40px;">Page properties</div>
+      <mat-divider style="margin-top: 10px;"></mat-divider>
       <form class="form">
         <mat-form-field class="page_name" appearance="outline">
           <mat-label>Page name</mat-label>
@@ -27,9 +28,10 @@
           {{ isInNavigation }}
         </mat-checkbox>
       </div>
-      <div class="title">Screen properties</div>
+      <div class="title" style="margin-top: 40px;">Screen properties</div>
+      <mat-divider style="margin-top: 10px;"></mat-divider>
       <div class="device">
-        <div>
+        <div [hidden]="phoneSelected == undefined">
           <!-- Screen selection -->
           <mat-form-field appearance="outline" class="form">
             <mat-label>Display on the device</mat-label>
@@ -41,13 +43,28 @@
             </mat-select>
           </mat-form-field>
         </div>
+        <div [hidden]='phoneSelected != undefined'>
+          <div class="flex" style="justify-content: start;">
+            <mat-form-field class="form" appearance="outline" style="max-width: 48%;">
+              <mat-label>Width</mat-label>
+              <input matInput type="number" min="1" placeholder="Width" [(ngModel)]="this.customWidth" (ngModelChange)="updatePhoneCustomSize()">
+              <!-- value will be passed by the preview -->
+            </mat-form-field>
+            <mat-form-field class="form" appearance="outline" style="max-width: 48%;">
+              <mat-label>Height</mat-label>
+              <input matInput type="number" min="1" placeholder="Height" [(ngModel)]="this.customHeight" (ngModelChange)="updatePhoneCustomSize()">
+              <!-- value will be passed by the preview -->
+            </mat-form-field>
+          </div>
+        </div>
         <div>
           <div class="flex">
             <div>
-              <p>Phone Orientation</p>
+              <span *ngIf="phoneOptions?.phoneType == undefined else phoneswitch" style="opacity: 0.6;">Phone Orientation</span>
+              <ng-template #phoneswitch><span>Phone Orientation</span></ng-template>
             </div>
             <div>
-              <mat-button-toggle-group [(ngModel)]="phoneOrientation">
+              <mat-button-toggle-group [disabled]="phoneOptions?.phoneType == undefined" [value]="(phoneOptions?.phoneType == undefined) ? undefined : phoneOrientation" [(ngModel)]="phoneOrientation">
                 <mat-button-toggle [value]="0" (change)="this.changeOrientation('PORTRAIT')">
                   <mat-icon>stay_current_portrait</mat-icon>
                 </mat-button-toggle>
@@ -58,29 +75,17 @@
             </div>
           </div>
         </div>
+        <div class="customize_screen">
+          <mat-checkbox (click)='showHideCustom()' [labelPosition]="'before'">
+            {{ customScreenSize }}
+          </mat-checkbox>
+        </div>
       </div>
       <div style="margin-top: 48px;">
         <div class="advanced-toggle">
           <span>Advanced settings</span><mat-slide-toggle [(ngModel)]="showAdvanced"></mat-slide-toggle>
         </div>
         <div *ngIf="showAdvanced" id="advanced-options" class="advanced-options-container">
-          <div class="customize_screen">
-            <mat-checkbox (click)='showHideCustom()' [labelPosition]="'before'">
-              {{ customScreenSize }}
-            </mat-checkbox>
-            <div [hidden]='isHidden' class="custom_size">
-              <mat-form-field class="custom_height" appearance="outline">
-                <mat-label>Height</mat-label>
-                <input matInput placeholder="Height" value={{height}}>
-                <!-- value will be passed by the preview -->
-              </mat-form-field>
-              <mat-form-field class="custom_width" appearance="outline">
-                <mat-label>Width</mat-label>
-                <input matInput placeholder="Width" value={{height}}>
-                <!-- value will be passed by the preview -->
-              </mat-form-field>
-            </div>
-          </div>
           <div>
             <mat-form-field appearance="outline" class="safe_space_form">
               <mat-label>Screen safe space(padding)</mat-label>

@@ -252,25 +252,54 @@ export class PreviewGridComponent implements OnInit {
   }
 
   getPreviewHeight(): any {
-    if(this.phoneOrientation == PhoneDirection.PORTRAIT) {
-      if(this.phoneOptions?.customHeight != null) {
-        return this.phoneOptions?.customHeight;
+    if(this.phoneOptions?.phoneType == undefined) {
+      const splittedRatio = this.phoneOptions?.aspectRatio.split("/");
+      if(splittedRatio != null) {
+        if(Number.parseInt(splittedRatio[0]) > Number.parseInt(splittedRatio[1])) {
+          return undefined; // Width is higher, so LANDSCAPE mode
+        } else {
+          if(this.phoneOptions?.customHeight != null) {
+            return this.phoneOptions.customHeight;
+          }
+          return '80%'; // Height is higher, so PORTRAIT mode
+        }
       }
-      return '80%';
     } else {
-      return undefined;
+      if(this.phoneOrientation == PhoneDirection.PORTRAIT) {
+        if(this.phoneOptions?.customHeight != null) {
+          return this.phoneOptions.customHeight;
+        }
+        return '80%';
+      }
     }
+    return undefined;
   }
   getPreviewWidth(): any {
-    if(this.phoneOrientation == PhoneDirection.PORTRAIT) {
-      return undefined;
-    } else {
-      if(this.phoneOptions?.customWidth != null) {
-        return this.phoneOptions?.customWidth;
+    if(this.phoneOptions?.phoneType == undefined) {
+      const splittedRatio = this.phoneOptions?.aspectRatio.split("/");
+      if(splittedRatio != null) {
+        if(Number.parseInt(splittedRatio[0]) > Number.parseInt(splittedRatio[1])) {
+          if(this.phoneOptions?.customWidth != null) {
+            return this.phoneOptions.customWidth;
+          }
+          return '70%'; // Width is higher, so LANDSCAPE mode
+        } else {
+          return undefined; // Height is higher, so PORTRAIT mode
+        }
       }
-      return '70%';
+    } else {
+      if(this.phoneOrientation == PhoneDirection.PORTRAIT) {
+        return undefined;
+      } else {
+        if(this.phoneOptions?.customWidth != null) {
+          return this.phoneOptions.customWidth;
+        }
+        return '70%';
+      }
     }
   }
+
+
   getMarginTop(): string | undefined {
     if(this.phoneOrientation == PhoneDirection.PORTRAIT) { return this.phoneOptions?.marginTop; }
     else { return undefined; }

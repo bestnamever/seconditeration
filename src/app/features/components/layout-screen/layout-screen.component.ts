@@ -4,7 +4,6 @@ import {OptionList} from 'src/app/core/models/option-list';
 import {PhoneProperties} from 'src/app/core/models/phone-properties';
 import {PhoneService} from 'src/app/core/services/phone.service';
 import {DeleteComfirmComponent} from '../delete-comfirm/delete-comfirm.component'
-import {Subscription} from "rxjs";
 import {PhoneType} from "../../../core/models/phone-type";
 import {PhoneDirection} from "../../../core/models/phone-direction";
 
@@ -27,11 +26,11 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
   homepage: string;
 
   //custom width and heigth
-  width: number;
-  height: number;
+  customWidth: number;
+  customHeight: number;
 
   //custom enable
-  isHidden: boolean;
+  // showCustomSize: boolean;
 
   // label texts
   setHomepage: string;
@@ -48,22 +47,19 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
   // Advanced settings enabled
   showAdvanced : boolean | null;
 
-  private currentPhoneSub: Subscription;
-
-
   constructor(public dialog: MatDialog, private phoneSetting: PhoneService) {
 
     this.homepage = "Homepage"
-    this.height = 0
-    this.width = 0
+    this.customWidth = 640
+    this.customHeight = 480
     this.customScreenSize = "Use custom screen size";
-    this.isHidden = true
     this.safeSpace = "Display safe-space in preview"
     this.setHomepage = "Set Homepage"
     this.isInNavigation = "Show in navigation"
     this.delete_component = "Homepage"
     this.delete_title = "page"
     this.showAdvanced = null;
+    // this.showCustomSize = false;
 
     this.phoneOptionList = []
     // this.phoneSelected = "Apple IPhone 13";
@@ -75,11 +71,14 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
         this.phoneOptionList.push({ value: phoneString, viewValue: PhoneType[phoneString]});
       }
     }
+  }
 
 
-    this.currentPhoneSub = this.phoneSetting.currentPhoneState.subscribe(phone => {
-      console.log(this.phoneSelected);
-      if(this.phoneSelected != phone.phoneType.toString() && this.phoneSelected != null) {
+  ngOnInit(): void {
+    this.phoneSetting.currentPhoneState.subscribe(phone => {
+      console.log("this.phoneSelected: [" + this.phoneSelected + "]");
+      console.log("phone.phoneType: [" + phone.phoneType + "]");
+      if(phone.phoneType !== undefined && this.phoneSelected != phone.phoneType.toString() && this.phoneSelected != null) {
         if(PhoneType[phone.phoneType].includes('Desktop')) {
           this.changeOrientation('LANDSCAPE');
         } else {
@@ -87,24 +86,20 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
         }
       }
       this.phoneOptions = phone;
-      this.phoneSelected = phone.phoneType.toString();
-      console.log("Now selected [" + phone.phoneType.toString() + "]");
+      this.phoneSelected = phone.phoneType?.toString();
+      console.log("Now selected [" + phone.phoneType?.toString() + "]");
       // this.phoneSelected = this.phoneOptions.phoneType === 0 ? "0" : "1";
       console.log(this.phoneSelected)
     });
-  }
 
-
-  ngOnInit(): void {
     this.phoneSetting.currentOrientationState.subscribe(orientation => {
       this.phoneOrientation = orientation;
       console.log("Phone Orientation is now " + PhoneDirection[orientation]);
       console.log("Orientation used in Frontend is [" + orientation + "]");
-    })
+    });
   }
 
-  ngOnDestroy(): void {
-    this.currentPhoneSub.unsubscribe();
+  ngOnDestroy() {
   }
 
 
@@ -120,12 +115,32 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
     }
   }
 
+  updatePhoneCustomSize() {
+    /*if(this.customHeight > this.customWidth) {
+      this.phoneOrientation = PhoneDirection.PORTRAIT;
+    } else if(this.customWidth > this.customHeight) {
+      this.phoneOrientation = PhoneDirection.LANDSCAPE;
+    }*/
+    if(this.customHeight > 0 && this.customWidth > 0) {
+      console.log("Updating Phone Size to " + this.customWidth + 'x' + this.customHeight);
+      this.phoneSetting.changePhone(undefined, this.customWidth, this.customHeight);
+    }
+  }
+
 
 
 
   showHideCustom() {
-    this.isHidden = !this.isHidden;
+    // this.showCustomSize = !this.showCustomSize;
+    if(this.phoneOptions?.phoneType == undefined) {
+      console.log("Switching back to Apple IPhone 13!");
+      this.phoneSetting.changePhone(PhoneType["Apple IPhone 13"]);
+    } else {
+      console.log("Switching to Custom Screen Size!");
+      this.phoneSetting.changePhone(undefined, this.customWidth, this.customHeight);
+    }
   }
+
 
   openDeleteDialog() {
     const dialogRef = this.dialog.open(DeleteComfirmComponent, { width: '30%', data: { title: this.delete_title, component: this.delete_component } });
