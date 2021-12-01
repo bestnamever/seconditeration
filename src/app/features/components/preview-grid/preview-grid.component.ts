@@ -149,14 +149,14 @@ export class PreviewGridComponent implements OnInit {
           if (this.dashboardComponents.filter(x => { return x.gridsterItem.id == item.gridsterItem.id }).length == 0) {
             this.dashboardComponents.push(item);
           }
-
         });
 
-        console.log(ids)
+        // get the component's id which is not inside of the design 
         this.dashboardComponents.forEach(component => {
           if (!ids.includes(component.gridsterItem.id))
             deletedComponentId = component.gridsterItem.id
         })
+        
         var temp = this.dashboardComponents
         var temp2 = temp.filter(x => {
           return x.gridsterItem.id != deletedComponentId
@@ -164,7 +164,7 @@ export class PreviewGridComponent implements OnInit {
         console.log("temp2 is " + JSON.stringify(temp2))
 
         console.log("deleted component is " + JSON.stringify(this.dashboardComponents[deletedComponentId]))
-        //this.dashboardComponents.splice(deletedComponentId, 1) infinite loop
+        //this.dashboardComponents.splice(deletedComponentId, 1)  infinite loop
         this.dashboardComponents = temp2
         console.log('Rendering finished!');
         console.log(this.dashboardComponents);
