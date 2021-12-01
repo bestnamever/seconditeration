@@ -11,6 +11,7 @@ interface PickerNode {
   name: string;
   children?: PickerNode[];
 }
+
 interface FlatNode {
   expandable: boolean;
   name: string;
@@ -31,7 +32,7 @@ export class AttributePickerComponent implements OnInit {
   isOpened : boolean;
 
   // Material Design Tree Setup
-  treeData : PickerNode[];
+  treeData : PickerNode[] | any;
 
   private _transformer = (node: PickerNode, level: number) => {
     return {
@@ -68,12 +69,10 @@ export class AttributePickerComponent implements OnInit {
 
       // Load data if the picker is opened
       if (this.isOpened) console.log("[ATTRIBUTEPICKER]", this.formatData());
+      this.treeData = <PickerNode[]>this.formatData();
+      this.dataSource.data = this.treeData;
       
-    });
-
-    // Fill the picker tree with data
-    this.treeData = [];
-    
+    });    
   }
 
   ngOnInit() {
@@ -82,7 +81,6 @@ export class AttributePickerComponent implements OnInit {
 
   closePicker() : void {
     this.attributePickerControl.setIsOpened(false);
-    this.dataSource.data = this.treeData;
   }
 
   formatData() : object[] {
@@ -111,8 +109,6 @@ export class AttributePickerComponent implements OnInit {
     });
     
     formattedArray.splice(0,1);
-
-    this.treeData = <PickerNode[]>formattedArray;
     return formattedArray;
   }
 
