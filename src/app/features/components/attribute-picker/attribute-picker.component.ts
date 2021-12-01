@@ -3,6 +3,7 @@ import { OpenremoteService } from 'src/app/core/services/openremote.service';
 import { AttributePickerControlService } from 'src/app/core/services/attributePickerControl.service';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import {FlatTreeControl} from '@angular/cdk/tree';
+import { sub } from 'date-fns';
 
 // Setup of Material Tree component
 interface PickerNode {
@@ -99,6 +100,8 @@ export class AttributePickerComponent implements OnInit {
        if (element.parentName){
           
         let index = formattedArray.map(e => e.name).indexOf(element.parentName);
+        // Append asset id to the name
+        asset.name = `${element.name}_${element.id}`;
 
         formattedArray[index].children.push(asset);
        }
@@ -115,8 +118,38 @@ export class AttributePickerComponent implements OnInit {
 
   hasChild = (_: number, node: FlatNode) => node.expandable;
 
-  onAssetSelect(asset? : any) : void {
-    console.log("[AssetSelectEvent]", "An asset was selected", asset? asset : undefined);
+  onAssetSelect(assetId? : string) : void {
+    console.log("[AssetSelectEvent]", "Following asset ID was selected", assetId? assetId : undefined);
+
+    // Get the list of attributes
+    let selectedAsset = this.usedAssets.find(obj => {
+      return obj.id == assetId;
+    })
+
+    console.log("[AseetSelectEvent]", "ID belongs to asset:", selectedAsset);
+    
+  }
+
+  /**
+   * Function to split the name of a tree-node from the ID
+   * @param {string} nodeName The full name of the node including the ID, formatted: "name_id"
+   * @returns {string} The name of the node without the ID
+   */
+  splitNodeName(nodeName : string) : string{
+    let subString = nodeName.replace(`_${nodeName.split("_").pop()}`, "");
+
+    return (subString) ? subString : nodeName;
+  }
+
+  /**
+   * Function to split the ID of a tree node from the rest of the name
+   * @param {string} nodeName The full name of the node including the ID, formatted: "name_id"
+   * @returns {string} The unique ID of the node from the OpenRemote Manager
+   */
+  splitNodeId(nodeName : string) :string {
+    let nodeId = nodeName.split("_").pop();
+
+    return (nodeId) ? nodeId : nodeName;
   }
 
 }

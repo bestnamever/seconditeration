@@ -18,11 +18,11 @@
           <div class="picker">
             <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
               <!-- This is the tree node template for leaf nodes -->
-              <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="onAssetSelect(dataSource)">
+              <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="onAssetSelect(splitNodeId(node.name))">
                 <!-- use a disabled button to provide padding for tree leaf -->
                 <button mat-icon-button>
               </button>
-              {{node.name}}
+              {{splitNodeName(node.name)}}
               </mat-tree-node>
               <!-- This is the tree node template for expandable nodes -->
               <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
