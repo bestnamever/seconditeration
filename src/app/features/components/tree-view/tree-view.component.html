@@ -1,7 +1,7 @@
 <div class="picker" attr.treeType="{{treeType}}">
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <!-- This is the tree node template for leaf nodes -->
-    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="onAssetSelect(splitNodeId(node.name))">
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="onAssetSelect(node.name)">
       <!-- use a disabled button to provide padding for tree leaf -->
       <button mat-icon-button>
     </button>

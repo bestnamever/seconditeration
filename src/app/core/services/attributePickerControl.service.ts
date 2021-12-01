@@ -9,10 +9,12 @@ import { Subject } from 'rxjs';
 export class AttributePickerControlService {
 
   isOpened : boolean;
-  selectedAsset : string | undefined
+  selectedAsset : string | null;
+  selectedAttribute : string | null;
 
   isOpenedChange : Subject<boolean> = new Subject<boolean>();
   selectedAssetChange : Subject<string> = new Subject<string>();
+  selectedAttributeChange : Subject<string> = new Subject<string>();
 
 constructor() { 
   this.isOpened = false
@@ -20,9 +22,14 @@ constructor() {
     this.isOpened = value;
   })
 
-  this.selectedAsset = undefined
+  this.selectedAsset = null
   this.selectedAssetChange.subscribe((value) => {
     this.selectedAsset = value;
+  })
+
+  this.selectedAttribute = null;
+  this.selectedAttributeChange.subscribe((value) => {
+    this.selectedAttribute = value;
   })
 }
 
@@ -32,6 +39,10 @@ setIsOpened(value : boolean){
 
 setSelectedAsset(value : string){
   this.selectedAssetChange.next(value);
+}
+
+setSelectedAttribute(value : string){
+  this.selectedAttributeChange.next(value);
 }
 
 }

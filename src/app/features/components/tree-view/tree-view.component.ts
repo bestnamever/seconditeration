@@ -99,7 +99,7 @@ export class TreeViewComponent implements OnInit {
 
     assets.forEach((element: any) => {
       let asset = {
-        id: element.id ? element.id : "-1",
+        id: element.id ? element.id : this.attributePickerControl.selectedAsset,
         name: element.name,
         children: []
       }
@@ -120,11 +120,17 @@ export class TreeViewComponent implements OnInit {
     return formattedArray;
   }
 
-  onAssetSelect(assetId ? : string): void {
-    if (this.treeType === "ASSET"){
-      console.log("[AssetSelectEvent]", "Following asset ID was selected", assetId ? assetId : undefined);
+  onAssetSelect(selectedItem ? : string): void {
+    if (this.treeType === "ASSET" && selectedItem){
+      let assetId = this.splitNodeId(selectedItem)
+      console.log("[AssetSelectEvent]", "Following asset ID was selected", assetId ? assetId : null);
 
       this.attributePickerControl.setSelectedAsset((assetId) ? assetId : "");
+    }
+    else if (this.treeType === "ATTRIBUTE" && selectedItem){
+      console.log("[AttributeSelectEvent]", "Following Attribute was selected", selectedItem ? selectedItem : null);
+
+      this.attributePickerControl.setSelectedAttribute(selectedItem);
     }
   }
 
@@ -136,10 +142,10 @@ export class TreeViewComponent implements OnInit {
       return obj.id == this.attributePickerControl.selectedAsset;
     })
 
-    console.log("[AseetSelectEvent]", "ID belongs to asset:", selectedAsset);
+    console.log("[AssetSelectEvent]", "ID belongs to asset:", selectedAsset);
 
     let attributes = Object.values(selectedAsset.attributes);
-    console.log("[AseetSelectEvent]", "Asset has following attributes", attributes);
+    console.log("[AssetSelectEvent]", "Asset has following attributes", attributes);
 
     this.treeData = < PickerNode[] > this.formatData(attributes);
     this.dataSource.data = this.treeData;
