@@ -294,10 +294,32 @@ export class PreviewGridComponent implements OnInit {
    * add an item into preivew
    */
   public addItem(value: WidgetType, x: number, y: number) {
-    var maxCurrentId = this.currentDesignPage?.positions[this.currentDesignPage.positions.length - 1].id
-    if (maxCurrentId != null) {
+    if (this.currentDesignPage?.positions.length != 0) {
+      console.log("something")
+      var maxCurrentId = this.currentDesignPage?.positions[this.currentDesignPage.positions.length - 1].id
+      if (maxCurrentId != null) {
+        const designpostion: DesignPosition = {
+          id: maxCurrentId + 1,
+          positionX: x,
+          positionY: y,
+          width: 1,
+          height: 1,
+          element: this.generateWidgetData(value)
+        }
+        // this.dashboardComponents.push({
+        //   gridsterItem: { cols: 1, rows: 1, x, y, minItemCols: 1, minItemRows: 1 },
+        //   widgetData: this.generateWidgetData(value)
+        // })
+        if (this.currentDesignPage != null) {
+          this.currentDesignPage?.positions.push(designpostion)
+          this.designService.updateData(this.currentDesignPage)
+        }
+      }
+    }
+    else {
+      console.log("empty")
       const designpostion: DesignPosition = {
-        id: maxCurrentId + 1,
+        id: 1,
         positionX: x,
         positionY: y,
         width: 1,
@@ -330,4 +352,9 @@ export class PreviewGridComponent implements OnInit {
   // onDrop(event: CdkDragDrop<WidgetComponent[]>) {
   //   this.dragDropService.drop(event);
   // }
+
+  //hotkey for deletion
+  deletion() {
+    console.log("key pressed")
+  }
 }
