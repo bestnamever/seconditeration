@@ -53,6 +53,7 @@ import { PreviewUpdatedtextComponent } from './features/components/preview-updat
 import { SearchFormComponent } from './features/components/search-form/search-form.component';
 import { ComponentThumbnailComponent } from './features/components/component-thumbnail/component-thumbnail.component';
 import { AttributePickerComponent } from './features/components/attribute-picker/attribute-picker.component';
+import { TreeViewComponent } from './features/components/tree-view/tree-view.component';
 
 // Lit Components
 import './features/litelements/vd-label/vd-label.component'
@@ -85,6 +86,7 @@ import './features/litelements/or-icon/or-icon.component'
     LayoutScreenComponent,
     DeleteComfirmComponent,
     AttributePickerComponent,
+    TreeViewComponent,
   ],
   imports: [
     CommonModule,
