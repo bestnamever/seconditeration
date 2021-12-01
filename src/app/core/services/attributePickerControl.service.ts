@@ -12,7 +12,7 @@ export class AttributePickerControlService {
   selectedAsset : string | undefined
 
   isOpenedChange : Subject<boolean> = new Subject<boolean>();
-  selectedAssetChange : Subject<string | undefined> = new Subject<string | undefined>();
+  selectedAssetChange : Subject<string> = new Subject<string>();
 
 constructor() { 
   this.isOpened = false
@@ -30,7 +30,7 @@ setIsOpened(value : boolean){
   this.isOpenedChange.next(value);
 }
 
-setSelectedAsset(value : string | undefined){
+setSelectedAsset(value : string){
   this.selectedAssetChange.next(value);
 }
 
