@@ -149,7 +149,7 @@ export class PreviewGridComponent implements OnInit {
     }
     this.changedOptions();
 
-    
+
     // Subscribe to changes of the Design
     this.designService.currentDesignState.subscribe(design => {
       var ids = new Array<number>()
@@ -179,12 +179,12 @@ export class PreviewGridComponent implements OnInit {
           }
         });
 
-        // get the component's id which is not inside of the design 
+        // get the component's id which is not inside of the design
         this.dashboardComponents.forEach(component => {
           if (!ids.includes(component.gridsterItem.id))
             deletedComponentId = component.gridsterItem.id
         })
-        
+
         var temp = this.dashboardComponents
         var temp2 = temp.filter(x => {
           return x.gridsterItem.id != deletedComponentId
