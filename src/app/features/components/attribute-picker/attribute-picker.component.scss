@@ -93,6 +93,11 @@
             border-top: solid 2px darken($color: white, $amount: 15%);
 
             a{
+
+                &.active{
+                    color: #4d9d2a;
+                }
+
                 display: inline-block;
                 width: max-content;
                 margin: 0px 10px;

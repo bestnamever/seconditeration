@@ -139,4 +139,17 @@ export class LayoutLeftbarComponent implements OnInit {
     this.dragdropService.gridOption(this.isSelected)
   }
 
+  /**
+   * Formats a string of the name of an asset type from the openremote api
+   * @param {string} name The name of the asset type from openremote
+   * @returns {string} A fromatted string containing the name of the asset type
+   */
+  formatAssetTypeName(name : string) : string {
+    let formattedName = name.replace("Asset", "");
+
+    formattedName = formattedName.replace(/([a-z])([A-Z])/g, '$1 $2');
+
+    return formattedName;
+  }
+
 }

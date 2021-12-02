@@ -9,8 +9,8 @@ import { Subject } from 'rxjs';
 export class AttributePickerControlService {
 
   isOpened : boolean;
-  selectedAsset : string | null;
-  selectedAttribute : string | null;
+  selectedAsset : string;
+  selectedAttribute : string;
 
   isOpenedChange : Subject<boolean> = new Subject<boolean>();
   selectedAssetChange : Subject<string> = new Subject<string>();
@@ -22,12 +22,12 @@ constructor() {
     this.isOpened = value;
   })
 
-  this.selectedAsset = null
+  this.selectedAsset = ""
   this.selectedAssetChange.subscribe((value) => {
     this.selectedAsset = value;
   })
 
-  this.selectedAttribute = null;
+  this.selectedAttribute = "";
   this.selectedAttributeChange.subscribe((value) => {
     this.selectedAttribute = value;
   })

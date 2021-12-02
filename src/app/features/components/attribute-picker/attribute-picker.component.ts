@@ -15,23 +15,55 @@ export class AttributePickerComponent implements OnInit {
 
   // Custom variables
   isOpened : boolean;
+  selectedAsset : string;
+  selectedAttribute : string;
 
 
   constructor(private attributePickerControl : AttributePickerControlService) {
    
-    // Subscribe to service variables for opening the pop-up
+    // Set initial values from the attribute picker control service
     this.isOpened = this.attributePickerControl.isOpened;
+    this.selectedAsset = this.attributePickerControl.selectedAsset;
+    this.selectedAttribute = this.attributePickerControl.selectedAttribute;
 
+    // Subscribe to service variables to handle changes
     this.attributePickerControl.isOpenedChange.subscribe(value => {
-      console.log("[ATTRIBUTEPICKER]", "Changed opened to:", value);
       this.isOpened = value;
-    });    
+    });
+    
+    this.attributePickerControl.selectedAssetChange.subscribe(value => {
+      this.selectedAsset = value;
+    });
+
+    this.attributePickerControl.selectedAttributeChange.subscribe(value => {
+      this.selectedAttribute = value;
+    })
   }
 
   ngOnInit() {
   }
 
   closePicker() : void {
+    this.attributePickerControl.setSelectedAsset("");
+    this.attributePickerControl.setSelectedAttribute("");
     this.attributePickerControl.setIsOpened(false);
+  }
+
+  submitSelection(): Object | boolean{
+    
+    // Take no action if there no attribute or asset is selected
+    if(this.selectedAsset === "" || this.selectedAttribute === "") return false;
+
+    console.log("[AttributePicker]", "Closing pop-up with following selection:", this.selectedAsset, this.selectedAttribute);
+
+    let selection = {
+      assetId : this.selectedAsset,
+      attribute : this.selectedAttribute
+    }
+
+    this.closePicker();
+
+    return selection;
+
   }
 }

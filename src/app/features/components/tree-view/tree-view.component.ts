@@ -1,21 +1,8 @@
-import {
-  AttributePickerControlService
-} from 'src/app/core/services/attributePickerControl.service';
-import {
-  OpenremoteService
-} from './../../../core/services/openremote.service';
-import {
-  Component,
-  Input,
-  OnInit
-} from '@angular/core';
-import {
-  MatTreeFlatDataSource,
-  MatTreeFlattener
-} from '@angular/material/tree';
-import {
-  FlatTreeControl
-} from '@angular/cdk/tree';
+import { AttributePickerControlService } from 'src/app/core/services/attributePickerControl.service';
+import { OpenremoteService } from './../../../core/services/openremote.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { FlatTreeControl } from '@angular/cdk/tree';
 
 // Setup of Material Tree component
 interface PickerNode {
@@ -70,7 +57,7 @@ export class TreeViewComponent implements OnInit {
     this.usedAssets = this.openremoteService.getAssets();
 
     this.attributePickerControl.selectedAssetChange.subscribe(value => {
-      if(this.treeType === "ATTRIBUTE"){
+      if(this.treeType === "ATTRIBUTE" && value !="" && value!= undefined){
         this.getAttributes();
       }
     })
@@ -80,7 +67,8 @@ export class TreeViewComponent implements OnInit {
     console.log("[TREE-VIEW]", "Type of this tree:", this.treeType);
 
     if (this.treeType === "ASSET") {
-      this.treeData = < PickerNode[] > this.formatData(this.usedAssets);
+      this.treeData = <PickerNode[]>this.formatData(this.usedAssets);
+      console.log("Tree Assets", this.treeData);
     } else {
       this.treeData = [];
     }
@@ -100,15 +88,14 @@ export class TreeViewComponent implements OnInit {
     assets.forEach((element: any) => {
       let asset = {
         id: element.id ? element.id : this.attributePickerControl.selectedAsset,
-        name: element.name,
+        name: element.id ? `${element.name}_${element.id}` : element.name,
         children: []
       }
 
       if (element.parentName) {
 
-        let index = formattedArray.map(e => e.name).indexOf(element.parentName);
+        let index = formattedArray.map(e => e.name).indexOf(`${element.parentName}_${element.parentId}`);
         // Append asset id to the name
-        asset.name = `${element.name}_${element.id}`;
 
         formattedArray[index].children.push(asset);
       } else {
@@ -120,7 +107,19 @@ export class TreeViewComponent implements OnInit {
     return formattedArray;
   }
 
-  onAssetSelect(selectedItem ? : string): void {
+  onAssetSelect(event : Event, selectedItem ? : string): void {
+
+    console.log("[ClickEvent]", event.target, typeof(event.target))
+    let target = <HTMLElement>event.target;
+    let siblings = Array.prototype.slice.call(target.parentElement?.children);
+
+    siblings?.forEach(sibling => {
+      sibling.setAttribute("aria-selected", "false");
+    })
+
+    target.setAttribute('aria-selected', 'true');
+    console.log(siblings);
+
     if (this.treeType === "ASSET" && selectedItem){
       let assetId = this.splitNodeId(selectedItem)
       console.log("[AssetSelectEvent]", "Following asset ID was selected", assetId ? assetId : null);
