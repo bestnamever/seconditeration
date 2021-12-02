@@ -36,6 +36,11 @@
   margin-left: 30px;
   width: 340px;
   border-top-width: 2.5px;
+
+  &.advanced-devider{
+    margin-left: 0;
+    width: 100%;
+  }
 }
 
 .title {
