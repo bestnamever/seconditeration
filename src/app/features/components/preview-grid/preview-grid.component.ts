@@ -1,20 +1,20 @@
-import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {DisplayGrid, GridsterConfig, GridsterItem, GridsterItemComponentInterface} from "angular-gridster2";
-import {WidgetComponent} from "../../../core/models/widget-component";
-import {PhoneProperties} from "../../../core/models/phone-properties";
-import {PreviewService} from "../../../core/services/preview.service";
-import {DesignPage} from "../../../core/models/design-page";
-import {DesignService} from "../../../core/services/design.service";
-import {PhoneService} from "../../../core/services/phone.service";
-import {DesignElement} from 'src/app/core/models/design-element';
-import {WidgetType} from 'src/app/core/models/widget-type';
-import {AssetType} from 'src/app/core/models/asset-type';
-import {DragAndDropService} from 'src/app/core/services/dragAnddrop.service';
-import {CdkDragDrop, CdkDragEnter} from '@angular/cdk/drag-drop';
-import {empty, Subscription} from 'rxjs';
-import {DesignPosition} from 'src/app/core/models/design-position';
-import {DeletionService} from 'src/app/core/services/deletion.service';
-import {PhoneDirection} from "../../../core/models/phone-direction";
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { DisplayGrid, GridsterConfig, GridsterItem, GridsterItemComponentInterface } from "angular-gridster2";
+import { WidgetComponent } from "../../../core/models/widget-component";
+import { PhoneProperties } from "../../../core/models/phone-properties";
+import { PreviewService } from "../../../core/services/preview.service";
+import { DesignPage } from "../../../core/models/design-page";
+import { DesignService } from "../../../core/services/design.service";
+import { PhoneService } from "../../../core/services/phone.service";
+import { DesignElement } from 'src/app/core/models/design-element';
+import { WidgetType } from 'src/app/core/models/widget-type';
+import { AssetType } from 'src/app/core/models/asset-type';
+import { DragAndDropService } from 'src/app/core/services/dragAnddrop.service';
+import { CdkDragDrop, CdkDragEnter } from '@angular/cdk/drag-drop';
+import { empty, Subscription } from 'rxjs';
+import { DesignPosition } from 'src/app/core/models/design-position';
+import { DeletionService } from 'src/app/core/services/deletion.service';
+import { PhoneDirection } from "../../../core/models/phone-direction";
 import { el } from 'date-fns/locale';
 import { ConsoleConfigurationValidationFailureReason } from '@openremote/model';
 
@@ -149,7 +149,7 @@ export class PreviewGridComponent implements OnInit {
     }
     this.changedOptions();
 
-    
+
     // Subscribe to changes of the Design
     this.designService.currentDesignState.subscribe(design => {
       var ids = new Array<number>()
@@ -184,7 +184,7 @@ export class PreviewGridComponent implements OnInit {
           if (!ids.includes(component.gridsterItem.id))
             deletedComponentId = component.gridsterItem.id
         })
-        
+
         var temp = this.dashboardComponents
         var temp2 = temp.filter(x => {
           return x.gridsterItem.id != deletedComponentId
@@ -261,13 +261,13 @@ export class PreviewGridComponent implements OnInit {
   }
 
   getAspectRatio(): any {
-    if(this.phoneOrientation == PhoneDirection.PORTRAIT) {
+    if (this.phoneOrientation == PhoneDirection.PORTRAIT) {
       return this.phoneOptions?.aspectRatio;
     } else {
       let aspectRatio = this.phoneOptions?.aspectRatio;
       const splittedRatio = aspectRatio?.split('/');
       // console.log(splittedRatio);
-      if(splittedRatio != null) {
+      if (splittedRatio != null) {
         aspectRatio = splittedRatio[1] + "/" + splittedRatio[0];
       }
       // console.log("Aspect Ratio is now [" + aspectRatio + "]");
@@ -277,21 +277,21 @@ export class PreviewGridComponent implements OnInit {
   }
 
   getPreviewHeight(): any {
-    if(this.phoneOptions?.phoneType == undefined) {
+    if (this.phoneOptions?.phoneType == undefined) {
       const splittedRatio = this.phoneOptions?.aspectRatio.split("/");
-      if(splittedRatio != null) {
-        if(Number.parseInt(splittedRatio[0]) > Number.parseInt(splittedRatio[1])) {
+      if (splittedRatio != null) {
+        if (Number.parseInt(splittedRatio[0]) > Number.parseInt(splittedRatio[1])) {
           return undefined; // Width is higher, so LANDSCAPE mode
         } else {
-          if(this.phoneOptions?.customHeight != null) {
+          if (this.phoneOptions?.customHeight != null) {
             return this.phoneOptions.customHeight;
           }
           return '80%'; // Height is higher, so PORTRAIT mode
         }
       }
     } else {
-      if(this.phoneOrientation == PhoneDirection.PORTRAIT) {
-        if(this.phoneOptions?.customHeight != null) {
+      if (this.phoneOrientation == PhoneDirection.PORTRAIT) {
+        if (this.phoneOptions?.customHeight != null) {
           return this.phoneOptions.customHeight;
         }
         return '80%';
@@ -300,11 +300,11 @@ export class PreviewGridComponent implements OnInit {
     return undefined;
   }
   getPreviewWidth(): any {
-    if(this.phoneOptions?.phoneType == undefined) {
+    if (this.phoneOptions?.phoneType == undefined) {
       const splittedRatio = this.phoneOptions?.aspectRatio.split("/");
-      if(splittedRatio != null) {
-        if(Number.parseInt(splittedRatio[0]) > Number.parseInt(splittedRatio[1])) {
-          if(this.phoneOptions?.customWidth != null) {
+      if (splittedRatio != null) {
+        if (Number.parseInt(splittedRatio[0]) > Number.parseInt(splittedRatio[1])) {
+          if (this.phoneOptions?.customWidth != null) {
             return this.phoneOptions.customWidth;
           }
           return '70%'; // Width is higher, so LANDSCAPE mode
@@ -313,10 +313,10 @@ export class PreviewGridComponent implements OnInit {
         }
       }
     } else {
-      if(this.phoneOrientation == PhoneDirection.PORTRAIT) {
+      if (this.phoneOrientation == PhoneDirection.PORTRAIT) {
         return undefined;
       } else {
-        if(this.phoneOptions?.customWidth != null) {
+        if (this.phoneOptions?.customWidth != null) {
           return this.phoneOptions.customWidth;
         }
         return '70%';
@@ -326,19 +326,19 @@ export class PreviewGridComponent implements OnInit {
 
 
   getMarginTop(): string | undefined {
-    if(this.phoneOrientation == PhoneDirection.PORTRAIT) { return this.phoneOptions?.marginTop; }
+    if (this.phoneOrientation == PhoneDirection.PORTRAIT) { return this.phoneOptions?.marginTop; }
     else { return undefined; }
   }
   getMarginBottom(): string | undefined {
-    if(this.phoneOrientation == PhoneDirection.PORTRAIT) { return this.phoneOptions?.marginBottom }
+    if (this.phoneOrientation == PhoneDirection.PORTRAIT) { return this.phoneOptions?.marginBottom }
     else { return undefined; }
   }
   getMarginLeft(): string | undefined {
-    if(this.phoneOrientation == PhoneDirection.LANDSCAPE) { return this.phoneOptions?.marginTop; }
+    if (this.phoneOrientation == PhoneDirection.LANDSCAPE) { return this.phoneOptions?.marginTop; }
     else { return undefined; }
   }
   getMarginRight(): string | undefined {
-    if(this.phoneOrientation == PhoneDirection.LANDSCAPE) { return this.phoneOptions?.marginBottom; }
+    if (this.phoneOrientation == PhoneDirection.LANDSCAPE) { return this.phoneOptions?.marginBottom; }
     else { return undefined; }
   }
 
@@ -445,7 +445,8 @@ export class PreviewGridComponent implements OnInit {
 
   public removeItem(widget: WidgetComponent) {
     if (this.currentDesignPage != null) {
-      this.currentDesignPage.positions = this.currentDesignPage.positions.filter(obj => JSON.stringify(obj.element) !== JSON.stringify(widget.widgetData))
+      console.log("current design page is " + JSON.stringify(this.currentDesignPage))
+      this.currentDesignPage.positions = this.currentDesignPage.positions.filter(obj => JSON.stringify(obj.id) !== JSON.stringify(widget.gridsterItem.id))
       console.log(this.currentDesignPage)
       this.designService.updateData(this.currentDesignPage)
     }

@@ -155,7 +155,6 @@ export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === "true") {
-        //todo: new subscription's send event and let preview call it to delete
         console.log(result)
         this.deletionService.sendEvent(data.selectedWidget)
       }
