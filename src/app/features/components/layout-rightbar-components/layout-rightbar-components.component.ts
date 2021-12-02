@@ -8,7 +8,6 @@ import {skip} from "rxjs/operators";
 import {Subscription} from "rxjs";
 import { AttributePickerControlService } from 'src/app/core/services/attributePickerControl.service';
 
-
 @Component({
   selector: 'app-layout-rightbar-components',
   templateUrl: './layout-rightbar-components.component.html',
@@ -35,6 +34,9 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
 
   //watt properties
   wattProperties: OptionList[]
+
+  //used assets
+
 
 
   // text: string
@@ -71,6 +73,11 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
 
     this.currentDesignSub = this.outputData.currentDesignState.subscribe(designpage => {
       this.designPage = JSON.parse(JSON.stringify(designpage));
+    })
+
+    this.attributePicker.lastSelectionChange.subscribe((value) => {
+      console.log("[RightbarComponents]", "The selected attribute was changed", value);
+      this.setNewValues(value);
     })
 
     // this.text = "example"
@@ -115,13 +122,31 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
   }
 
   openPicker() : void {
-    console.log('open picker');
     this.attributePicker.setIsOpened(true);
   }
 
   // setCardSetting(message: string) {
   //   this.text = message;
   // }
+
+  setNewValues(newValues : any) {
+    // Get all used assets
+    const assets = <any[]>this.outputData.currentAssets;
+
+    // Get the selected asset
+    const selectedAsset = assets.find((x : any) => x.id === newValues.assetId);
+    const assetName = selectedAsset.name;
+
+    // Get the selected attribute on the found asset
+    const selectedAttribute = <any>Object.values(selectedAsset.attributes).find((x : any) => x.name === newValues.attributeName)
+
+    // Get the value of the selected attribute
+    const attributeValue = selectedAttribute.value;
+
+    console.log("[RightbarComponents]", "Found following value for this attribute", selectedAttribute, attributeValue);
+
+    // Update values in preview
+  }
 
 }
 

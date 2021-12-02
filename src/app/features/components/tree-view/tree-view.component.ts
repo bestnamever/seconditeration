@@ -22,12 +22,13 @@ interface FlatNode {
   templateUrl: './tree-view.component.html',
   styleUrls: ['./tree-view.component.scss']
 })
+
 export class TreeViewComponent implements OnInit {
 
   @Input() treeType: any;
   usedAssets: any[];
 
-  // Material Design Tree Setup
+  // Material Design Tree declarations
   treeData: PickerNode[] | any;
 
   private _transformer = (node: PickerNode, level: number) => {
@@ -52,10 +53,12 @@ export class TreeViewComponent implements OnInit {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
+
   constructor(private openremoteService: OpenremoteService, private attributePickerControl: AttributePickerControlService) {
     // Get currently used assets
     this.usedAssets = this.openremoteService.getAssets();
 
+    // Subscribe to the assetchange event
     this.attributePickerControl.selectedAssetChange.subscribe(value => {
       if(this.treeType === "ATTRIBUTE" && value !="" && value!= undefined){
         this.getAttributes();
@@ -64,15 +67,17 @@ export class TreeViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("[TREE-VIEW]", "Type of this tree:", this.treeType);
 
+    // Fill the asset tree with data of the currenlty used assets
     if (this.treeType === "ASSET") {
       this.treeData = <PickerNode[]>this.formatData(this.usedAssets);
       console.log("Tree Assets", this.treeData);
     } else {
+      // leave tree empty for now
       this.treeData = [];
     }
 
+    // Set the datasource for the tree
     this.dataSource.data = this.treeData;
   }
 
@@ -109,46 +114,45 @@ export class TreeViewComponent implements OnInit {
 
   onAssetSelect(event : Event, selectedItem ? : string): void {
 
-    console.log("[ClickEvent]", event.target, typeof(event.target))
+    // Get the target element of the click
     let target = <HTMLElement>event.target;
+
+    // Get all the sibling elements
     let siblings = Array.prototype.slice.call(target.parentElement?.children);
 
+    // Make sure all other elements show as not selected
     siblings?.forEach(sibling => {
       sibling.setAttribute("aria-selected", "false");
     })
 
+    // Make the target element show as selected
     target.setAttribute('aria-selected', 'true');
     console.log(siblings);
 
+    // Set the asset or attribute selection in the AtrributePickerControl service based on the tree type
     if (this.treeType === "ASSET" && selectedItem){
       let assetId = this.splitNodeId(selectedItem)
-      console.log("[AssetSelectEvent]", "Following asset ID was selected", assetId ? assetId : null);
 
       this.attributePickerControl.setSelectedAsset((assetId) ? assetId : "");
     }
     else if (this.treeType === "ATTRIBUTE" && selectedItem){
-      console.log("[AttributeSelectEvent]", "Following Attribute was selected", selectedItem ? selectedItem : null);
 
       this.attributePickerControl.setSelectedAttribute(selectedItem);
     }
   }
 
   getAttributes(): any {
-    console.log("An asset was selected, getting the attributes");
-
-    // Get the list of attributes
+    // Get the list of attributes based on the selected asset
     let selectedAsset = this.usedAssets.find(obj => {
       return obj.id == this.attributePickerControl.selectedAsset;
     })
 
-    console.log("[AssetSelectEvent]", "ID belongs to asset:", selectedAsset);
-
+    // Get an array of attributes
     let attributes = Object.values(selectedAsset.attributes);
-    console.log("[AssetSelectEvent]", "Asset has following attributes", attributes);
 
+    // Set the treedata to the array of attributes
     this.treeData = < PickerNode[] > this.formatData(attributes);
     this.dataSource.data = this.treeData;
-
   }
 
   /**
