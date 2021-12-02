@@ -15,6 +15,7 @@ export class DesignService {
   private currentDesignSubject: BehaviorSubject<DesignPage>; // The state which we can edit
   public readonly currentDesignState: Observable<DesignPage>; // The view-only state, where we can subscribe on to get updates.
   private readonly designHistory: DesignPage[] // List of all submitted Designs, to keep track of history (for undo-ing but also for checking whether it has changed)
+  public readonly currentAssets : any;
 
   // Constructor
   constructor(private openremoteService: OpenremoteService) {
@@ -24,6 +25,7 @@ export class DesignService {
     this.currentDesignState = this.currentDesignSubject.asObservable(); // Make a clone of the state which is read-only
     this.designHistory = [];
     this.designHistory.push(this.getFirstDesign());
+    this.currentAssets  = openremoteService.getAssets();
 
     // openremote impl
 

@@ -74,7 +74,7 @@ export class PhoneService {
             borderRadius: '54px',
             smallNotch: false,
             largeNotch: false,
-            aspectRatio: '9/16',
+            aspectRatio: '9/17',
             marginTop: '52px',
             marginBottom: '52px',
             customWidth: '55%',

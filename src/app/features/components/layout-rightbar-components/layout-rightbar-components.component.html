@@ -7,40 +7,40 @@
   <mat-divider class="material-devider"></mat-divider>
   <div class="screen_body">
     <div class="content">
-      <div class="title">General settings</div>
-      <div class="Asset">
-        <mat-form-field appearance="outline" class="form">
-          <mat-label>Select Asset type</mat-label>
-          <mat-select #chosenAssetValue disableOptionCentering [(value)]="assetSelected"
-                      (valueChange)="change('asset',chosenAssetValue.value)">
-            <mat-option *ngFor="let asset of assets" [value]="asset.value">
-              {{asset.viewValue}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="Properties">
-        <mat-form-field appearance="outline" class="form">
-          <mat-label>Select Properties</mat-label>
-          <mat-select #chosenMeasureValue disableOptionCentering [(value)]="measurementSelected"
-                      (valueChange)="change('measurement',chosenMeasureValue.value)">
-            <div *ngIf="getPropertyType()">
-              <mat-option *ngFor="let property of wattProperties" [value]="property.value">
-                {{property.viewValue}}
-              </mat-option>
-            </div>
-            <div *ngIf="!getPropertyType()">
-              <mat-option *ngFor="let property of tempProperties" [value]="property.value">
-                {{property.viewValue}}
-              </mat-option>
-            </div>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="title">Card settings</div>
-      <app-layout-component-setting></app-layout-component-setting>
+        <div class="title">General settings</div>
+        <div class="Asset">
+            <mat-form-field appearance="outline" class="form">
+                <mat-label>Select Asset type</mat-label>
+                <mat-select #chosenAssetValue disableOptionCentering [(value)]="assetSelected"
+                    (valueChange)="change('asset',chosenAssetValue.value)">
+                    <mat-option *ngFor="let asset of assets" [value]="asset.value">
+                        {{asset.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button (click)="openPicker()">Attribute picker</button>
+        </div>
+        <div class="Properties">
+            <mat-form-field appearance="outline" class="form">
+                <mat-label>Select Properties</mat-label>
+                <mat-select #chosenMeasureValue disableOptionCentering [(value)]="measurementSelected"
+                    (valueChange)="change('measurement',chosenMeasureValue.value)">
+                    <div *ngIf="getPropertyType()">
+                        <mat-option *ngFor="let property of wattProperties" [value]="property.value">
+                            {{property.viewValue}}
+                        </mat-option>
+                    </div>
+                    <div *ngIf="!getPropertyType()">
+                        <mat-option *ngFor="let property of tempProperties" [value]="property.value">
+                            {{property.viewValue}}
+                        </mat-option>
+                    </div>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="title">Card settings</div>
+        <app-layout-component-setting></app-layout-component-setting>
     </div>
-  </div>
 </div>
 <ng-template #nothingselected>
   <div class="flex-two" style="height: 100%; text-align: center; background-color: #FFFFFF;">

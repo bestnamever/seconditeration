@@ -179,7 +179,7 @@ export class PreviewGridComponent implements OnInit {
           }
         });
 
-        // get the component's id which is not inside of the design 
+        // get the component's id which is not inside of the design
         this.dashboardComponents.forEach(component => {
           if (!ids.includes(component.gridsterItem.id))
             deletedComponentId = component.gridsterItem.id
