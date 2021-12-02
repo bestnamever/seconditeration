@@ -10,8 +10,8 @@ export class DragAndDropService {
 
   private subject: Subject<any>;
 
-  private isOptionShown: BehaviorSubject<Boolean | null>;
-  public isOptionShownState: Observable<Boolean | null>;
+  private isOptionShown: BehaviorSubject<boolean | null>;
+  public isOptionShownState: Observable<boolean | null>;
 
   private gridItemCoordinates: BehaviorSubject<any>;
   public gridItemCoordinatesState: Observable<any>;
@@ -19,7 +19,7 @@ export class DragAndDropService {
   constructor() {
 
     this.subject = new Subject<any>()
-    this.isOptionShown = new BehaviorSubject<Boolean | null>(false)
+    this.isOptionShown = new BehaviorSubject<boolean | null>(false)
     this.isOptionShownState = this.isOptionShown.asObservable()
 
     this.gridItemCoordinates = new BehaviorSubject<any>(null)
@@ -38,7 +38,7 @@ export class DragAndDropService {
     return this.subject.asObservable()
   }
 
-  gridOption(widgetIn: Boolean) {
+  gridOption(widgetIn: boolean) {
     this.isOptionShown.next(widgetIn)
   }
 

@@ -1,10 +1,11 @@
-<div class="top_info">
+<div *ngIf="this.assetSelected != null else nothingselected">
+  <div class="top_info">
     <div class="icon">
-        Infomation card
+      Infomation card
     </div>
-</div>
-<mat-divider class="material-devider"></mat-divider>
-<div class="screen_body">
+  </div>
+  <mat-divider class="material-devider"></mat-divider>
+  <div class="screen_body">
     <div class="content">
         <div class="title">General settings</div>
         <div class="Asset">
@@ -41,3 +42,13 @@
         <app-layout-component-setting></app-layout-component-setting>
     </div>
 </div>
+<ng-template #nothingselected>
+  <div class="flex-two" style="height: 100%; text-align: center; background-color: #FFFFFF;">
+    <mat-icon style="transform: scale(2); margin-bottom: 24px;">app_registration</mat-icon>
+    <p style="font-weight: 500">No Component selected.</p>
+    <p>
+      Click a Widget on the screen to<br />
+      edit its properties here!
+    </p>
+  </div>
+</ng-template>

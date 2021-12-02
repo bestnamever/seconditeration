@@ -60,6 +60,9 @@ import './features/litelements/vd-label/vd-label.component'
 import './features/litelements/vd-graph/vd-graph.component';
 import './features/litelements/vd-barchart/vd-barchart.component';
 import './features/litelements/or-icon/or-icon.component'
+import { PreviewComponent } from './features/pages/preview/preview.component';
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 
 
@@ -87,34 +90,37 @@ import './features/litelements/or-icon/or-icon.component'
     DeleteComfirmComponent,
     AttributePickerComponent,
     TreeViewComponent,
+    PreviewComponent
   ],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    GridsterModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatListModule,
-    MatIconModule,
-    MatButtonModule,
-    MatProgressSpinnerModule,
-    MatTabsModule,
-    MatDividerModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatChipsModule,
-    MatCheckboxModule,
-    MatInputModule,
-    MatDialogModule,
-    MatSlideToggleModule,
-    FormsModule,
-    DragDropModule,
-    MatGridListModule,
-    MatTreeModule,
-  ],
+    imports: [
+        CommonModule,
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        GridsterModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatListModule,
+        MatIconModule,
+        MatButtonModule,
+        MatProgressSpinnerModule,
+        MatTabsModule,
+        MatDividerModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatChipsModule,
+        MatCheckboxModule,
+        MatInputModule,
+        MatDialogModule,
+        MatSlideToggleModule,
+        FormsModule,
+        DragDropModule,
+        MatGridListModule,
+        MatButtonToggleModule,
+        MatExpansionModule,
+        MatTreeModule,
+    ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: OpenremoterequestInterceptor, multi: true },
   ],
