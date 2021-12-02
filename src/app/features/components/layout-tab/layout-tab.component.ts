@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {PreviewService} from "../../../core/services/preview.service";
 
 @Component({
   selector: 'app-layout-tab',
@@ -6,7 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./layout-tab.component.scss']
 })
 export class LayoutTabComponent implements OnInit {
-  constructor() { }
+
+  selectedIndex: number;
+
+  constructor(private previewService: PreviewService) {
+    this.selectedIndex = 1;
+  }
+
   ngOnInit(): void {
+    this.previewService.currentlySelectedWidgetState.subscribe((data) => {
+      if(data != null) {
+        this.selectedIndex = 0;
+      }
+    });
   }
 }
