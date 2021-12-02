@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { isThursday } from 'date-fns';
-import { is } from 'date-fns/locale';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -11,10 +9,12 @@ export class AttributePickerControlService {
   isOpened : boolean;
   selectedAsset : string;
   selectedAttribute : string;
+  lastSelection : object;
 
   isOpenedChange : Subject<boolean> = new Subject<boolean>();
   selectedAssetChange : Subject<string> = new Subject<string>();
   selectedAttributeChange : Subject<string> = new Subject<string>();
+  lastSelectionChange : Subject<object> = new Subject<object>();
 
 constructor() { 
   this.isOpened = false
@@ -22,7 +22,7 @@ constructor() {
     this.isOpened = value;
   })
 
-  this.selectedAsset = ""
+  this.selectedAsset = "";
   this.selectedAssetChange.subscribe((value) => {
     this.selectedAsset = value;
   })
@@ -30,6 +30,11 @@ constructor() {
   this.selectedAttribute = "";
   this.selectedAttributeChange.subscribe((value) => {
     this.selectedAttribute = value;
+  })
+
+  this.lastSelection = {};
+  this.lastSelectionChange.subscribe((value) => {
+    this.lastSelection = value;
   })
 }
 
@@ -43,6 +48,18 @@ setSelectedAsset(value : string){
 
 setSelectedAttribute(value : string){
   this.selectedAttributeChange.next(value);
+}
+
+setLastSelection(assetId : string, attributeName : string){
+  let newValue = {
+    assetId : assetId,
+    attributeName : attributeName,
+    timeStamp: new Date().toLocaleString()
+  }
+
+  console.log("[AttributePickerControlService]", "Saved new last selection", newValue);
+
+  this.lastSelectionChange.next(newValue);
 }
 
 }

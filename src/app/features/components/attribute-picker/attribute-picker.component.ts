@@ -49,21 +49,16 @@ export class AttributePickerComponent implements OnInit {
     this.attributePickerControl.setIsOpened(false);
   }
 
-  submitSelection(): Object | boolean{
+  submitSelection(): void{
     
     // Take no action if there no attribute or asset is selected
-    if(this.selectedAsset === "" || this.selectedAttribute === "") return false;
+    if(this.selectedAsset === "" || this.selectedAttribute === "") return;
 
     console.log("[AttributePicker]", "Closing pop-up with following selection:", this.selectedAsset, this.selectedAttribute);
 
-    let selection = {
-      assetId : this.selectedAsset,
-      attribute : this.selectedAttribute
-    }
+    this.attributePickerControl.setLastSelection(this.selectedAsset, this.selectedAttribute);
 
     this.closePicker();
-
-    return selection;
 
   }
 }
