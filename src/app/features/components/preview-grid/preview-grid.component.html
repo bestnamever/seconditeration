@@ -6,10 +6,11 @@
         <div class="gridContainer" [ngStyle]="{'padding-bottom': getMarginBottom()}">
           <gridster *ngIf="(dashboardComponents.length > 0 || isDragging) else listisempty" [options]="gridOptions" class="customGrid">
             <gridster-item class="item" [item]="component.gridsterItem" *ngFor="let component of dashboardComponents"
-              (click)="selectItem(component)">
+              (click)="selectItem(component)" onkeypress="deletion()">
               <div class="widgetContainer" [ngStyle]="{'box-shadow': getBorderState(component)}">
                 <!--<p>Test {{component.widgetData}}</p>-->
-                <app-preview-parentwidget [widgetId]="component.gridsterItem.id"></app-preview-parentwidget>
+                <app-preview-parentwidget [widgetId]="component.gridsterItem.id" >
+                </app-preview-parentwidget>
               </div>
             </gridster-item>
           </gridster>

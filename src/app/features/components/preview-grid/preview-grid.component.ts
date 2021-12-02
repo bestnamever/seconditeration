@@ -1,5 +1,5 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
-import {GridsterConfig, GridsterItem, GridsterItemComponentInterface} from "angular-gridster2";
+import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {DisplayGrid, GridsterConfig, GridsterItem, GridsterItemComponentInterface} from "angular-gridster2";
 import {WidgetComponent} from "../../../core/models/widget-component";
 import {PhoneProperties} from "../../../core/models/phone-properties";
 import {PreviewService} from "../../../core/services/preview.service";
@@ -10,11 +10,13 @@ import {DesignElement} from 'src/app/core/models/design-element';
 import {WidgetType} from 'src/app/core/models/widget-type';
 import {AssetType} from 'src/app/core/models/asset-type';
 import {DragAndDropService} from 'src/app/core/services/dragAnddrop.service';
-import {CdkDragEnter} from '@angular/cdk/drag-drop';
-import {Subscription} from 'rxjs';
+import {CdkDragDrop, CdkDragEnter} from '@angular/cdk/drag-drop';
+import {empty, Subscription} from 'rxjs';
 import {DesignPosition} from 'src/app/core/models/design-position';
 import {DeletionService} from 'src/app/core/services/deletion.service';
 import {PhoneDirection} from "../../../core/models/phone-direction";
+import { el } from 'date-fns/locale';
+import { ConsoleConfigurationValidationFailureReason } from '@openremote/model';
 
 
 @Component({
@@ -114,6 +116,7 @@ export class PreviewGridComponent implements OnInit {
     // this.subscription = this.data.currentMessage.subscribe((message: string) => this.message = message)
   }
 
+
   /* ------------------------------------------------------- */
 
   // Method called on init of the page
@@ -146,10 +149,14 @@ export class PreviewGridComponent implements OnInit {
     }
     this.changedOptions();
 
-
+    
     // Subscribe to changes of the Design
     this.designService.currentDesignState.subscribe(design => {
+      var ids = new Array<number>()
+      var deletedComponentId!: any
       console.log('Starting to render the design..');
+      console.log(design)
+
       this.currentDesignPage = design;
       if (design != null) {
         design.positions.forEach(position => {
@@ -164,14 +171,33 @@ export class PreviewGridComponent implements OnInit {
             widgetData: position.element
           };
 
+          ids.push(position.id)
+
           // Check if the component is already added with the same properties (width, height, x, y, etc)
           if (this.dashboardComponents.filter(x => { return x.gridsterItem.id == item.gridsterItem.id }).length == 0) {
             this.dashboardComponents.push(item);
           }
         });
+
+        // get the component's id which is not inside of the design 
+        this.dashboardComponents.forEach(component => {
+          if (!ids.includes(component.gridsterItem.id))
+            deletedComponentId = component.gridsterItem.id
+        })
+        
+        var temp = this.dashboardComponents
+        var temp2 = temp.filter(x => {
+          return x.gridsterItem.id != deletedComponentId
+        })
+        console.log("temp2 is " + JSON.stringify(temp2))
+
+        console.log("deleted component is " + JSON.stringify(this.dashboardComponents[deletedComponentId]))
+        //this.dashboardComponents.splice(deletedComponentId, 1)  infinite loop
+        this.dashboardComponents = temp2
         console.log('Rendering finished!');
         console.log(this.dashboardComponents);
       }
+
     });
 
     // Subscribe to the currently selected Widget
@@ -225,7 +251,6 @@ export class PreviewGridComponent implements OnInit {
     this.gridItemCoordinates.set(itemComponent, { x: clientX, y: clientY, width, height });
     console.log(this.gridItemCoordinates);
   }
-
 
   /* --------------------------------------- */
 
@@ -325,6 +350,8 @@ export class PreviewGridComponent implements OnInit {
     }
   }
 
+
+
   isWidgetSelected(component: WidgetComponent): any {
     return this.selectedWidget === component;
   }
@@ -377,20 +404,38 @@ export class PreviewGridComponent implements OnInit {
    * add an item into preivew
    */
   public addItem(value: WidgetType, x: number, y: number) {
-    var maxCurrentId = this.currentDesignPage?.positions[this.currentDesignPage.positions.length - 1].id
-    if (maxCurrentId != null) {
+    if (this.currentDesignPage?.positions.length != 0) {
+      console.log("something")
+      var maxCurrentId = this.currentDesignPage?.positions[this.currentDesignPage.positions.length - 1].id
+      if (maxCurrentId != null) {
+        const designpostion: DesignPosition = {
+          id: maxCurrentId + 1,
+          positionX: x,
+          positionY: y,
+          width: 1,
+          height: 1,
+          element: this.generateWidgetData(value)
+        }
+        // this.dashboardComponents.push({
+        //   gridsterItem: { cols: 1, rows: 1, x, y, minItemCols: 1, minItemRows: 1 },
+        //   widgetData: this.generateWidgetData(value)
+        // })
+        if (this.currentDesignPage != null) {
+          this.currentDesignPage?.positions.push(designpostion)
+          this.designService.updateData(this.currentDesignPage)
+        }
+      }
+    }
+    else {
+      console.log("empty")
       const designpostion: DesignPosition = {
-        id: maxCurrentId + 1,
+        id: 1,
         positionX: x,
         positionY: y,
         width: 1,
         height: 1,
         element: this.generateWidgetData(value)
       }
-      // this.dashboardComponents.push({
-      //   gridsterItem: { cols: 1, rows: 1, x, y, minItemCols: 1, minItemRows: 1 },
-      //   widgetData: this.generateWidgetData(value)
-      // })
       if (this.currentDesignPage != null) {
         this.currentDesignPage?.positions.push(designpostion)
         this.designService.updateData(this.currentDesignPage)
@@ -417,4 +462,9 @@ export class PreviewGridComponent implements OnInit {
   // onDrop(event: CdkDragDrop<WidgetComponent[]>) {
   //   this.dragDropService.drop(event);
   // }
+
+  //hotkey for deletion
+  deletion() {
+    console.log("key pressed")
+  }
 }
