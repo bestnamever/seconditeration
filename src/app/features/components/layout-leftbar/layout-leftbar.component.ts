@@ -63,7 +63,7 @@ export class LayoutLeftbarComponent implements OnInit {
       this.selectedFilter = assetFilter;
       console.log(this.openremoteService.getAssets());
     })
-    
+
     //console.log('[LEFT BAR]', this.openremoteService.getAssetTypes());
     //console.log('[LEFT BAR]', this.assetTypes);
   }
@@ -121,7 +121,7 @@ export class LayoutLeftbarComponent implements OnInit {
       column = firstItem.gridster.pixelsToPositionX(xLocInGrid, (x) => Math.floor(x));
       row = (firstItem.gridster.pixelsToPositionY((yLocInGrid + firstItem.gridster.el.scrollTop), (y) => Math.floor(y)) - 1);
 
-      // trying to detect whether the dragged position is occupied 
+      // trying to detect whether the dragged position is occupied
       // IT DOES NOT WORK!
       // do not know where goes wrong since xLoc and yLoc are not asigned so it stoped somewhere above
       // maybe because of the Mouseevent
@@ -154,7 +154,7 @@ export class LayoutLeftbarComponent implements OnInit {
 
     // below is for fixing the drag and drop function when drop into a position where is occupid
     // IT DOES NOT WORK
-    var isOccupied: boolean = true
+    /*var isOccupied: boolean = true
     const savedDesign = localStorage.getItem('savedDesign');
     if (environment.useLocalStorage && savedDesign != null) {
       var designPage = JSON.parse(savedDesign) as DesignPage
@@ -162,14 +162,15 @@ export class LayoutLeftbarComponent implements OnInit {
         element.positionX == column && element.positionX == row
       })
       console.log(isOccupied)
-    }
-    if (!isOccupied) {
+    }*/
+    this.dragdropService.sendEvent(component.componentType, column, row);
+   /* if (!isOccupied) {
       console.log("occupied : " + isOccupied)
       this.dragdropService.sendEvent(component.componentType, column, row)
     }
     else if (isOccupied) {
       console.log("occupied: " + isOccupied)
-    }
+    }*/
 
   }
 
