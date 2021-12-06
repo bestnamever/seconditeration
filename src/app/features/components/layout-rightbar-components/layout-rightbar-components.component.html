@@ -8,8 +8,11 @@
   <div class="screen_body">
     <div class="content">
         <div class="title">General settings</div>
-        <p>{{assetSelected}} | {{attributeSelected}}</p>
-        <button (click)="openPicker()">Attribute picker</button>
+        <mat-form-field appearance="outline" class="data-field">
+          <mat-label>Selected Data</mat-label>
+          <input matInput placeholder="Select and attribute" readonly=true value="{{assetSelected}} | {{attributeSelected}}">
+          <button (click)="openPicker()"><mat-icon aria-hidden="false" aria-label="Example home icon">edit</mat-icon></button>
+        </mat-form-field>
         <!-- <div class="Asset">
             <mat-form-field appearance="outline" class="form">
                 <mat-label>Select Asset type</mat-label>
