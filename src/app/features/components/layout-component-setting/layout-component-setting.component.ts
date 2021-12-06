@@ -151,7 +151,7 @@ export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
       title: this.delete_title,
       descriptionHtml:
         'Are you sure you want to delete this <b>' + this.delete_component + '</b>?<br /><br />' +
-        'Deleting this page is a <b>destructive</b> action, meaning that it cannot be reverted later.',
+        'Deleting this component is a <b>destructive</b> action, meaning that it cannot be reverted later.',
       alignActions: 'start',
       cancelText: 'CANCEL',
       successText: 'DELETE ' + this.delete_component.toUpperCase(),
