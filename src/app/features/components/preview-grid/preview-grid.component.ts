@@ -15,7 +15,7 @@ import { empty, Subscription } from 'rxjs';
 import { DesignPosition } from 'src/app/core/models/design-position';
 import { DeletionService } from 'src/app/core/services/deletion.service';
 import { PhoneDirection } from "../../../core/models/phone-direction";
-import { el } from 'date-fns/locale';
+import { el, tr } from 'date-fns/locale';
 import { ConsoleConfigurationValidationFailureReason } from '@openremote/model';
 import { Components } from 'src/app/core/models/components';
 
@@ -92,9 +92,9 @@ export class PreviewGridComponent implements OnInit {
       itemChangeCallback: (item, itemComponent) => { this.itemChange(item, itemComponent); },
 
       //drag and drop
-      enableEmptyCellClick: true,
-      enableEmptyCellDrop: true,
-      enableEmptyCellDrag: true,  // this one will give the background color
+      enableEmptyCellClick: false,
+      enableEmptyCellDrop: false,
+      enableEmptyCellDrag: false,  // this one will give the background color
       enableOccupiedCellDrop: false,
       emptyCellClickCallback: this.emptyCellClick.bind(this),
       emptyCellDropCallback: this.emptyCellClick.bind(this),
@@ -102,8 +102,11 @@ export class PreviewGridComponent implements OnInit {
       // itemResizeCallback: PreviewGridComponent.itemResize,
     };
 
-    this.dragDropService.selectedWidgetState.subscribe(component =>
-      this.selectedComponent = component)
+    this.dragDropService.selectedWidgetState.subscribe(component => {
+      this.selectedComponent = component
+    }
+
+    )
 
     this.deletionEventSubscription = this.deletionService.getEvent().subscribe(data => {
       this.removeItem(data)
@@ -112,10 +115,16 @@ export class PreviewGridComponent implements OnInit {
     this.dragDropService.isOptionShownState.subscribe(isShown => {
       if (isShown) {
         this.gridOptions.displayGrid = 'always'
+        this.gridOptions.enableEmptyCellClick = true
+        this.gridOptions.enableEmptyCellDrag = true
+        this.gridOptions.enableEmptyCellDrop = true
         this.changedOptions()
       }
       else {
         this.gridOptions.displayGrid = 'onDrag&Resize'
+        this.gridOptions.enableEmptyCellClick = false
+        this.gridOptions.enableEmptyCellDrag = false
+        this.gridOptions.enableEmptyCellDrop = false
         this.changedOptions()
       }
     });
@@ -430,18 +439,20 @@ export class PreviewGridComponent implements OnInit {
 
   // drag and drop
   emptyCellClick(event: MouseEvent, item: GridsterItem): void {
-    console.info('empty cell click', event, item);
-    const designpostion: DesignPosition = {
-      id: this.currentDesignPage?.positions.length != 0 ? this.currentDesignPage?.positions[this.currentDesignPage.positions.length - 1].id! + 1 : 1,
-      positionX: item.x,
-      positionY: item.y,
-      width: 1,
-      height: 1,
-      element: this.generateWidgetData(this.selectedComponent?.componentType!)
-    }
-    if (this.currentDesignPage != null && designpostion != null) {
-      this.currentDesignPage?.positions.push(designpostion)
-      this.designService.updateData(this.currentDesignPage)
+    if (this.gridOptions.enableEmptyCellClick != false) {
+      console.info('empty cell click', event, item);
+      const designpostion: DesignPosition = {
+        id: this.currentDesignPage?.positions.length != 0 ? this.currentDesignPage?.positions[this.currentDesignPage.positions.length - 1].id! + 1 : 1,
+        positionX: item.x,
+        positionY: item.y,
+        width: 1,
+        height: 1,
+        element: this.generateWidgetData(this.selectedComponent?.componentType!)
+      }
+      if (this.currentDesignPage != null && designpostion != null) {
+        this.currentDesignPage?.positions.push(designpostion)
+        this.designService.updateData(this.currentDesignPage)
+      }
     }
   }
 }
