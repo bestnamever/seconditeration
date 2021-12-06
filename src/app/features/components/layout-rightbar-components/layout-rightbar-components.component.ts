@@ -4,8 +4,7 @@ import { DesignPage } from 'src/app/core/models/design-page';
 import { DesignService } from 'src/app/core/services/design.service';
 import { PreviewService } from "../../../core/services/preview.service"
 import { OptionList } from 'src/app/core/models/option-list';
-import {skip} from "rxjs/operators";
-import {Subscription} from "rxjs";
+import { Subscription } from "rxjs";
 import { AttributePickerControlService } from 'src/app/core/services/attributePickerControl.service';
 
 @Component({

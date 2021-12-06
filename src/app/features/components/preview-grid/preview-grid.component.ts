@@ -389,12 +389,12 @@ export class PreviewGridComponent implements OnInit {
     newDesignElement = {
       widgetType: type,
       assetType: AssetType.THERMOSTAT,
-      text: "Label for " + text,
+      text: "New" + text,
       values: [{
-        asset: "Thermostat 1",
-        time: new Date("2019-01-16"),
-        value: "25",
-        measurement: "°C"
+        asset: AssetType.ALL,
+        time: new Date(),
+        value: "",
+        measurement: ""
       }]
     }
     return newDesignElement
