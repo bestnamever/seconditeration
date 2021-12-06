@@ -1,4 +1,7 @@
 <div class="flex-one">
+  <div *ngIf="editMode" style="position: absolute; right: 0; padding: 12px 12px 12px 12px;">
+    <app-preview-phoneshare></app-preview-phoneshare>
+  </div>
   <div class="flex-two">
     <div *ngIf="fullscreen == false else screen" class="phoneContainer" [ngStyle]="{'aspect-ratio': this.getAspectRatio(), 'min-height': this.getPreviewHeight(), 'min-width': this.getPreviewWidth()}">
       <div class="phone" [ngStyle]="{'border-radius': this.phoneOptions?.borderRadius, 'border-width': this.phoneOptions?.borderThickness, 'padding-left': this.getMarginLeft(), 'padding-right': this.getMarginRight()}">
