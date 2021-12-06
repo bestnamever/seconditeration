@@ -7,12 +7,12 @@ import { Subject } from 'rxjs';
 export class AttributePickerControlService {
 
   isOpened : boolean;
-  selectedAsset : string;
+  selectedAsset : any;
   selectedAttribute : string;
   lastSelection : object;
 
   isOpenedChange : Subject<boolean> = new Subject<boolean>();
-  selectedAssetChange : Subject<string> = new Subject<string>();
+  selectedAssetChange : Subject<any> = new Subject<any>();
   selectedAttributeChange : Subject<string> = new Subject<string>();
   lastSelectionChange : Subject<object> = new Subject<object>();
 
@@ -42,7 +42,7 @@ setIsOpened(value : boolean){
   this.isOpenedChange.next(value);
 }
 
-setSelectedAsset(value : string){
+setSelectedAsset(value : any){
   this.selectedAssetChange.next(value);
 }
 

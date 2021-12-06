@@ -21,8 +21,9 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
   // selected widget
   widget: GridsterItem | undefined
 
-  // selected asset
+  // selected asset & attribute
   assetSelected: string | undefined
+  attributeSelected : string | undefined
 
   // selected measurement
   measurementSelected: string | undefined
@@ -67,6 +68,7 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
     this.selectedWidgetSub = this.data.currentlySelectedWidgetState.subscribe(widget => (
       this.widget = widget?.gridsterItem,
       this.assetSelected = widget?.widgetData.values[0].asset,
+      this.attributeSelected = widget?.widgetData.values[0].attributeName,
       this.measurementSelected = widget?.widgetData.values[0].measurement,
       console.log("property is ::" + this.measurementSelected)
     ))
@@ -146,8 +148,26 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
     console.log("[RightbarComponents]", "Found following value for this attribute", selectedAttribute, attributeValue);
 
     // Update values in preview
-  }
+    this.designPage?.positions.forEach(element => {
+      if (element.id == this.widget?.id) {
 
+        element.element.assetType = selectedAsset.type;
+        element.element.values[0].assetId = selectedAsset.id;
+        element.element.values[0].asset = assetName;
+        element.element.values[0].attributeName = selectedAttribute.name;
+        element.element.values[0].value = attributeValue;
+        element.element.values[0].time = new Date();
+        element.element.values[0].measurement = undefined;
+        console.log("[RightbarComponents]", "Updated Widget:", element.element, selectedAsset, selectedAttribute);
+
+        // Update front-end
+        this.assetSelected = assetName;
+        this.attributeSelected = selectedAttribute.name;
+      }
+    });
+
+    if (this.designPage != null) this.outputData.updateData(this.designPage);
+  }
 }
 
 

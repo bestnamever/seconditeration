@@ -4,7 +4,7 @@ import { DesignPage } from "../models/design-page";
 import { WidgetType } from "../models/widget-type";
 import { AssetType } from "../models/asset-type";
 import { environment } from "../../../environments/environment";
-import {OpenremoteService} from "./openremote.service";
+import { OpenremoteService } from "./openremote.service";
 
 @Injectable({
   providedIn: 'root'

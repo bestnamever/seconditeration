@@ -12,6 +12,8 @@ import { DeleteComfirmComponent } from '../delete-comfirm/delete-comfirm.compone
 import { skip, take, takeLast } from "rxjs/operators";
 import { WidgetType } from 'src/app/core/models/widget-type';
 import { DeletionService } from 'src/app/core/services/deletion.service';
+import { AttributePickerControlService } from "../../../core/services/attributePickerControl.service"
+import { OpenremoteService } from '../../../core/services/openremote.service';
 
 interface width {
   value: number
@@ -51,7 +53,7 @@ export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
   private selectedWidgetSub: Subscription;
   private currentDesignSub: Subscription;
 
-  constructor(private inputData: PreviewService, private outputData: DesignService, public dialog: MatDialog, private deletionService: DeletionService) {
+  constructor(private openRemote : OpenremoteService, private inputData: PreviewService, private outputData: DesignService, public dialog: MatDialog, private deletionService: DeletionService, private attributePicker : AttributePickerControlService) {
 
     this.selectedWidget = null
 
@@ -80,6 +82,10 @@ export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
     this.currentDesignSub = this.outputData.currentDesignState.subscribe(designpage => {
       this.designPage = JSON.parse(JSON.stringify(designpage))
     });
+
+    attributePicker.lastSelectionChange.subscribe( (value) => {
+      this.setWidgetValues(this.selectedWidget?.widgetData.values, value);
+    })
   }
 
   ngOnInit() {
@@ -103,11 +109,7 @@ export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
     // change value in designpage
     this.designPage?.positions.forEach(element => {
       if (element.id == this.selectedGridsterItem?.id) {
-        if (key === "value") {
-          element.element.values[0].value = value
-          this.value = value
-        }
-        else if (key === "text") {
+        if (key === "text") {
           element.element.text = value
           this.text = value
         }
@@ -159,6 +161,18 @@ export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
         this.deletionService.sendEvent(data.selectedWidget)
       }
     });
+  }
+
+  setWidgetValues (widget : any, newData : any) : void {
+    // console.log("[setWidgetValues]", widget, newData);
+    // let assetId = newData.assetId;
+    // let currentAssets = this.openRemote.getAssets();
+
+    // let selectedAsset = currentAssets.find(obj => {
+    //   return obj.id == assetId;
+    // })
+
+    // console.log("[setWidgetValues]", currentAssets, selectedAsset);
   }
 }
 

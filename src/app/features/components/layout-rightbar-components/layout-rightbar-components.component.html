@@ -8,7 +8,9 @@
   <div class="screen_body">
     <div class="content">
         <div class="title">General settings</div>
-        <div class="Asset">
+        <p>{{assetSelected}} | {{attributeSelected}}</p>
+        <button (click)="openPicker()">Attribute picker</button>
+        <!-- <div class="Asset">
             <mat-form-field appearance="outline" class="form">
                 <mat-label>Select Asset type</mat-label>
                 <mat-select #chosenAssetValue disableOptionCentering [(value)]="assetSelected"
@@ -18,9 +20,8 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <button (click)="openPicker()">Attribute picker</button>
-        </div>
-        <div class="Properties">
+        </div> -->
+        <!-- <div class="Properties">
             <mat-form-field appearance="outline" class="form">
                 <mat-label>Select Properties</mat-label>
                 <mat-select #chosenMeasureValue disableOptionCentering [(value)]="measurementSelected"
@@ -30,14 +31,9 @@
                             {{property.viewValue}}
                         </mat-option>
                     </div>
-                    <div *ngIf="!getPropertyType()">
-                        <mat-option *ngFor="let property of tempProperties" [value]="property.value">
-                            {{property.viewValue}}
-                        </mat-option>
-                    </div>
                 </mat-select>
             </mat-form-field>
-        </div>
+        </div> -->
         <div class="title">Card settings</div>
         <app-layout-component-setting></app-layout-component-setting>
     </div>
