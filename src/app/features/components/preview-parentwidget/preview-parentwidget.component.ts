@@ -78,24 +78,20 @@ export class PreviewParentwidgetComponent implements OnInit, AfterViewInit, OnDe
           }
         });
 
-        if (this.designPage != null) this.designService.updateData(this.designPage);
         console.log("parentwidget changed:", this.widgetData?.values[0].value, this.designPage);
       }
       else console.log("[parentWidget]", false);
 
-      //Render the content in the lit-components
-      if(this.containerRef != null && this.contentRef != null) {
-        this.containerRef.createEmbeddedView(this.contentRef);
-      }
-      this.changeDetectorRef.detectChanges();
-    }, 5000); 
+      if (this.designPage != null) this.designService.updateData(this.designPage);
+
+    }, 3000); 
   }
 
   ngAfterViewInit() {
-    // if(this.containerRef != null && this.contentRef != null) {
-    //   this.containerRef.createEmbeddedView(this.contentRef);
-    // }
-    // this.changeDetectorRef.detectChanges();
+    if(this.containerRef != null && this.contentRef != null) {
+      this.containerRef.createEmbeddedView(this.contentRef);
+    }
+    this.changeDetectorRef.detectChanges();
   }
 
   ngOnDestroy() {
