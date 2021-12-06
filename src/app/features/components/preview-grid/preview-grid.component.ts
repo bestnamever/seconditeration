@@ -17,6 +17,7 @@ import { DeletionService } from 'src/app/core/services/deletion.service';
 import { PhoneDirection } from "../../../core/models/phone-direction";
 import { el } from 'date-fns/locale';
 import { ConsoleConfigurationValidationFailureReason } from '@openremote/model';
+import { Components } from 'src/app/core/models/components';
 
 
 @Component({
@@ -39,8 +40,9 @@ export class PreviewGridComponent implements OnInit {
   currentDesignPage: DesignPage | null;
   selectedWidget: WidgetComponent | null;
   isDragging: boolean | null;
+  selectedComponent: Components | null;
 
-  dragEventSubscription: Subscription
+  // dragEventSubscription: Subscription
 
   deletionEventSubscription: Subscription
 
@@ -57,6 +59,7 @@ export class PreviewGridComponent implements OnInit {
     this.currentDesignPage = null;
     this.isDragging = false;
     this.dashboardComponents = new Array<WidgetComponent>();
+    this.selectedComponent = null;
 
     this.gridItemCoordinates = new Map<GridsterItemComponentInterface, { x: number, y: number, width: number, height: number }>();
 
@@ -84,14 +87,23 @@ export class PreviewGridComponent implements OnInit {
       pushResizeItems: true,
       disableScrollHorizontal: true,
       displayGrid: 'onDrag&Resize',
+
       itemInitCallback: (item, itemComponent) => { this.itemChange(item, itemComponent); },
       itemChangeCallback: (item, itemComponent) => { this.itemChange(item, itemComponent); },
+
+      //drag and drop
+      enableEmptyCellClick: true,
+      enableEmptyCellDrop: true,
+      enableEmptyCellDrag: true,  // this one will give the background color
+      enableOccupiedCellDrop: false,
+      emptyCellClickCallback: this.emptyCellClick.bind(this),
+      emptyCellDropCallback: this.emptyCellClick.bind(this),
+      emptyCellDragCallback: this.emptyCellClick.bind(this),
       // itemResizeCallback: PreviewGridComponent.itemResize,
     };
 
-    this.dragEventSubscription = this.dragDropService.getEvent().subscribe(param => {
-      this.addItem(param.type, param.x, param.y)
-    })
+    this.dragDropService.selectedWidgetState.subscribe(component =>
+      this.selectedComponent = component)
 
     this.deletionEventSubscription = this.deletionService.getEvent().subscribe(data => {
       this.removeItem(data)
@@ -400,48 +412,6 @@ export class PreviewGridComponent implements OnInit {
     return newDesignElement
   }
 
-  /**
-   * add an item into preivew
-   */
-  public addItem(value: WidgetType, x: number, y: number) {
-    if (this.currentDesignPage?.positions.length != 0) {
-      console.log("something")
-      var maxCurrentId = this.currentDesignPage?.positions[this.currentDesignPage.positions.length - 1].id
-      if (maxCurrentId != null) {
-        const designpostion: DesignPosition = {
-          id: maxCurrentId + 1,
-          positionX: x,
-          positionY: y,
-          width: 1,
-          height: 1,
-          element: this.generateWidgetData(value)
-        }
-        // this.dashboardComponents.push({
-        //   gridsterItem: { cols: 1, rows: 1, x, y, minItemCols: 1, minItemRows: 1 },
-        //   widgetData: this.generateWidgetData(value)
-        // })
-        if (this.currentDesignPage != null) {
-          this.currentDesignPage?.positions.push(designpostion)
-          this.designService.updateData(this.currentDesignPage)
-        }
-      }
-    }
-    else {
-      console.log("empty")
-      const designpostion: DesignPosition = {
-        id: 1,
-        positionX: x,
-        positionY: y,
-        width: 1,
-        height: 1,
-        element: this.generateWidgetData(value)
-      }
-      if (this.currentDesignPage != null) {
-        this.currentDesignPage?.positions.push(designpostion)
-        this.designService.updateData(this.currentDesignPage)
-      }
-    }
-  }
 
   public removeItem(widget: WidgetComponent) {
     if (this.currentDesignPage != null) {
@@ -452,20 +422,26 @@ export class PreviewGridComponent implements OnInit {
     }
   }
 
-  /**
-   * drag and drop
-   * entered
-   */
-  enter(event: CdkDragEnter<any>) {
-    console.log('entered');
-  }
-
-  // onDrop(event: CdkDragDrop<WidgetComponent[]>) {
-  //   this.dragDropService.drop(event);
-  // }
-
   //hotkey for deletion
   deletion() {
     console.log("key pressed")
+  }
+
+
+  // drag and drop
+  emptyCellClick(event: MouseEvent, item: GridsterItem): void {
+    console.info('empty cell click', event, item);
+    const designpostion: DesignPosition = {
+      id: this.currentDesignPage?.positions.length != 0 ? this.currentDesignPage?.positions[this.currentDesignPage.positions.length - 1].id! + 1 : 1,
+      positionX: item.x,
+      positionY: item.y,
+      width: 1,
+      height: 1,
+      element: this.generateWidgetData(this.selectedComponent?.componentType!)
+    }
+    if (this.currentDesignPage != null && designpostion != null) {
+      this.currentDesignPage?.positions.push(designpostion)
+      this.designService.updateData(this.currentDesignPage)
+    }
   }
 }
