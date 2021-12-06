@@ -286,7 +286,7 @@ export class PreviewGridComponent implements OnInit {
           if (this.phoneOptions?.customHeight != null) {
             return this.phoneOptions.customHeight;
           }
-          return '80%'; // Height is higher, so PORTRAIT mode
+          return '75%'; // Height is higher, so PORTRAIT mode
         }
       }
     } else {
@@ -294,7 +294,7 @@ export class PreviewGridComponent implements OnInit {
         if (this.phoneOptions?.customHeight != null) {
           return this.phoneOptions.customHeight;
         }
-        return '80%';
+        return '75%';
       }
     }
     return undefined;
@@ -307,7 +307,7 @@ export class PreviewGridComponent implements OnInit {
           if (this.phoneOptions?.customWidth != null) {
             return this.phoneOptions.customWidth;
           }
-          return '70%'; // Width is higher, so LANDSCAPE mode
+          return '65%'; // Width is higher, so LANDSCAPE mode
         } else {
           return undefined; // Height is higher, so PORTRAIT mode
         }
@@ -319,7 +319,7 @@ export class PreviewGridComponent implements OnInit {
         if (this.phoneOptions?.customWidth != null) {
           return this.phoneOptions.customWidth;
         }
-        return '70%';
+        return '65%';
       }
     }
   }

@@ -62,8 +62,8 @@ export class PhoneService {
         smallNotch: false,
         largeNotch: false,
         aspectRatio: customWidth + '/' + customHeight,
-        customWidth: '75%',
-        customHeight: '75%'
+        customWidth: '70%',
+        customHeight: '70%'
       }
     } else if(phoneType != null) {
       switch (phoneType) {
@@ -77,8 +77,8 @@ export class PhoneService {
             aspectRatio: '9/17',
             marginTop: '52px',
             marginBottom: '52px',
-            customWidth: '55%',
-            customHeight: '65%'
+            customWidth: '50%',
+            customHeight: '60%'
           }
         }
         case PhoneType["Apple IPhone 13"]: {
