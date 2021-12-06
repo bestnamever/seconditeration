@@ -4,7 +4,7 @@
     <!-- Component Browser tab -->
     <mat-toolbar color="primary" class="toolbar-header">
         <mat-toolbar-row class="toolbar-row">
-          <span>Component Browser</span>
+            <span>Component Browser</span>
         </mat-toolbar-row>
     </mat-toolbar>
     <div class="tab-component-browser tab-wrapper">
@@ -28,9 +28,12 @@
                 <div *ngFor="let component of selectedComponents" class="component-card-wrapper" style="z-index: 999">
                     <mat-grid-list cols="1" rowHeight="100px" style="z-index: 999">
                         <mat-grid-tile colspan="1" rowspan="1" style="border: 0px solid black;z-index: 999">
-                            <div cdkDrag style="z-index: 100000" [cdkDragFreeDragPosition]="dragPosition"
+                            <!-- <div cdkDrag style="z-index: 100000" [cdkDragFreeDragPosition]="dragPosition"
                                 class="draggableComponent" (mousedown)="onDragStart($event, component)"
-                                (mouseup)="onDrop($event, component)">
+                                (mouseup)="onDrop($event, component)"> -->
+                            <div style="z-index: 100000" class="draggableComponent" draggable="true"
+                                (dragstart)="dragStartHandler($event,component)"
+                                (dragend)="dragEndHandler($event,component)">
                                 <app-component-thumbnail componentTitle={{component.componentTitle}}
                                     iconCode={{component.iconCode}} componentType={{component.componentType}}>
                                 </app-component-thumbnail>
