@@ -1,22 +1,20 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { DisplayGrid, GridsterConfig, GridsterItem, GridsterItemComponentInterface } from "angular-gridster2";
-import { WidgetComponent } from "../../../core/models/widget-component";
-import { PhoneProperties } from "../../../core/models/phone-properties";
-import { PreviewService } from "../../../core/services/preview.service";
-import { DesignPage } from "../../../core/models/design-page";
-import { DesignService } from "../../../core/services/design.service";
-import { PhoneService } from "../../../core/services/phone.service";
-import { DesignElement } from 'src/app/core/models/design-element';
-import { WidgetType } from 'src/app/core/models/widget-type';
-import { AssetType } from 'src/app/core/models/asset-type';
-import { DragAndDropService } from 'src/app/core/services/dragAnddrop.service';
-import { CdkDragDrop, CdkDragEnter } from '@angular/cdk/drag-drop';
-import { empty, Subscription } from 'rxjs';
-import { DesignPosition } from 'src/app/core/models/design-position';
-import { DeletionService } from 'src/app/core/services/deletion.service';
-import { PhoneDirection } from "../../../core/models/phone-direction";
-import { el } from 'date-fns/locale';
-import { ConsoleConfigurationValidationFailureReason } from '@openremote/model';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {GridsterConfig, GridsterItem, GridsterItemComponentInterface} from "angular-gridster2";
+import {WidgetComponent} from "../../../core/models/widget-component";
+import {PhoneProperties} from "../../../core/models/phone-properties";
+import {PreviewService} from "../../../core/services/preview.service";
+import {DesignService} from "../../../core/services/design.service";
+import {PhoneService} from "../../../core/services/phone.service";
+import {DesignElement} from 'src/app/core/models/design-element';
+import {WidgetType} from 'src/app/core/models/widget-type';
+import {AssetType} from 'src/app/core/models/asset-type';
+import {DragAndDropService} from 'src/app/core/services/dragAnddrop.service';
+import {CdkDragEnter} from '@angular/cdk/drag-drop';
+import {Subscription} from 'rxjs';
+import {DesignPosition} from 'src/app/core/models/design-position';
+import {DeletionService} from 'src/app/core/services/deletion.service';
+import {PhoneDirection} from "../../../core/models/phone-direction";
+import {Design} from "../../../core/models/design";
 
 
 @Component({
@@ -36,7 +34,7 @@ export class PreviewGridComponent implements OnInit {
   phoneOrientation: PhoneDirection | undefined;
   dashboardComponents: Array<WidgetComponent>;
 
-  currentDesignPage: DesignPage | null;
+  currentDesignPage: Design | null;
   selectedWidget: WidgetComponent | null;
   isDragging: boolean | null;
 
@@ -158,20 +156,20 @@ export class PreviewGridComponent implements OnInit {
       console.log(design)
 
       this.currentDesignPage = design;
-      if (design != null) {
-        design.positions.forEach(position => {
+      if (design != null && design.widgets != null) {
+        design.widgets.forEach((widget: DesignPosition) => {
           const item = {
             gridsterItem: {
-              id: position.id,
-              cols: position.width,
-              rows: position.height,
-              x: position.positionX,
-              y: position.positionY
+              id: widget.id,
+              cols: widget.width,
+              rows: widget.height,
+              x: widget.positionX,
+              y: widget.positionY
             },
-            widgetData: position.element
+            widgetData: widget.element
           };
 
-          ids.push(position.id)
+          ids.push(widget.id)
 
           // Check if the component is already added with the same properties (width, height, x, y, etc)
           if (this.dashboardComponents.filter(x => { return x.gridsterItem.id == item.gridsterItem.id }).length == 0) {
@@ -225,13 +223,13 @@ export class PreviewGridComponent implements OnInit {
 
     // Update the design in the storage
     if (this.currentDesignPage != null) {
-      this.currentDesignPage.positions.forEach(position => {
-        if (position.id == item.id) {
-          console.log('An item with the id [' + position.id + '] changed!');
-          position.positionX = item.x;
-          position.positionY = item.y;
-          position.width = item.cols;
-          position.height = item.rows;
+      this.currentDesignPage.widgets.forEach((widget: DesignPosition) => {
+        if (widget.id == item.id) {
+          console.log('An item with the id [' + widget.id + '] changed!');
+          widget.positionX = item.x;
+          widget.positionY = item.y;
+          widget.width = item.cols;
+          widget.height = item.rows;
           if (this.currentDesignPage != null) {
             this.designService.updateLocation(this.currentDesignPage);
           } else {
@@ -389,13 +387,8 @@ export class PreviewGridComponent implements OnInit {
     newDesignElement = {
       widgetType: type,
       assetType: AssetType.THERMOSTAT,
-      text: "Label for " + text,
-      values: [{
-        asset: "Thermostat 1",
-        time: new Date("2019-01-16"),
-        value: "25",
-        measurement: "°C"
-      }]
+      text: "New " + text,
+      values: []
     }
     return newDesignElement
   }
@@ -404,9 +397,9 @@ export class PreviewGridComponent implements OnInit {
    * add an item into preivew
    */
   public addItem(value: WidgetType, x: number, y: number) {
-    if (this.currentDesignPage?.positions.length != 0) {
-      console.log("something")
-      var maxCurrentId = this.currentDesignPage?.positions[this.currentDesignPage.positions.length - 1].id
+    if (this.currentDesignPage?.widgets != null && this.currentDesignPage.widgets.length != 0) {
+      // console.log("something")
+      var maxCurrentId = this.currentDesignPage?.widgets[this.currentDesignPage?.widgets.length - 1].id
       if (maxCurrentId != null) {
         const designpostion: DesignPosition = {
           id: maxCurrentId + 1,
@@ -421,13 +414,13 @@ export class PreviewGridComponent implements OnInit {
         //   widgetData: this.generateWidgetData(value)
         // })
         if (this.currentDesignPage != null) {
-          this.currentDesignPage?.positions.push(designpostion)
+          this.currentDesignPage?.widgets.push(designpostion)
           this.designService.updateData(this.currentDesignPage)
         }
       }
     }
     else {
-      console.log("empty")
+      // console.log("empty")
       const designpostion: DesignPosition = {
         id: 1,
         positionX: x,
@@ -437,7 +430,7 @@ export class PreviewGridComponent implements OnInit {
         element: this.generateWidgetData(value)
       }
       if (this.currentDesignPage != null) {
-        this.currentDesignPage?.positions.push(designpostion)
+        this.currentDesignPage?.widgets.push(designpostion)
         this.designService.updateData(this.currentDesignPage)
       }
     }
@@ -446,7 +439,7 @@ export class PreviewGridComponent implements OnInit {
   public removeItem(widget: WidgetComponent) {
     if (this.currentDesignPage != null) {
       console.log("current design page is " + JSON.stringify(this.currentDesignPage))
-      this.currentDesignPage.positions = this.currentDesignPage.positions.filter(obj => JSON.stringify(obj.id) !== JSON.stringify(widget.gridsterItem.id))
+      this.currentDesignPage.widgets = this.currentDesignPage.widgets.filter(obj => JSON.stringify(obj.id) !== JSON.stringify(widget.gridsterItem.id))
       console.log(this.currentDesignPage)
       this.designService.updateData(this.currentDesignPage)
     }

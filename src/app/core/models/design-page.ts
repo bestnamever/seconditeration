@@ -1,6 +1,6 @@
-import {DesignPosition} from "./design-position";
-
 export interface DesignPage {
-  name: string;
-  positions: Array<DesignPosition>;
+  id: number,
+  name: string,
+  is_homepage: boolean,
+  in_navigation: boolean
 }
