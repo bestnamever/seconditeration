@@ -24,42 +24,45 @@ interface width {
   templateUrl: './layout-component-setting.component.html',
   styleUrls: ['./layout-component-setting.component.scss']
 })
-export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
+export class LayoutComponentSettingComponent implements OnDestroy {
 
-  //page value
-  design: Design | undefined
 
-  // selected widget
-  selectedWidget: WidgetComponent | null
 
-  // selected widget's GridsterItem
-  selectedGridsterItem: GridsterItem | undefined
+  // Current Design
+  design: Design | undefined;
 
-  // selected widget type
-  type: number | undefined;
+  // Selected item variables
+  selectedWidget: WidgetComponent | null;
+  selectedGridsterItem: GridsterItem | undefined;  // selected widget's GridsterItem
+  selectedWidgetType: number | undefined;
+  selectedWidgetText: string | undefined;
+  selectedWidgetValue: string | undefined;
 
-  // selected widget label text
-  text: string | undefined;
-
-  // selected widget value
-  value: string | undefined;
-
+  // Placeholder text variables
   delete_component: string;
   delete_title: string;
   widths: width[];
   widthValue: number;
 
+  // Subscriptions
   private selectedWidgetSub: Subscription;
   private currentDesignSub: Subscription;
 
+
+
+  /* -------------------------------------------------------------------- */
+  /*                       Constructor Method                             */
+  /* -------------------------------------------------------------------- */
+
   constructor(private openRemote : OpenremoteService, private inputData: PreviewService, private outputData: DesignService, public dialog: MatDialog, private deletionService: DeletionService, private attributePicker : AttributePickerControlService) {
 
+    // Selected item variables
     this.selectedWidget = null
 
+    // Placeholder text variables
     this.delete_component = "Component"
     this.delete_title = "Delete this Component"
-
-    this.text = "Room Temperature"
+    this.selectedWidgetText = "Room Temperature"
     this.widths = [
       { value: 30, viewValue: '30%' },
       { value: 50, viewValue: '50%' },
@@ -68,40 +71,49 @@ export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
     ]
     this.widthValue = 0
 
-    // set value on right side bar
+
+    // Subscribing to the Selected Widget, and setting the right variables
     this.selectedWidgetSub = this.inputData.currentlySelectedWidgetState.subscribe(widget => {
       this.selectedWidget = widget;
       this.selectedGridsterItem = widget?.gridsterItem;
-      this.type = widget?.widgetData.widgetType;
-      this.text = widget?.widgetData.text;
+      this.selectedWidgetType = widget?.widgetData.widgetType;
+      this.selectedWidgetText = widget?.widgetData.text;
       if(widget?.widgetData.values != null && widget.widgetData.values.length > 0) {
-        this.value = widget?.widgetData.values[0].value;
+        this.selectedWidgetValue = widget?.widgetData.values[0].value;
       }
-      console.log("value is : " + this.value)
+      // console.log("value is : " + this.selectedWidgetValue)
     })
 
+    // Subscribing to the current Design.
     this.currentDesignSub = this.outputData.currentDesignState.subscribe(designpage => {
       this.design = JSON.parse(JSON.stringify(designpage))
     });
 
+    // Subsciribing to changes in the attribute picker
     attributePicker.lastSelectionChange.subscribe( (value) => {
       this.setWidgetValues(this.selectedWidget?.widgetData.values, value);
     })
   }
 
-  ngOnInit() {
 
-  }
 
-  ngOnDestroy() {
-    this.selectedWidgetSub.unsubscribe();
-    this.currentDesignSub.unsubscribe();
-  }
+
+
+
+  /* -------------------------------------------------------------------- */
+  /*                 Set Methods for changing details                     */
+  /* -------------------------------------------------------------------- */
+
 
   // select width by chips
   selectionOnChip(chip: MatChip, value: number) {
     this.widthValue = value
     chip.toggleSelected();
+  }
+
+  updateData(event: any, key: string) {
+    console.log("new value " + event.target.value);
+    this.setValue(key, event.target.value)
   }
 
   //select value by input textarea
@@ -112,11 +124,11 @@ export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
       if (widget.id == this.selectedGridsterItem?.id) {
         if (key === "value") {
           widget.element.values[0].value = value
-          this.value = value
+          this.selectedWidgetValue = value
         }
         else if (key === "text") {
           widget.element.text = value
-          this.text = value
+          this.selectedWidgetText = value
         }
       }
     })
@@ -126,30 +138,36 @@ export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
       this.outputData.updateData(this.design)
   }
 
-  //textarea input
-  updateData(event: any, key: string) {
-    console.log("new value " + event.target.value);
-
-    this.setValue(key, event.target.value)
-  }
 
 
-  /**
-   * card setting display
-   * @returns settings card of selected widget and delete button
-   */
-  showCardView(): boolean { return this.type === 0 }
-  showGraphView(): boolean { return this.type === 1 }
-  showButtonView(): boolean { return this.type === 2 }
-  showChartView(): boolean { return this.type === 3 }
+
+
+  /* -------------------------------------------------------------------------------------- */
+  /*                 Check statements whether a Widget Type is selected                     */
+  /* -------------------------------------------------------------------------------------- */
+
+
+  showCardView(): boolean { return this.selectedWidgetType === 0 }
+  showGraphView(): boolean { return this.selectedWidgetType === 1 }
+  showButtonView(): boolean { return this.selectedWidgetType === 2 }
+  showChartView(): boolean { return this.selectedWidgetType === 3 }
 
   showDeleteButton(): boolean {
-    if (this.type != null) {
-      return this.type >= 0 || this.type <= 4
+    if (this.selectedWidgetType != null) {
+      return this.selectedWidgetType >= 0 || this.selectedWidgetType <= 4
     }
     else
       return false
   }
+
+
+
+
+
+  /* -------------------------------------------------------------------------------------- */
+  /*                Methods regarding opening Dialogs (for deleting ex.)                    */
+  /* -------------------------------------------------------------------------------------- */
+
 
   //open delete dialog
   openDeleteDialog() {
@@ -177,15 +195,14 @@ export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
   }
 
   setWidgetValues (widget : any, newData : any) : void {
-    // console.log("[setWidgetValues]", widget, newData);
-    // let assetId = newData.assetId;
-    // let currentAssets = this.openRemote.getAssets();
 
-    // let selectedAsset = currentAssets.find(obj => {
-    //   return obj.id == assetId;
-    // })
+  }
 
-    // console.log("[setWidgetValues]", currentAssets, selectedAsset);
+
+
+  ngOnDestroy() {
+    this.selectedWidgetSub.unsubscribe();
+    this.currentDesignSub.unsubscribe();
   }
 }
 
