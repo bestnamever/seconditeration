@@ -34,9 +34,14 @@ export class PhoneService {
     }
   }
 
-  /* ---------------------------------------------- */
 
-  // Methods
+
+
+  /* ---------------------------------------------------------------------------- */
+  /*                       Change and Update methods                              */
+  /* ---------------------------------------------------------------------------- */
+
+
   changeOrientation(phoneOrientation: PhoneDirection) {
     console.log("Switching Phone Orientation to " + PhoneDirection[phoneOrientation] + "..")
     this.currentOrientationSubject.next(phoneOrientation);
@@ -53,6 +58,15 @@ export class PhoneService {
       this.currentPhoneSubject.next(properties);
     }
   }
+
+
+
+
+
+  /* ---------------------------------------------------------------------------- */
+  /*                      Get methods for reading data                            */
+  /* ---------------------------------------------------------------------------- */
+
 
   getPhone(phoneType?: PhoneType, customWidth?: number, customHeight?: number): PhoneProperties | undefined {
     if(customWidth != null && customHeight != null) {
@@ -259,7 +273,11 @@ export class PhoneService {
   }
 
 
-  /* ---------------------------------------------------------- */
+
+
+  /* ---------------------------------------------------------------------------- */
+  /*                  Methods for getting Default settings                        */
+  /* ---------------------------------------------------------------------------- */
 
   getDefaultOrientation(): PhoneDirection {
     return PhoneDirection.PORTRAIT;

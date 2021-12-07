@@ -6,7 +6,9 @@ export const environment = {
   production: false,
   useLocalStorage: false,
   useDatabase: true,
-  previewUrl: 'http://145.93.65.104:4200/preview'
+  previewUrl: 'http://192.168.178.24:4200/preview',
+  backendUrl: 'http://207.180.246.34:8000',
+  openremoteUrl: 'http://martinaeytesting.nl:8080'
 };
 
 /*

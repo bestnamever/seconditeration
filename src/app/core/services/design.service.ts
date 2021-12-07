@@ -14,99 +14,45 @@ import { DesignPosition } from '../models/design-position';
 })
 export class DesignService {
 
+
   // Variables
   private currentDesignSubject: BehaviorSubject<Design>; // The state which we can edit
   public readonly currentDesignState: Observable<Design>; // The view-only state, where we can subscribe on to get updates.
   private readonly designHistory: Design[] // List of all submitted Designs, to keep track of history (for undo-ing but also for checking whether it has changed)
   public readonly currentAssets: any;
 
+
+
   // Constructor
   constructor(private openremoteService: OpenremoteService, private backendService: BackendService) {
 
     // Initialize variables
-    this.currentDesignSubject = new BehaviorSubject<Design>(this.getFirstDesign()); // Set the 1st design on init
+    const firstDesign = this.getFirstDesign();
+    this.currentDesignSubject = new BehaviorSubject<Design>(firstDesign); // Set the 1st design on init
     this.currentDesignState = this.currentDesignSubject.asObservable(); // Make a clone of the state which is read-only
-    this.designHistory = [];
-    this.designHistory.push(this.getFirstDesign());
     this.currentAssets = openremoteService.getAssets();
 
-    // openremote impl
+    // Setup history object
+    this.designHistory = [];
+    this.designHistory.push(firstDesign);
 
-    // A method that sends a message to console when the Design gets updated
+    // If using local storage: Save when the design changes.
     if (environment.useLocalStorage) {
       this.currentDesignState.subscribe((design) => {
         localStorage.setItem('savedDesign', JSON.stringify(design))
       });
     }
+
+    // If using database: Get the initial database objects
     else if (environment.useDatabase) {
-
-      // Get design from database
-      this.backendService.getResponse("design/1").subscribe(res => {
-
-        console.log("get design 1: " + JSON.stringify(res))
-
-        var response_desgin = res[0]
-        var response_widgets
-
-        this.backendService.getResponse("widget/1").subscribe(res_widgets => {
-
-          response_widgets = res_widgets[0]
-          console.log("get widgets : " + JSON.stringify(response_widgets.widgets))
-
-          var designPage: Design = {
-            name: response_desgin.name,
-            id: response_desgin.id,
-            display_device: response_desgin.display_device,
-            safe_space: response_desgin.safe_space,
-            display_safe_space: response_desgin.display_safe_space,
-            page: {
-              id: response_widgets.id,
-              name: response_widgets.name,
-              is_homepage: response_widgets.is_homepage,
-              in_navigation: response_widgets.in_navigation,
-            },
-            widgets: []
-          }
-          for (var i = 0; i < response_widgets.widgets.length; i++) {
-            console.log("get widgets are : " + response_widgets.widgets.length)
-            var currentItem = response_widgets.widgets[i]
-            console.log("get widget element is : " + JSON.stringify(currentItem))
-            var designpostion: DesignPosition
-            designpostion = {
-              id: currentItem.id - 1,
-              positionX: currentItem.position_x,
-              positionY: currentItem.position_y,
-              width: currentItem.width,
-              height: currentItem.height,
-              element: {
-                widgetType: currentItem.widget_type,
-                assetType: currentItem.assetType,
-                text: currentItem.label,
-                values: currentItem.values,
-              }
-            }
-            console.log("get widget is : " + JSON.stringify(currentItem))
-            designPage?.widgets.push(designpostion)
-          }
-          // this.currentDesignPage = designPage
-          // console.log("here is it ：" + this.currentDesignPage)
-          console.log("designpage :", designPage)
-          this.updateData(designPage)
-        })
-      })
+      this.getDesignFromDatabase();
     }
   }
 
-  public getHistoryByNumber(commitsAgo: number): Design {
-    console.log("Current state of designHistory is:");
-    console.log(this.designHistory);
-    return this.designHistory[this.designHistory.length - commitsAgo];
-  }
-  public getHistoryLength(): number {
-    return this.designHistory.length;
-  }
 
-  /* ----------------------------------------- */
+  /* -------------------------------------------------------------------------------- */
+  /*                Update Methods for saving new Data into state                     */
+  /* -------------------------------------------------------------------------------- */
 
   public updateLocation(design: Design): any {
     console.log("Started updating the location in DesignService...");
@@ -134,7 +80,90 @@ export class DesignService {
     }
   }
 
-  /* ----------------------------------------- */
+
+
+
+  /* -------------------------------------------------------------------------------- */
+  /*                         Database Related Functions                               */
+  /* -------------------------------------------------------------------------------- */
+
+  // Get design from database
+  private getDesignFromDatabase() {
+
+    // Get design from database
+    this.backendService.getResponse("design/1").subscribe(res => {
+      const response_design = res[0];
+      let response_widgets;
+      this.backendService.getResponse("widget/1").subscribe(res_widgets => {
+        response_widgets = res_widgets[0];
+
+        // Converting received data into Design object.
+        const designPage: Design = {
+          name: response_design.name,
+          id: response_design.id,
+          display_device: response_design.display_device,
+          safe_space: response_design.safe_space,
+          display_safe_space: response_design.display_safe_space,
+          page: {
+            id: response_widgets.id,
+            name: response_widgets.name,
+            is_homepage: response_widgets.is_homepage,
+            in_navigation: response_widgets.in_navigation,
+          },
+          widgets: []
+        };
+
+        // Looping through Widgets, and converting their data.
+        for (var i = 0; i < response_widgets.widgets.length; i++) {
+          let currentItem = response_widgets.widgets[i];
+          let designpostion: DesignPosition = {
+            id: currentItem.id - 1,
+            positionX: currentItem.position_x,
+            positionY: currentItem.position_y,
+            width: currentItem.width,
+            height: currentItem.height,
+            element: {
+              widgetType: currentItem.widget_type,
+              assetType: currentItem.assetType,
+              text: currentItem.label,
+              values: currentItem.values,
+            }
+          }
+          designPage?.widgets.push(designpostion)
+        }
+
+        // Last function is to update the data in state.
+        console.log('Data received from the Database is the following:', designPage);
+        this.updateData(designPage)
+      })
+    })
+  }
+
+
+
+
+
+  /* -------------------------------------------------------------------------------- */
+  /*                       Simple filter / query methods                              */
+  /* -------------------------------------------------------------------------------- */
+
+  public getHistoryByNumber(commitsAgo: number): Design {
+    console.log("Current state of designHistory is:");
+    console.log(this.designHistory);
+    return this.designHistory[this.designHistory.length - commitsAgo];
+  }
+
+  public getHistoryLength(): number {
+    return this.designHistory.length;
+  }
+
+
+
+
+
+  /* -------------------------------------------------------------------------------- */
+  /*               Initial Value methods (getting 1st design etc)                     */
+  /* -------------------------------------------------------------------------------- */
 
   private getFirstDesign(): Design {
     const savedDesign = localStorage.getItem('savedDesign');
@@ -147,7 +176,7 @@ export class DesignService {
       return {
         id: 0,
         name: "Main Design",
-        display_device: PhoneType["Apple IPhone 13"],
+        display_device: "Apple IPhone 13",
         safe_space: 0,
         display_safe_space: false,
         page: {

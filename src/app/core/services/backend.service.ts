@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class BackendService {
-  http: any;
 
   constructor(private httpClient: HttpClient) { }
 
