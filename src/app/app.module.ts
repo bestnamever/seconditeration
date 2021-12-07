@@ -61,12 +61,12 @@ import './features/litelements/vd-graph/vd-graph.component';
 import './features/litelements/vd-barchart/vd-barchart.component';
 import './features/litelements/or-icon/or-icon.component'
 import { PreviewComponent } from './features/pages/preview/preview.component';
-import {MatButtonToggleModule} from "@angular/material/button-toggle";
-import {MatExpansionModule} from "@angular/material/expansion";
+import { MatButtonToggleModule } from "@angular/material/button-toggle";
+import { MatExpansionModule } from "@angular/material/expansion";
 import { PreviewPhoneshareComponent } from './features/components/preview-phoneshare/preview-phoneshare.component';
 import { DialogComponent } from './features/components/dialog/dialog.component';
-import {QrCodeModule} from "ng-qrcode";
-import {BackendInterceptor} from "./core/interceptors/backend.interceptor";
+import { QrCodeModule } from "ng-qrcode";
+import { BackendInterceptor } from './core/interceptors/backend.interceptor';
 
 
 
@@ -98,39 +98,39 @@ import {BackendInterceptor} from "./core/interceptors/backend.interceptor";
     PreviewPhoneshareComponent,
     DialogComponent
   ],
-    imports: [
-        CommonModule,
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        GridsterModule,
-        MatToolbarModule,
-        MatSidenavModule,
-        MatListModule,
-        MatIconModule,
-        MatButtonModule,
-        MatProgressSpinnerModule,
-        MatTabsModule,
-        MatDividerModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        MatChipsModule,
-        MatCheckboxModule,
-        MatInputModule,
-        MatDialogModule,
-        MatSlideToggleModule,
-        FormsModule,
-        DragDropModule,
-        MatGridListModule,
-        MatButtonToggleModule,
-        MatExpansionModule,
-        MatTreeModule,
-        QrCodeModule,
-    ],
+  imports: [
+    CommonModule,
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    GridsterModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    MatIconModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatTabsModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatChipsModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatDialogModule,
+    MatSlideToggleModule,
+    FormsModule,
+    DragDropModule,
+    MatGridListModule,
+    MatButtonToggleModule,
+    MatExpansionModule,
+    MatTreeModule,
+    QrCodeModule,
+  ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: OpenremoterequestInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: BackendInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: BackendInterceptor, multi: true }
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
