@@ -44,3 +44,45 @@
   align-items: center;
   flex-direction: column;
 }
+
+.data-field{
+    width: 100%;
+    margin-top: 10px;
+
+    button{
+        position: absolute;
+        right: 0px;
+        top: 45%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        padding: 5px;
+        transition: all 250ms ease-out;
+
+        &:hover{
+            cursor: pointer;
+            background: darken($color: white, $amount: 10%);
+            border-radius: 7px;
+            color: lighten($color: black, $amount: 10%);
+        }
+    }
+
+    input{
+        text-transform: capitalize;
+
+        &:hover{
+            cursor: pointer;
+        }
+    }
+
+    &::ng-deep.mat-form-field-wrapper{
+        width: 100%;
+    
+        .mat-form-field-infix{
+            display: flex;
+            position: relative;
+        }
+    }
+}
+
+

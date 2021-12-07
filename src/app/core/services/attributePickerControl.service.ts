@@ -42,7 +42,7 @@ setIsOpened(value : boolean){
   this.isOpenedChange.next(value);
 }
 
-setSelectedAsset(value : string){
+setSelectedAsset(value : any){
   this.selectedAssetChange.next(value);
 }
 
@@ -57,6 +57,7 @@ setLastSelection(assetId : string, attributeName : string){
     timeStamp: new Date().toLocaleString()
   }
 
+  // Debug
   console.log("[AttributePickerControlService]", "Saved new last selection", newValue);
 
   this.lastSelectionChange.next(newValue);
