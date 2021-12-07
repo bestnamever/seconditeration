@@ -24,6 +24,7 @@ import { MatListModule } from '@angular/material/list';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTreeModule } from '@angular/material/tree';
 
 // Other externally imported Libraries
 import { GridsterModule } from 'angular-gridster2'
@@ -51,11 +52,17 @@ import { PreviewTopbarComponent } from './features/components/preview-topbar/pre
 import { PreviewUpdatedtextComponent } from './features/components/preview-updatedtext/preview-updatedtext.component';
 import { SearchFormComponent } from './features/components/search-form/search-form.component';
 import { ComponentThumbnailComponent } from './features/components/component-thumbnail/component-thumbnail.component';
+import { AttributePickerComponent } from './features/components/attribute-picker/attribute-picker.component';
+import { TreeViewComponent } from './features/components/tree-view/tree-view.component';
 
 // Lit Components
 import './features/litelements/vd-label/vd-label.component'
 import './features/litelements/vd-graph/vd-graph.component';
 import './features/litelements/vd-barchart/vd-barchart.component';
+import './features/litelements/or-icon/or-icon.component'
+import { PreviewComponent } from './features/pages/preview/preview.component';
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 
 
@@ -80,34 +87,40 @@ import './features/litelements/vd-barchart/vd-barchart.component';
     LayoutRightbarComponentsComponent,
     LayoutComponentSettingComponent,
     LayoutScreenComponent,
-    DeleteComfirmComponent
+    DeleteComfirmComponent,
+    AttributePickerComponent,
+    TreeViewComponent,
+    PreviewComponent
   ],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    GridsterModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatListModule,
-    MatIconModule,
-    MatButtonModule,
-    MatProgressSpinnerModule,
-    MatTabsModule,
-    MatDividerModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatChipsModule,
-    MatCheckboxModule,
-    MatInputModule,
-    MatDialogModule,
-    MatSlideToggleModule,
-    FormsModule,
-    DragDropModule,
-    MatGridListModule,
-  ],
+    imports: [
+        CommonModule,
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        GridsterModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatListModule,
+        MatIconModule,
+        MatButtonModule,
+        MatProgressSpinnerModule,
+        MatTabsModule,
+        MatDividerModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatChipsModule,
+        MatCheckboxModule,
+        MatInputModule,
+        MatDialogModule,
+        MatSlideToggleModule,
+        FormsModule,
+        DragDropModule,
+        MatGridListModule,
+        MatButtonToggleModule,
+        MatExpansionModule,
+        MatTreeModule,
+    ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: OpenremoterequestInterceptor, multi: true },
   ],

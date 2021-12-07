@@ -123,3 +123,26 @@ gridster .gridster-column {
 gridster .gridster-row {
   outline: 1px solid lightgray;
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #D0D0D0;
+  // border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #A0A0A0;
+  // border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  // background: #b30000;
+}
+

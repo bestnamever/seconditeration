@@ -6,7 +6,9 @@ import { PreviewService } from "../../../core/services/preview.service"
 import { OptionList } from 'src/app/core/models/option-list';
 import {skip} from "rxjs/operators";
 import {Subscription} from "rxjs";
-
+import { AttributePickerControlService } from 'src/app/core/services/attributePickerControl.service';
+import {Design} from "../../../core/models/design";
+import {DesignPosition} from "../../../core/models/design-position";
 
 @Component({
   selector: 'app-layout-rightbar-components',
@@ -16,7 +18,7 @@ import {Subscription} from "rxjs";
 export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
 
   //page value
-  designPage: DesignPage | undefined
+  designPage: Design | undefined
 
   // selected widget
   widget: GridsterItem | undefined
@@ -35,12 +37,16 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
   //watt properties
   wattProperties: OptionList[]
 
+  //used assets
+
+
+
   // text: string
 
   private selectedWidgetSub: Subscription;
   private currentDesignSub: Subscription;
 
-  constructor(private data: PreviewService, private outputData: DesignService) {
+  constructor(private data: PreviewService, private outputData: DesignService, private attributePicker: AttributePickerControlService) {
     this.assets = [
       { value: "ALTA Wireless Temperature Sensor", viewValue: "ALTA Wireless Temperature Sensor" },
       { value: "Govee Thermometer", viewValue: "Govee Thermometer" },
@@ -60,15 +66,22 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
     ]
 
     // set value on right side bar
-    this.selectedWidgetSub = this.data.currentlySelectedWidgetState.subscribe(widget => (
-      this.widget = widget?.gridsterItem,
-      this.assetSelected = widget?.widgetData.values[0].asset,
-      this.measurementSelected = widget?.widgetData.values[0].measurement,
-      console.log("property is ::" + this.measurementSelected)
-    ))
+    this.selectedWidgetSub = this.data.currentlySelectedWidgetState.subscribe(widget => {
+      this.widget = widget?.gridsterItem;
+      if(widget?.widgetData.values != null && widget.widgetData.values.length > 0) {
+        this.assetSelected = widget?.widgetData.values[0].asset;
+        this.measurementSelected = widget?.widgetData.values[0].measurement;
+        console.log("property is ::" + this.measurementSelected);
+      }
+    })
 
     this.currentDesignSub = this.outputData.currentDesignState.subscribe(designpage => {
       this.designPage = JSON.parse(JSON.stringify(designpage));
+    })
+
+    this.attributePicker.lastSelectionChange.subscribe((value) => {
+      console.log("[RightbarComponents]", "The selected attribute was changed", value);
+      this.setNewValues(value);
     })
 
     // this.text = "example"
@@ -91,13 +104,13 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
   //change value
   setValue(key: string, value: string) {
 
-    this.designPage?.positions.forEach(element => {
-      if (element.id == this.widget?.id) {
+    this.designPage?.widgets.forEach((widget: DesignPosition) => {
+      if (widget.id == this.widget?.id) {
         if (key === "asset") {
-          element.element.values[0].asset = value
+          widget.element.values[0].asset = value
         }
         else if (key === "measurement") {
-          element.element.values[0].measurement = value
+          widget.element.values[0].measurement = value
         }
       }
     })
@@ -112,9 +125,32 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
     this.setValue(chosenkey, chosenValue)
   }
 
+  openPicker() : void {
+    this.attributePicker.setIsOpened(true);
+  }
+
   // setCardSetting(message: string) {
   //   this.text = message;
   // }
+
+  setNewValues(newValues : any) {
+    // Get all used assets
+    const assets = <any[]>this.outputData.currentAssets;
+
+    // Get the selected asset
+    const selectedAsset = assets.find((x : any) => x.id === newValues.assetId);
+    const assetName = selectedAsset.name;
+
+    // Get the selected attribute on the found asset
+    const selectedAttribute = <any>Object.values(selectedAsset.attributes).find((x : any) => x.name === newValues.attributeName)
+
+    // Get the value of the selected attribute
+    const attributeValue = selectedAttribute.value;
+
+    console.log("[RightbarComponents]", "Found following value for this attribute", selectedAttribute, attributeValue);
+
+    // Update values in preview
+  }
 
 }
 

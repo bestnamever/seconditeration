@@ -6,6 +6,7 @@
 
     .mat-tab-label{
         background: white;
+        opacity: 1;
 
         .mat-tab-label-content{
             color: #4d9d2a;
@@ -21,4 +22,8 @@
     .mat-slide-toggle-thumb{
         background-color: #4d9d2a;
     }
+}
+
+::ng-deep.mat-tab-label, ::ng-deep.mat-tab-label-active{
+  min-width: 0!important;
 }

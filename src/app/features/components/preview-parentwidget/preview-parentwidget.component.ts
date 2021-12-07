@@ -34,8 +34,8 @@ export class PreviewParentwidgetComponent implements OnInit, AfterViewInit, OnDe
     this.currentDesignSub = this.designService.currentDesignState.subscribe(design => {
       const oldDesign = this.designService.getHistoryByNumber(1);
       let oldWidgetData = null;
-      if(oldDesign != null) { oldWidgetData = oldDesign.positions.find(x => { return x.id == this.widgetId})?.element; }
-      const newWidgetData = design.positions.find(x => { return x.id == this.widgetId})?.element;
+      if(oldDesign != null) { oldWidgetData = oldDesign.widgets.find(x => { return x.id == this.widgetId})?.element; }
+      const newWidgetData = design.widgets.find(x => { return x.id == this.widgetId})?.element;
       if(this.amountOfTimesUpdated == 0 || JSON.stringify(newWidgetData) !== JSON.stringify(oldWidgetData)) {
         console.log("Updating the ParentWidget...");
         this.amountOfTimesUpdated++;

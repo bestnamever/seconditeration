@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from "rxjs";
-import { AssetType } from '../models/asset-type';
-import { WidgetType } from '../models/widget-type';
 import { AssetFilter } from '../models/asset-filter';
 
 @Injectable({

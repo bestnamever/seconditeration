@@ -5,20 +5,23 @@ import 'chartjs-adapter-date-fns';
 /* ----------------------- */
 
 interface DesignElement {
-  'assetType': AssetType;
-  'text': string;
-  'values': Array<DesignElementvalue>;
-  'details'?: Map<string, string>;
+  assetType: AssetType;
+  text: string;
+  values: Array<DesignElementvalue>;
+  details?: Map<string, string>;
 }
 interface DesignElementvalue {
-  'asset': string;
-  'time': Date;
-  'value': string;
-  'measurement': string;
+  asset: string;
+  time: Date;
+  value: string;
+  measurement: string;
 }
 enum AssetType {
-  THERMOSTAT,
-  SOLAR
+  ALL = "All",
+  THERMOSTAT = "Thermostat",
+  SOLAR = "Solar Collector",
+  AIR = "Air Quality Sensor",
+  HUE = "Philips Hue"
 }
 
 /* ------------------------ */
@@ -95,7 +98,6 @@ export class VdGraphComponent extends LitElement {
       data: {
         labels: this.getGraphTimes(),
         datasets: [{
-          label: 'Temperature',
           data: this.getGraphData(),
           // backgroundColor: ['red', 'blue', 'green'],
           pointBackgroundColor: '#4d9d2a',
@@ -161,17 +163,34 @@ export class VdGraphComponent extends LitElement {
     return data;
   }
 
+/*  getGraphLabels(): string[] {
+    let data: string[] = [];
+    this.widgetData?.values.forEach(x => {
+      data.push(x.measurement)
+    })
+  }*/
+
   // Util function for calculating the maximum height depending on values and the AssetType.
   getMaxHeight(): number {
     console.log('The asset type in getMaxHeight is the following: ' + this.widgetData?.assetType);
-    switch (this.widgetData?.assetType) {
-      case AssetType.THERMOSTAT:
-        const values = this.widgetData?.values.filter(x => { return (Number.parseFloat(x.value) > 30); });
-        if(values.length > 0) { return Number.parseFloat(values[0].value); }
-        else { return 30; }
-      case AssetType.SOLAR:
-        return 3;
+    if(this.widgetData != null) {
+      switch (this.widgetData.assetType.toString()) {
+        case "Thermostat": {
+          const values = this.widgetData.values.filter(x => { return (Number.parseFloat(x.value) > 30); });
+          if(values.length > 0) { return Number.parseFloat(values[0].value); }
+          else { return 30; }
+        }
+        case "Solar Collector": {
+          console.log("Using SOLAR getMaxHeight()");
+          return 3;
+        }
+        default: {
+          console.log("Using default getMaxHeight()");
+          return 100;
+        }
+      }
     }
+    console.log("WidgetData in getMaxHeight() was null!");
     return 100;
   }
 

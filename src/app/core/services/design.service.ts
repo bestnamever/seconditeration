@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
-import { DesignPage } from "../models/design-page";
 import { WidgetType } from "../models/widget-type";
 import { AssetType } from "../models/asset-type";
 import { environment } from "../../../environments/environment";
 import {OpenremoteService} from "./openremote.service";
+import {Design} from "../models/design";
+import {PhoneType} from "../models/phone-type";
+import {BackendService} from "./backend.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,18 +14,20 @@ import {OpenremoteService} from "./openremote.service";
 export class DesignService {
 
   // Variables
-  private currentDesignSubject: BehaviorSubject<DesignPage>; // The state which we can edit
-  public readonly currentDesignState: Observable<DesignPage>; // The view-only state, where we can subscribe on to get updates.
-  private readonly designHistory: DesignPage[] // List of all submitted Designs, to keep track of history (for undo-ing but also for checking whether it has changed)
+  private currentDesignSubject: BehaviorSubject<Design>; // The state which we can edit
+  public readonly currentDesignState: Observable<Design>; // The view-only state, where we can subscribe on to get updates.
+  private readonly designHistory: Design[] // List of all submitted Designs, to keep track of history (for undo-ing but also for checking whether it has changed)
+  public readonly currentAssets : any;
 
   // Constructor
-  constructor(private openremoteService: OpenremoteService) {
+  constructor(private openremoteService: OpenremoteService, private backendService: BackendService) {
 
     // Initialize variables
-    this.currentDesignSubject = new BehaviorSubject<DesignPage>(this.getFirstDesign()); // Set the 1st design on init
+    this.currentDesignSubject = new BehaviorSubject<Design>(this.getFirstDesign()); // Set the 1st design on init
     this.currentDesignState = this.currentDesignSubject.asObservable(); // Make a clone of the state which is read-only
     this.designHistory = [];
     this.designHistory.push(this.getFirstDesign());
+    this.currentAssets  = openremoteService.getAssets();
 
     // openremote impl
 
@@ -35,7 +39,7 @@ export class DesignService {
     }
   }
 
-  public getHistoryByNumber(commitsAgo: number): DesignPage {
+  public getHistoryByNumber(commitsAgo: number): Design {
     console.log("Current state of designHistory is:");
     console.log(this.designHistory);
     return this.designHistory[this.designHistory.length - commitsAgo];
@@ -46,35 +50,54 @@ export class DesignService {
 
   /* ----------------------------------------- */
 
-  public updateLocation(designPage: DesignPage): any {
+  public updateLocation(design: Design): any {
     console.log("Started updating the location in DesignService...");
-    const newDesignPage = JSON.stringify(designPage); // Duplicating the variable so it does not update here when frontend changes.
+    const newDesignPage = JSON.stringify(design); // Duplicating the variable so it does not update here when frontend changes.
     this.currentDesignSubject.next(JSON.parse(newDesignPage));
     this.designHistory.push(JSON.parse(newDesignPage));
     console.log("Updated the location! New history is the following:");
     console.log(this.designHistory);
+
+    if (environment.useDatabase) {
+      this.backendService.uploadDesign(design);
+    }
   }
-  public updateData(value: DesignPage): any {
+
+  public updateData(value: Design): any {
     console.log("Started updating the data in DesignService...");
     const newDesignPage = JSON.stringify(value); // Duplicating the variable so it does not update here when frontend changes.
     this.currentDesignSubject.next(JSON.parse(newDesignPage));
     this.designHistory.push(JSON.parse(newDesignPage));
     console.log("Updated the data! New history is the following:");
     console.log(this.designHistory);
+
+    if (environment.useDatabase) {
+      this.backendService.uploadDesign(value);
+    }
   }
 
   /* ----------------------------------------- */
 
-  private getFirstDesign(): DesignPage {
+  private getFirstDesign(): Design {
     const savedDesign = localStorage.getItem('savedDesign');
     if (environment.useLocalStorage && savedDesign != null) {
       console.log('Got the design from local Storage!');
 /*      console.log(savedDesign);*/
-      return JSON.parse(savedDesign) as DesignPage;
+      return JSON.parse(savedDesign) as Design;
     } else {
       return {
-        name: "Temporary Page",
-        positions: [
+        id: 0,
+        name: "Main Design",
+        display_device: PhoneType["Apple IPhone 13"],
+        safe_space: 0,
+        display_safe_space: false,
+        page: {
+          id: 0,
+          name: "Homepage",
+          is_homepage: true,
+          in_navigation: true
+        },
+        widgets: [
           {
             id: 0,
             positionX: 0,
