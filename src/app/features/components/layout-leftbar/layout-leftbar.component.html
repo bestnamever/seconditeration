@@ -13,9 +13,14 @@
             <mat-form-field class="asset-filter" appearance="fill">
                 <mat-label>Choose an asset type</mat-label>
                 <mat-select disableOptionCentering [(value)]='selectedAssetType' (selectionChange)="updateAssetValue()">
+                    <mat-option value=All>
+                        <div class="option">
+                            <or-icon class="or-icon" icon="mdi:check" style="--or-icon-fill: #4d9d2a"></or-icon> All
+                        </div>
+                    </mat-option>
                     <mat-option *ngFor="let type of assetTypes" [value]="type.name">
                         <div class="option">
-                            <or-icon icon="{{type.icon}}"></or-icon>
+                            <or-icon class="or-icon" icon="{{type.icon}}" style="--or-icon-fill: #{{type.colour}}"></or-icon>
                             {{formatAssetTypeName(type.name)}}
                         </div>
                     </mat-option>

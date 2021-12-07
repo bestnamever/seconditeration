@@ -68,7 +68,7 @@ export class PreviewParentwidgetComponent implements OnInit, AfterViewInit, OnDe
 
       console.log("[ParentWidget]", "checking if update is needed")
       if (value != this.widgetData?.values[0].value && this.widgetData?.values[0].value != undefined){
-        console.log("[ParentWidget]", true);
+        console.log("[ParentWidget]", true, attribute);
         this.widgetData.values[0].value = value;
 
         this.designPage?.positions.forEach((element : any) => {
@@ -80,7 +80,7 @@ export class PreviewParentwidgetComponent implements OnInit, AfterViewInit, OnDe
 
         console.log("parentwidget changed:", this.widgetData?.values[0].value, this.designPage);
       }
-      else console.log("[parentWidget]", false);
+      else console.log("[parentWidget]", false, attribute);
 
       if (this.designPage != null) this.designService.updateData(this.designPage);
 
