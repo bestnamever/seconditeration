@@ -221,7 +221,7 @@ export class PreviewGridComponent implements OnInit {
         console.log(this.dashboardComponents);
       }
     });
-    
+
 
     // Get widgets from database
     // this.backendService.getResponse("widgets").subscribe(response => {

@@ -73,7 +73,7 @@ export class DesignService {
             console.log("get widget element is : " + JSON.stringify(currentItem))
             var designpostion: DesignPosition
             designpostion = {
-              id: currentItem.id,
+              id: currentItem.id - 1,
               positionX: currentItem.position_x,
               positionY: currentItem.position_y,
               width: currentItem.width,
