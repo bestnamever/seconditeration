@@ -14,6 +14,7 @@ export class BackendInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
+    console.log(request.url);
     if (request.url.startsWith("backend")) {
       request = request.clone({
         url: "http://207.180.246.34:8000" + request.url.replace("backend", ""),

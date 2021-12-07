@@ -66,6 +66,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import { PreviewPhoneshareComponent } from './features/components/preview-phoneshare/preview-phoneshare.component';
 import { DialogComponent } from './features/components/dialog/dialog.component';
 import {QrCodeModule} from "ng-qrcode";
+import {BackendInterceptor} from "./core/interceptors/backend.interceptor";
 
 
 
@@ -129,6 +130,7 @@ import {QrCodeModule} from "ng-qrcode";
     ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: OpenremoterequestInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: BackendInterceptor, multi: true },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
