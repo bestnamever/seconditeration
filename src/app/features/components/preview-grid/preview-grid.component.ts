@@ -437,7 +437,7 @@ export class PreviewGridComponent implements OnInit {
     if (this.gridOptions.enableEmptyCellClick != false) {
       console.info('empty cell click', event, item);
       const designpostion: DesignPosition = {
-        id: this.currentDesignPage?.widgets.length != 0 ? this.currentDesignPage?.widgets[this.currentDesignPage.widgets.length - 1].id! + 1 : 1,
+        id: (this.currentDesignPage?.widgets != null) && (this.currentDesignPage?.widgets.length != 0) ? this.currentDesignPage?.widgets[this.currentDesignPage.widgets.length - 1].id! + 1 : 1,
         positionX: item.x,
         positionY: item.y,
         width: 1,
@@ -445,7 +445,9 @@ export class PreviewGridComponent implements OnInit {
         element: this.generateWidgetData(this.selectedComponent?.componentType!)
       }
       if (this.currentDesignPage != null && designpostion != null) {
-        this.currentDesignPage?.widgets.push(designpostion)
+        if (this.currentDesignPage?.widgets != null)
+          this.currentDesignPage?.widgets.push(designpostion)
+
         this.designService.updateData(this.currentDesignPage)
       }
     }
