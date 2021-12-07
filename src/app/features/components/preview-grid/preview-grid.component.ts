@@ -413,8 +413,13 @@ export class PreviewGridComponent implements OnInit {
     newDesignElement = {
       widgetType: type,
       assetType: AssetType.THERMOSTAT,
-      text: "New " + text,
-      values: []
+      text: "New" + text,
+      values: [{
+        asset: AssetType.ALL,
+        time: new Date(),
+        value: "",
+        measurement: ""
+      }]
     }
     return newDesignElement
   }

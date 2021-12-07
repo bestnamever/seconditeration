@@ -5,6 +5,7 @@ export enum AssetType {
     BUILDING = 'BuildingAsset',
     ROOM = 'RoomAsset',
     CITY = "CityAsset",
-    SOLAR = "Solar",
+    SOLAR = "ElectricityProducerSolarAsset",
     THERMOSTAT= "Thermostat",
+    WEATHER = "WeatherAsset"
 }

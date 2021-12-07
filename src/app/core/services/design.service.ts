@@ -3,7 +3,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 import { WidgetType } from "../models/widget-type";
 import { AssetType } from "../models/asset-type";
 import { environment } from "../../../environments/environment";
-import {OpenremoteService} from "./openremote.service";
+import { OpenremoteService } from "./openremote.service";
 import {Design} from "../models/design";
 import {PhoneType} from "../models/phone-type";
 import {BackendService} from "./backend.service";
