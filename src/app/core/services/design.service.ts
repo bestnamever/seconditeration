@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
-import { DesignPage } from "../models/design-page";
 import { WidgetType } from "../models/widget-type";
 import { AssetType } from "../models/asset-type";
 import { environment } from "../../../environments/environment";
 import {OpenremoteService} from "./openremote.service";
 import {Design} from "../models/design";
 import {PhoneType} from "../models/phone-type";
+import {BackendService} from "./backend.service";
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class DesignService {
   public readonly currentAssets : any;
 
   // Constructor
-  constructor(private openremoteService: OpenremoteService) {
+  constructor(private openremoteService: OpenremoteService, private backendService: BackendService) {
 
     // Initialize variables
     this.currentDesignSubject = new BehaviorSubject<Design>(this.getFirstDesign()); // Set the 1st design on init
@@ -57,7 +57,12 @@ export class DesignService {
     this.designHistory.push(JSON.parse(newDesignPage));
     console.log("Updated the location! New history is the following:");
     console.log(this.designHistory);
+
+    if (environment.useDatabase) {
+      this.backendService.uploadDesign(design);
+    }
   }
+
   public updateData(value: Design): any {
     console.log("Started updating the data in DesignService...");
     const newDesignPage = JSON.stringify(value); // Duplicating the variable so it does not update here when frontend changes.
@@ -65,6 +70,10 @@ export class DesignService {
     this.designHistory.push(JSON.parse(newDesignPage));
     console.log("Updated the data! New history is the following:");
     console.log(this.designHistory);
+
+    if (environment.useDatabase) {
+      this.backendService.uploadDesign(value);
+    }
   }
 
   /* ----------------------------------------- */

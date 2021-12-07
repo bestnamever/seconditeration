@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
 import {WidgetComponent} from "../models/widget-component";
-import {Design} from "../models/design";
 
 @Injectable({
   providedIn: 'root'

@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  useLocalStorage: true
+  useLocalStorage: true,
+  useDatabase: true
 };
 
 /*
