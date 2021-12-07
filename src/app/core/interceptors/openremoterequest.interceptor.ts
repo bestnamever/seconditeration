@@ -32,10 +32,10 @@ export class OpenremoterequestInterceptor implements HttpInterceptor {
     request = request.clone({
       url: /*'http://martinaeytesting.nl:8080' +*/ request.url,
       headers: request.headers
-        .append("Authorization", auth)
-        .append("Access-Control-Allow-Origin", '*')
-        .append("Access-Control-Allow-Methods", 'POST, PUT, GET, OPTIONS, DELETE')
-        .append("Cache-Control", "no-cache")
+        // .append("Authorization", auth)
+        // .append("Access-Control-Allow-Origin", '*')
+        // .append("Access-Control-Allow-Methods", 'POST, PUT, GET, OPTIONS, DELETE')
+        // .append("Cache-Control", "no-cache")
        // .append("Access-Control-Expose-Headers", "*")
     });
     console.log("Going to execute the following request:")
