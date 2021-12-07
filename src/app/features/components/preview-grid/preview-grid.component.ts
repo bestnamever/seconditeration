@@ -415,8 +415,10 @@ export class PreviewGridComponent implements OnInit {
       assetType: AssetType.THERMOSTAT,
       text: "New" + text,
       values: [{
-        asset: AssetType.ALL,
+        assetName: "",
+        assetId: "",
         time: new Date(),
+        attributeName: "",
         value: "",
         measurement: ""
       }]

@@ -5,6 +5,7 @@ import {DesignService} from "../../../core/services/design.service";
 import { DesignPage } from 'src/app/core/models/design-page';
 import {Subscription} from "rxjs";
 import { OpenremoteService } from 'src/app/core/services/openremote.service';
+import {Design} from "../../../core/models/design";
 
 @Component({
   selector: 'app-preview-parentwidget',
@@ -17,7 +18,7 @@ export class PreviewParentwidgetComponent implements OnInit, AfterViewInit, OnDe
   @Input('widgetId') widgetId: number | undefined;
   // @Input('widgetData') widgetData: DesignElement | undefined;
   widgetData: DesignElement | undefined;
-  designPage: DesignPage | undefined
+  designPage: Design | undefined
   amountOfTimesUpdated: number;
   usedAssets : any;
 
@@ -61,7 +62,7 @@ export class PreviewParentwidgetComponent implements OnInit, AfterViewInit, OnDe
 
       // Find the currently used asset based on the selected widget
       let selectedAsset = this.usedAssets.find((obj : any) => {
-        return obj.id == this.widgetData?.values[0].assetId; 
+        return obj.id == this.widgetData?.values[0].assetId;
       })
 
       if (!selectedAsset) return; // When there are no widgets on screen
@@ -78,7 +79,7 @@ export class PreviewParentwidgetComponent implements OnInit, AfterViewInit, OnDe
         this.widgetData.values[0].value = value;
 
         // Update the designpage with the new valuechange
-        this.designPage?.positions.forEach((element : any) => {
+        this.designPage?.widgets.forEach((element : any) => {
           if (element.id == this.widgetId) {
             element.element.values[0].value = this.widgetData?.values[0].value;
 
@@ -93,7 +94,7 @@ export class PreviewParentwidgetComponent implements OnInit, AfterViewInit, OnDe
       // Save the updated design
       if (this.designPage != null) this.designService.updateData(this.designPage);
 
-    }, 3000); 
+    }, 3000);
   }
 
   ngAfterViewInit() {

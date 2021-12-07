@@ -35,13 +35,13 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
 
   constructor(private data: PreviewService, private outputData: DesignService, private attributePicker: AttributePickerControlService) {
      // set value on right side bar
-    this.selectedWidgetSub = this.data.currentlySelectedWidgetState.subscribe(widget => (
-      this.widget = widget?.gridsterItem,
-      this.assetSelected = widget?.widgetData.values[0].asset,
-      this.attributeSelected = widget?.widgetData.values[0].attributeName,
-      this.measurementSelected = widget?.widgetData.values[0].measurement,
+    this.selectedWidgetSub = this.data.currentlySelectedWidgetState.subscribe(widget => {
+      this.widget = widget?.gridsterItem;
+      this.assetSelected = widget?.widgetData.values[0].assetName;
+      this.attributeSelected = widget?.widgetData.values[0].attributeName;
+      this.measurementSelected = widget?.widgetData.values[0].measurement;
       console.log("property is ::" + this.measurementSelected)
-    ))
+    })
 
     // set value on right side bar
     // this.selectedWidgetSub = this.data.currentlySelectedWidgetState.subscribe(widget => {
@@ -109,17 +109,17 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
     console.log("[RightbarComponents]", "Found following value for this attribute", selectedAttribute, attributeValue);
 
     // Update values of the selected widget
-    this.designPage?.positions.forEach(element => {
+    this.designPage?.widgets.forEach(element => {
       if (element.id == this.widget?.id) {
 
         // Set all the values of the widget
         element.element.assetType = selectedAsset.type;
         element.element.values[0].assetId = selectedAsset.id;
-        element.element.values[0].asset = assetName;
+        element.element.values[0].assetName = assetName;
         element.element.values[0].attributeName = selectedAttribute.name;
         element.element.values[0].value = (attributeValue)? attributeValue : "Null";
         element.element.values[0].time = new Date();
-        element.element.values[0].measurement = undefined;
+        element.element.values[0].measurement = "";
 
         // Debug
         console.log("[RightbarComponents]", "Updated Widget:", element.element, selectedAsset, selectedAttribute);

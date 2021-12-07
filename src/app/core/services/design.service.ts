@@ -109,8 +109,10 @@ export class DesignService {
               assetType: AssetType.THERMOSTAT,
               text: "Label for Thermostat",
               values: [{
-                asset: "Thermostat 1",
+                assetName: "Thermostat 1",
+                assetId: "",
                 time: new Date("2019-01-16"),
+                attributeName: "",
                 value: "25",
                 measurement: "°C"
               }]
@@ -128,44 +130,58 @@ export class DesignService {
               text: "Solar Energy",
               values: [
                 {
-                  asset: "Solar Collector 1",
+                  assetName: "Solar Collector 1",
+                  assetId: "",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 12)),
+                  attributeName: "",
                   value: "0.1",
                   measurement: "KW"
                 },
                 {
-                  asset: "Solar Collector 1",
+                  assetName: "Solar Collector 1",
+                  assetId: "",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 10)),
+                  attributeName: "",
                   value: "1.2",
                   measurement: "KW"
                 },
                 {
-                  asset: "Solar Collector 1",
+                  assetName: "Solar Collector 1",
+                  assetId: "",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 8)),
+                  attributeName: "",
                   value: "1.3",
                   measurement: "KW"
                 },
                 {
-                  asset: "Solar Collector 1",
+                  assetName: "Solar Collector 1",
+                  assetId: "",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 6)),
+                  attributeName: "",
                   value: "1.9",
                   measurement: "KW"
                 },
                 {
-                  asset: "Solar Collector 1",
+                  assetName: "Solar Collector 1",
+                  assetId: "",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 4)),
+                  attributeName: "",
                   value: "1.8",
                   measurement: "KW"
                 },
                 {
-                  asset: "Solar Collector 1",
+                  assetName: "Solar Collector 1",
+                  assetId: "",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 2)),
+                  attributeName: "",
                   value: "1.2",
                   measurement: "KW"
                 },
                 {
-                  asset: "Solar Collector 1",
+                  assetName: "Solar Collector 1",
+                  assetId: "",
                   time: new Date(new Date().getTime() + (1000 * 60 * 60 * 2)),
+                  attributeName: "",
                   value: "1.1",
                   measurement: "KW"
                 }
@@ -184,14 +200,18 @@ export class DesignService {
               text: "Temperature Bar",
               values: [
                 {
-                  asset: "Thermostat 1",
+                  assetName: "Thermostat 1",
+                  assetId: "",
                   time: new Date("2019-01-16"),
+                  attributeName: "",
                   value: "25",
                   measurement: "°C"
                 },
                 {
-                  asset: "Thermostat 2",
+                  assetName: "Thermostat 2",
+                  assetId: "",
                   time: new Date("2019-01-16"),
+                  attributeName: "",
                   value: "19",
                   measurement: "°C"
                 }

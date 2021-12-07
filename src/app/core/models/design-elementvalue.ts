@@ -1,8 +1,8 @@
 export interface DesignElementvalue {
-  asset: string;
-  assetId? : string
+  assetName: string;
+  assetId: string;
   time: Date;
-  attributeName? : string;
+  attributeName: string;
   value: string;
   measurement?: string;
 }
