@@ -38,13 +38,13 @@ export class OpenremoteService {
         console.log("Connection to OpenRemote server was a success!");
 
         // Getting the list of all asset types
-        httpClient.get('http://martinaeytesting.nl:8080/api/master/model/assetDescriptors').subscribe(result => {
+        httpClient.get('openremote/api/master/model/assetDescriptors').subscribe(result => {
           this.assetTypes = result;
           console.log('DESCRIPTORS', this.assetTypes);
         })
 
         //Getting the currently logged on User:
-        httpClient.get('http://martinaeytesting.nl:8080/api/master/user/user').subscribe(result => {
+        httpClient.get('openremote/api/master/user/user').subscribe(result => {
           console.log("Logged into OpenRemote Servers with the following user:");
           console.log(result);
           const userResponse = result as OrUserresponse;

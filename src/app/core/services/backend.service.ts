@@ -14,7 +14,7 @@ export class BackendService {
     if (design != null) {
       if (design.display_device != null) { design.display_device = design.display_device.toString(); }
       else { design.display_device = "" }
-      
+
       design.id = 1;
 
       if (design.page == null) {
@@ -28,7 +28,7 @@ export class BackendService {
       else
         design.page.id = 1;
 
-      this.httpClient.post('http://207.180.246.34:8000/api/design', JSON.stringify(design), {
+      this.httpClient.post('backend/api/design', JSON.stringify(design), {
         headers: {
           "Content-Type": "application/json"
         }
