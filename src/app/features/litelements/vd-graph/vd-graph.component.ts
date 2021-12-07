@@ -173,7 +173,7 @@ export class VdGraphComponent extends LitElement {
   // Util function for calculating the maximum height depending on values and the AssetType.
   getMaxHeight(): number {
     console.log('The asset type in getMaxHeight is the following: ' + this.widgetData?.assetType);
-    if(this.widgetData != null) {
+    if(this.widgetData != null && this.widgetData.assetType != null) {
       switch (this.widgetData.assetType.toString()) {
         case "Thermostat": {
           const values = this.widgetData.values.filter(x => { return (Number.parseFloat(x.value) > 30); });
