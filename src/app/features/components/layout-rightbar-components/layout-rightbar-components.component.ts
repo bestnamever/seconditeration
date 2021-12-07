@@ -107,7 +107,7 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
     this.designPage?.widgets.forEach((widget: DesignPosition) => {
       if (widget.id == this.widget?.id) {
         if (key === "asset") {
-          widget.element.values[0].asset = value
+          widget.element.values[0].assetName = value
         }
         else if (key === "measurement") {
           widget.element.values[0].measurement = value

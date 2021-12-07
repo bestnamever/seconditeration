@@ -1,4 +1,4 @@
-import {DesignElement} from "./design-element";
+import { DesignElement } from "./design-element";
 
 export interface DesignPosition {
   id: number;
@@ -6,5 +6,5 @@ export interface DesignPosition {
   positionY: number;
   width: number;
   height: number;
-  element: DesignElement
+  element: DesignElement;
 }

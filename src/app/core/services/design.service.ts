@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { WidgetType } from "../models/widget-type";
 import { AssetType } from "../models/asset-type";
 import { environment } from "../../../environments/environment";
-import {OpenremoteService} from "./openremote.service";
-import {Design} from "../models/design";
-import {PhoneType} from "../models/phone-type";
-import {BackendService} from "./backend.service";
+import { OpenremoteService } from "./openremote.service";
+import { Design } from "../models/design";
+import { PhoneType } from "../models/phone-type";
+import { BackendService } from "./backend.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class DesignService {
   private currentDesignSubject: BehaviorSubject<Design>; // The state which we can edit
   public readonly currentDesignState: Observable<Design>; // The view-only state, where we can subscribe on to get updates.
   private readonly designHistory: Design[] // List of all submitted Designs, to keep track of history (for undo-ing but also for checking whether it has changed)
-  public readonly currentAssets : any;
+  public readonly currentAssets: any;
 
   // Constructor
   constructor(private openremoteService: OpenremoteService, private backendService: BackendService) {
@@ -27,7 +27,7 @@ export class DesignService {
     this.currentDesignState = this.currentDesignSubject.asObservable(); // Make a clone of the state which is read-only
     this.designHistory = [];
     this.designHistory.push(this.getFirstDesign());
-    this.currentAssets  = openremoteService.getAssets();
+    this.currentAssets = openremoteService.getAssets();
 
     // openremote impl
 
@@ -82,7 +82,7 @@ export class DesignService {
     const savedDesign = localStorage.getItem('savedDesign');
     if (environment.useLocalStorage && savedDesign != null) {
       console.log('Got the design from local Storage!');
-/*      console.log(savedDesign);*/
+      /*      console.log(savedDesign);*/
       return JSON.parse(savedDesign) as Design;
     } else {
       return {
@@ -109,7 +109,9 @@ export class DesignService {
               assetType: AssetType.THERMOSTAT,
               text: "Label for Thermostat",
               values: [{
-                asset: "Thermostat 1",
+                assetName: "Thermostat 1",
+                assetId: "",
+                attributeName: "",
                 time: new Date("2019-01-16"),
                 value: "25",
                 measurement: "°C"
@@ -128,43 +130,57 @@ export class DesignService {
               text: "Solar Energy",
               values: [
                 {
-                  asset: "Solar Collector 1",
+                  assetName: "Solar Collector 1",
+                  assetId: "",
+                  attributeName: "",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 12)),
                   value: "0.1",
                   measurement: "KW"
                 },
                 {
-                  asset: "Solar Collector 1",
+                  assetName: "Solar Collector 1",
+                  assetId: "",
+                  attributeName: "",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 10)),
                   value: "1.2",
                   measurement: "KW"
                 },
                 {
-                  asset: "Solar Collector 1",
+                  assetName: "Solar Collector 1",
+                  assetId: "",
+                  attributeName: "",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 8)),
                   value: "1.3",
                   measurement: "KW"
                 },
                 {
-                  asset: "Solar Collector 1",
+                  assetName: "Solar Collector 1",
+                  assetId: "",
+                  attributeName: "",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 6)),
                   value: "1.9",
                   measurement: "KW"
                 },
                 {
-                  asset: "Solar Collector 1",
+                  assetName: "Solar Collector 1",
+                  assetId: "",
+                  attributeName: "",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 4)),
                   value: "1.8",
                   measurement: "KW"
                 },
                 {
-                  asset: "Solar Collector 1",
+                  assetName: "Solar Collector 1",
+                  assetId: "",
+                  attributeName: "",
                   time: new Date(new Date().getTime() - (1000 * 60 * 60 * 2)),
                   value: "1.2",
                   measurement: "KW"
                 },
                 {
-                  asset: "Solar Collector 1",
+                  assetName: "Solar Collector 1",
+                  assetId: "",
+                  attributeName: "",
                   time: new Date(new Date().getTime() + (1000 * 60 * 60 * 2)),
                   value: "1.1",
                   measurement: "KW"
@@ -184,13 +200,17 @@ export class DesignService {
               text: "Temperature Bar",
               values: [
                 {
-                  asset: "Thermostat 1",
+                  assetName: "Thermostat 1",
+                  assetId: "",
+                  attributeName: "",
                   time: new Date("2019-01-16"),
                   value: "25",
                   measurement: "°C"
                 },
                 {
-                  asset: "Thermostat 2",
+                  assetName: "Thermostat 2",
+                  assetId: "",
+                  attributeName: "",
                   time: new Date("2019-01-16"),
                   value: "19",
                   measurement: "°C"

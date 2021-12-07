@@ -2,11 +2,13 @@ import { defineInjectable, Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Design } from "../models/design";
 import { tr } from 'date-fns/locale';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BackendService {
+  http: any;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -37,5 +39,10 @@ export class BackendService {
       })
     }
 
+  }
+
+  public getResponse(uri: string): Observable<any> {
+    const url = 'backend/api/' + uri;
+    return this.httpClient.get(url);
   }
 }
