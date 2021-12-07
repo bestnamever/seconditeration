@@ -182,7 +182,6 @@ export class PreviewGridComponent implements OnInit {
           if (!ids.includes(component.gridsterItem.id))
             deletedComponentId = component.gridsterItem.id
         })
-
         var temp = this.dashboardComponents
         var temp2 = temp.filter(x => {
           return x.gridsterItem.id != deletedComponentId
