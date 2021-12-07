@@ -20,6 +20,7 @@ import { ConsoleConfigurationValidationFailureReason } from '@openremote/model';
 import { Components } from 'src/app/core/models/components';
 import { Design } from 'src/app/core/models/design';
 import { BackendService } from 'src/app/core/services/backend.service';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -174,73 +175,53 @@ export class PreviewGridComponent implements OnInit {
 
 
     // Subscribe to changes of the Design
-    // this.designService.currentDesignState.subscribe(design => {
-    //   var ids = new Array<number>()
-    //   var deletedComponentId!: any
-    //   console.log('Starting to render the design..');
-    //   console.log(design)
+    this.designService.currentDesignState.subscribe(design => {
+      var ids = new Array<number>()
+      var deletedComponentId!: any
+      console.log('Starting to render the design..');
+      console.log(design)
 
-    //   this.currentDesignPage = design;
-    //   if (design != null && design.widgets != null) {
-    //     design.widgets.forEach((widget: DesignPosition) => {
-    //       const item = {
-    //         gridsterItem: {
-    //           id: widget.id,
-    //           cols: widget.width,
-    //           rows: widget.height,
-    //           x: widget.positionX,
-    //           y: widget.positionY
-    //         },
-    //         widgetData: widget.element
-    //       };
+      this.currentDesignPage = design;
+      if (design != null && design.widgets != null) {
+        design.widgets.forEach((widget: DesignPosition) => {
+          const item = {
+            gridsterItem: {
+              id: widget.id,
+              cols: widget.width,
+              rows: widget.height,
+              x: widget.positionX,
+              y: widget.positionY
+            },
+            widgetData: widget.element
+          };
 
-    //       ids.push(widget.id)
+          ids.push(widget.id)
 
-    //       // Check if the component is already added with the same properties (width, height, x, y, etc)
-    //       if (this.dashboardComponents.filter(x => { return x.gridsterItem.id == item.gridsterItem.id }).length == 0) {
-    //         this.dashboardComponents.push(item);
-    //       }
-    //     });
+          // Check if the component is already added with the same properties (width, height, x, y, etc)
+          if (this.dashboardComponents.filter(x => { return x.gridsterItem.id == item.gridsterItem.id }).length == 0) {
+            this.dashboardComponents.push(item);
+          }
+        });
 
-    //     // get the component's id which is not inside of the design
-    //     this.dashboardComponents.forEach(component => {
-    //       if (!ids.includes(component.gridsterItem.id))
-    //         deletedComponentId = component.gridsterItem.id
-    //     })
-    //     var temp = this.dashboardComponents
-    //     var temp2 = temp.filter(x => {
-    //       return x.gridsterItem.id != deletedComponentId
-    //     })
-    //     console.log("temp2 is " + JSON.stringify(temp2))
+        // get the component's id which is not inside of the design
+        this.dashboardComponents.forEach(component => {
+          if (!ids.includes(component.gridsterItem.id))
+            deletedComponentId = component.gridsterItem.id
+        })
+        var temp = this.dashboardComponents
+        var temp2 = temp.filter(x => {
+          return x.gridsterItem.id != deletedComponentId
+        })
+        console.log("temp2 is " + JSON.stringify(temp2))
 
-    //     console.log("deleted component is " + JSON.stringify(this.dashboardComponents[deletedComponentId]))
-    //     //this.dashboardComponents.splice(deletedComponentId, 1)  infinite loop
-    //     this.dashboardComponents = temp2
-    //     console.log('Rendering finished!');
-    //     console.log(this.dashboardComponents);
-    //   }
-
-    // });
-    // Get design from database
-    this.backendService.getResponse("design/1").subscribe(res => {
-      console.log("get design 1: " + JSON.stringify(res))
-      var designPage: Design = {
-        name: res.name,
-        id: res.id,
-        display_device: res.display_device,
-        safe_space: res.safe_space,
-        display_safe_space: res.display_safe_space,
-        page: {
-          id: res.page.id,
-          name: res.page.name,
-          is_homepage: res.page.is_homepage,
-          in_navigation: res.page.in_navigation,
-        },
-        widgets: []
+        console.log("deleted component is " + JSON.stringify(this.dashboardComponents[deletedComponentId]))
+        //this.dashboardComponents.splice(deletedComponentId, 1)  infinite loop
+        this.dashboardComponents = temp2
+        console.log('Rendering finished!');
+        console.log(this.dashboardComponents);
       }
-      this.currentDesignPage = designPage
-      console.log("current design page is " + JSON.stringify(this.currentDesignPage))
-    })
+    });
+    
 
     // Get widgets from database
     // this.backendService.getResponse("widgets").subscribe(response => {
@@ -282,23 +263,23 @@ export class PreviewGridComponent implements OnInit {
     // })
 
     // use backend data to create design page
-    //   if (this.currentDesignPage != null) {
-    //     this.currentDesignPage.positions.forEach(position => {
-    //       const item = {
-    //         gridsterItem: {
-    //           id: position.id,
-    //           cols: position.width,
-    //           rows: position.height,
-    //           x: position.positionX,
-    //           y: position.positionY
-    //         },
-    //         widgetData: position.element
-    //       }
-    //       if (this.dashboardComponents.filter(x => { return x.gridsterItem.id == item.gridsterItem.id }).length == 0) {
-    //         this.dashboardComponents.push(item);
-    //       }
-    //     })
-    //   }
+    // if (this.currentDesignPage != null) {
+    //   this.currentDesignPage.positions.forEach(position => {
+    //     const item = {
+    //       gridsterItem: {
+    //         id: position.id,
+    //         cols: position.width,
+    //         rows: position.height,
+    //         x: position.positionX,
+    //         y: position.positionY
+    //       },
+    //       widgetData: position.element
+    //     }
+    //     if (this.dashboardComponents.filter(x => { return x.gridsterItem.id == item.gridsterItem.id }).length == 0) {
+    //       this.dashboardComponents.push(item);
+    //     }
+    //   })
+    // }
     // })
 
 
@@ -529,7 +510,7 @@ export class PreviewGridComponent implements OnInit {
         if (this.currentDesignPage?.widgets != null)
           this.currentDesignPage?.widgets.push(designpostion)
 
-        this.designService.updateData(this.currentDesignPage)
+        // this.designService.updateData(this.currentDesignPage)
       }
     }
   }

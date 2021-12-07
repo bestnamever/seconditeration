@@ -7,6 +7,7 @@ import { OpenremoteService } from "./openremote.service";
 import { Design } from "../models/design";
 import { PhoneType } from "../models/phone-type";
 import { BackendService } from "./backend.service";
+import { DesignPosition } from '../models/design-position';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,63 @@ export class DesignService {
         localStorage.setItem('savedDesign', JSON.stringify(design))
       });
     }
+    else if (environment.useDatabase) {
+
+      // Get design from database
+      this.backendService.getResponse("design/1").subscribe(res => {
+
+        console.log("get design 1: " + JSON.stringify(res))
+
+        var response_desgin = res[0]
+        var response_widgets
+
+        this.backendService.getResponse("widget/1").subscribe(res_widgets => {
+
+          response_widgets = res_widgets[0]
+          console.log("get widgets : " + JSON.stringify(response_widgets.widgets))
+
+          var designPage: Design = {
+            name: response_desgin.name,
+            id: response_desgin.id,
+            display_device: response_desgin.display_device,
+            safe_space: response_desgin.safe_space,
+            display_safe_space: response_desgin.display_safe_space,
+            page: {
+              id: response_widgets.id,
+              name: response_widgets.name,
+              is_homepage: response_widgets.is_homepage,
+              in_navigation: response_widgets.in_navigation,
+            },
+            widgets: []
+          }
+          for (var i = 0; i < response_widgets.widgets.length; i++) {
+            console.log("get widgets are : " + response_widgets.widgets.length)
+            var currentItem = response_widgets.widgets[i]
+            console.log("get widget element is : " + JSON.stringify(currentItem))
+            var designpostion: DesignPosition
+            designpostion = {
+              id: currentItem.id,
+              positionX: currentItem.position_x,
+              positionY: currentItem.position_y,
+              width: currentItem.width,
+              height: currentItem.height,
+              element: {
+                widgetType: currentItem.widget_type,
+                assetType: currentItem.assetType,
+                text: currentItem.label,
+                values: currentItem.values,
+              }
+            }
+            console.log("get widget is : " + JSON.stringify(currentItem))
+            designPage?.widgets.push(designpostion)
+          }
+          // this.currentDesignPage = designPage
+          // console.log("here is it ：" + this.currentDesignPage)
+          console.log("designpage :", designPage)
+          this.updateData(designPage)
+        })
+      })
+    }
   }
 
   public getHistoryByNumber(commitsAgo: number): Design {
@@ -59,7 +117,7 @@ export class DesignService {
     console.log(this.designHistory);
 
     if (environment.useDatabase) {
-      this.backendService.uploadDesign(design);
+      // this.backendService.uploadDesign(design);
     }
   }
 
@@ -72,7 +130,7 @@ export class DesignService {
     console.log(this.designHistory);
 
     if (environment.useDatabase) {
-      this.backendService.uploadDesign(value);
+      // this.backendService.uploadDesign(value);
     }
   }
 
@@ -84,7 +142,8 @@ export class DesignService {
       console.log('Got the design from local Storage!');
       /*      console.log(savedDesign);*/
       return JSON.parse(savedDesign) as Design;
-    } else {
+    }
+    else {
       return {
         id: 0,
         name: "Main Design",
