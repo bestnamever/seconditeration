@@ -221,6 +221,9 @@ export class PreviewGridComponent implements OnInit {
 
     });
 
+
+    // Get from database
+
     // Subscribe to the currently selected Widget
     this.previewService.currentlySelectedWidgetState.subscribe(widget => {
       this.selectedWidget = widget;
@@ -278,7 +281,7 @@ export class PreviewGridComponent implements OnInit {
 
   selectItem(component: WidgetComponent): void {
     this.previewService.selectWidget(component);
-    // console.log(this.previewService.currentlySelectedWidgetState)
+    console.log("selected " + JSON.stringify(component))
   }
 
   getAspectRatio(): any {
