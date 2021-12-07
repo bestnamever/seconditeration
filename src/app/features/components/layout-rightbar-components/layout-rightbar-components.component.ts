@@ -1,14 +1,14 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GridsterItem } from 'angular-gridster2';
 import { DesignPage } from 'src/app/core/models/design-page';
 import { DesignService } from 'src/app/core/services/design.service';
 import { PreviewService } from "../../../core/services/preview.service"
 import { OptionList } from 'src/app/core/models/option-list';
-import {skip} from "rxjs/operators";
-import {Subscription} from "rxjs";
+import { skip } from "rxjs/operators";
+import { Subscription } from "rxjs";
 import { AttributePickerControlService } from 'src/app/core/services/attributePickerControl.service';
-import {Design} from "../../../core/models/design";
-import {DesignPosition} from "../../../core/models/design-position";
+import { Design } from "../../../core/models/design";
+import { DesignPosition } from "../../../core/models/design-position";
 
 @Component({
   selector: 'app-layout-rightbar-components',
@@ -68,8 +68,8 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
     // set value on right side bar
     this.selectedWidgetSub = this.data.currentlySelectedWidgetState.subscribe(widget => {
       this.widget = widget?.gridsterItem;
-      if(widget?.widgetData.values != null && widget.widgetData.values.length > 0) {
-        this.assetSelected = widget?.widgetData.values[0].asset;
+      this.assetSelected = widget?.widgetData.assetType
+      if (widget?.widgetData.values != null && widget.widgetData.values.length > 0) {
         this.measurementSelected = widget?.widgetData.values[0].measurement;
         console.log("property is ::" + this.measurementSelected);
       }
@@ -125,7 +125,7 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
     this.setValue(chosenkey, chosenValue)
   }
 
-  openPicker() : void {
+  openPicker(): void {
     this.attributePicker.setIsOpened(true);
   }
 
@@ -133,16 +133,16 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
   //   this.text = message;
   // }
 
-  setNewValues(newValues : any) {
+  setNewValues(newValues: any) {
     // Get all used assets
     const assets = <any[]>this.outputData.currentAssets;
 
     // Get the selected asset
-    const selectedAsset = assets.find((x : any) => x.id === newValues.assetId);
+    const selectedAsset = assets.find((x: any) => x.id === newValues.assetId);
     const assetName = selectedAsset.name;
 
     // Get the selected attribute on the found asset
-    const selectedAttribute = <any>Object.values(selectedAsset.attributes).find((x : any) => x.name === newValues.attributeName)
+    const selectedAttribute = <any>Object.values(selectedAsset.attributes).find((x: any) => x.name === newValues.attributeName)
 
     // Get the value of the selected attribute
     const attributeValue = selectedAttribute.value;
