@@ -56,38 +56,48 @@ export class PreviewParentwidgetComponent implements OnInit, AfterViewInit, OnDe
 
     // Wait for openRemote data and check if the value needs to be changed
     setTimeout(() => {
+      // Get assets form OpenRemote API
       this.usedAssets = this.openRemote.getAssets();
+
+      // Find the currently used asset based on the selected widget
       let selectedAsset = this.usedAssets.find((obj : any) => {
         return obj.id == this.widgetData?.values[0].assetId; 
       })
 
-      if (!selectedAsset) return;
+      if (!selectedAsset) return; // When there are no widgets on screen
 
+      // Find the attribute and its value based on the selected asset
       let attribute = <any>Object.values(selectedAsset.attributes).find((x : any) => x.name === this.widgetData?.values[0].attributeName);
       let value = attribute.value;
 
-      console.log("[ParentWidget]", "checking if update is needed")
-      if (value != this.widgetData?.values[0].value && this.widgetData?.values[0].value != undefined){
+      console.log("[ParentWidget]", "checking if update is needed"); // Debug
+
+      // If the local value and the OpenRemote value is different, update the local value
+      if (value != this.widgetData?.values[0].value  && this.widgetData?.values[0].value != undefined){
         console.log("[ParentWidget]", true, attribute);
         this.widgetData.values[0].value = value;
 
+        // Update the designpage with the new valuechange
         this.designPage?.positions.forEach((element : any) => {
           if (element.id == this.widgetId) {
             element.element.values[0].value = this.widgetData?.values[0].value;
-            console.log("parentwidget designpage", element.element.values[0].value)
+
+            console.log("[parentWidget] designpage", element.element.values[0].value) // Debug
           }
         });
 
-        console.log("parentwidget changed:", this.widgetData?.values[0].value, this.designPage);
+        console.log("[parentWidget] Changed:", this.widgetData?.values[0].value, this.designPage); // Debug
       }
-      else console.log("[parentWidget]", false, attribute);
+      else console.log("[parentWidget]", false, attribute, this.widgetData?.values[0].value); // Debug
 
+      // Save the updated design
       if (this.designPage != null) this.designService.updateData(this.designPage);
 
     }, 3000); 
   }
 
   ngAfterViewInit() {
+    // Render lit components
     if(this.containerRef != null && this.contentRef != null) {
       this.containerRef.createEmbeddedView(this.contentRef);
     }

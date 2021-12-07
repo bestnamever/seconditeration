@@ -7,12 +7,12 @@ import { Subject } from 'rxjs';
 export class AttributePickerControlService {
 
   isOpened : boolean;
-  selectedAsset : any;
+  selectedAsset : string;
   selectedAttribute : string;
   lastSelection : object;
 
   isOpenedChange : Subject<boolean> = new Subject<boolean>();
-  selectedAssetChange : Subject<any> = new Subject<any>();
+  selectedAssetChange : Subject<string> = new Subject<string>();
   selectedAttributeChange : Subject<string> = new Subject<string>();
   lastSelectionChange : Subject<object> = new Subject<object>();
 
@@ -57,6 +57,7 @@ setLastSelection(assetId : string, attributeName : string){
     timeStamp: new Date().toLocaleString()
   }
 
+  // Debug
   console.log("[AttributePickerControlService]", "Saved new last selection", newValue);
 
   this.lastSelectionChange.next(newValue);
