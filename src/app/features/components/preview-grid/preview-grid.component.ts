@@ -15,8 +15,10 @@ import { empty, Subscription } from 'rxjs';
 import { DesignPosition } from 'src/app/core/models/design-position';
 import { DeletionService } from 'src/app/core/services/deletion.service';
 import { PhoneDirection } from "../../../core/models/phone-direction";
-import { el } from 'date-fns/locale';
+import { el, tr } from 'date-fns/locale';
 import { ConsoleConfigurationValidationFailureReason } from '@openremote/model';
+import { Components } from 'src/app/core/models/components';
+import { Design } from 'src/app/core/models/design';
 
 
 @Component({
@@ -36,11 +38,12 @@ export class PreviewGridComponent implements OnInit {
   phoneOrientation: PhoneDirection | undefined;
   dashboardComponents: Array<WidgetComponent>;
 
-  currentDesignPage: DesignPage | null;
+  currentDesignPage: Design | null;
   selectedWidget: WidgetComponent | null;
   isDragging: boolean | null;
+  selectedComponent: Components | null;
 
-  dragEventSubscription: Subscription
+  // dragEventSubscription: Subscription
 
   deletionEventSubscription: Subscription
 
@@ -57,6 +60,7 @@ export class PreviewGridComponent implements OnInit {
     this.currentDesignPage = null;
     this.isDragging = false;
     this.dashboardComponents = new Array<WidgetComponent>();
+    this.selectedComponent = null;
 
     this.gridItemCoordinates = new Map<GridsterItemComponentInterface, { x: number, y: number, width: number, height: number }>();
 
@@ -84,14 +88,26 @@ export class PreviewGridComponent implements OnInit {
       pushResizeItems: true,
       disableScrollHorizontal: true,
       displayGrid: 'onDrag&Resize',
+
       itemInitCallback: (item, itemComponent) => { this.itemChange(item, itemComponent); },
       itemChangeCallback: (item, itemComponent) => { this.itemChange(item, itemComponent); },
+
+      //drag and drop
+      enableEmptyCellClick: false,
+      enableEmptyCellDrop: false,
+      enableEmptyCellDrag: false,  // this one will give the background color
+      enableOccupiedCellDrop: false,
+      emptyCellClickCallback: this.emptyCellClick.bind(this),
+      emptyCellDropCallback: this.emptyCellClick.bind(this),
+      emptyCellDragCallback: this.emptyCellClick.bind(this),
       // itemResizeCallback: PreviewGridComponent.itemResize,
     };
 
-    this.dragEventSubscription = this.dragDropService.getEvent().subscribe(param => {
-      this.addItem(param.type, param.x, param.y)
-    })
+    this.dragDropService.selectedWidgetState.subscribe(component => {
+      this.selectedComponent = component
+    }
+
+    )
 
     this.deletionEventSubscription = this.deletionService.getEvent().subscribe(data => {
       this.removeItem(data)
@@ -100,10 +116,16 @@ export class PreviewGridComponent implements OnInit {
     this.dragDropService.isOptionShownState.subscribe(isShown => {
       if (isShown) {
         this.gridOptions.displayGrid = 'always'
+        this.gridOptions.enableEmptyCellClick = true
+        this.gridOptions.enableEmptyCellDrag = true
+        this.gridOptions.enableEmptyCellDrop = true
         this.changedOptions()
       }
       else {
         this.gridOptions.displayGrid = 'onDrag&Resize'
+        this.gridOptions.enableEmptyCellClick = false
+        this.gridOptions.enableEmptyCellDrag = false
+        this.gridOptions.enableEmptyCellDrop = false
         this.changedOptions()
       }
     });
@@ -158,20 +180,20 @@ export class PreviewGridComponent implements OnInit {
       console.log(design)
 
       this.currentDesignPage = design;
-      if (design != null) {
-        design.positions.forEach(position => {
+      if (design != null && design.widgets != null) {
+        design.widgets.forEach((widget: DesignPosition) => {
           const item = {
             gridsterItem: {
-              id: position.id,
-              cols: position.width,
-              rows: position.height,
-              x: position.positionX,
-              y: position.positionY
+              id: widget.id,
+              cols: widget.width,
+              rows: widget.height,
+              x: widget.positionX,
+              y: widget.positionY
             },
-            widgetData: position.element
+            widgetData: widget.element
           };
 
-          ids.push(position.id)
+          ids.push(widget.id)
 
           // Check if the component is already added with the same properties (width, height, x, y, etc)
           if (this.dashboardComponents.filter(x => { return x.gridsterItem.id == item.gridsterItem.id }).length == 0) {
@@ -184,7 +206,6 @@ export class PreviewGridComponent implements OnInit {
           if (!ids.includes(component.gridsterItem.id))
             deletedComponentId = component.gridsterItem.id
         })
-
         var temp = this.dashboardComponents
         var temp2 = temp.filter(x => {
           return x.gridsterItem.id != deletedComponentId
@@ -199,6 +220,9 @@ export class PreviewGridComponent implements OnInit {
       }
 
     });
+
+
+    // Get from database
 
     // Subscribe to the currently selected Widget
     this.previewService.currentlySelectedWidgetState.subscribe(widget => {
@@ -225,13 +249,13 @@ export class PreviewGridComponent implements OnInit {
 
     // Update the design in the storage
     if (this.currentDesignPage != null) {
-      this.currentDesignPage.positions.forEach(position => {
-        if (position.id == item.id) {
-          console.log('An item with the id [' + position.id + '] changed!');
-          position.positionX = item.x;
-          position.positionY = item.y;
-          position.width = item.cols;
-          position.height = item.rows;
+      this.currentDesignPage.widgets.forEach((widget: DesignPosition) => {
+        if (widget.id == item.id) {
+          console.log('An item with the id [' + widget.id + '] changed!');
+          widget.positionX = item.x;
+          widget.positionY = item.y;
+          widget.width = item.cols;
+          widget.height = item.rows;
           if (this.currentDesignPage != null) {
             this.designService.updateLocation(this.currentDesignPage);
           } else {
@@ -257,7 +281,7 @@ export class PreviewGridComponent implements OnInit {
 
   selectItem(component: WidgetComponent): void {
     this.previewService.selectWidget(component);
-    // console.log(this.previewService.currentlySelectedWidgetState)
+    console.log("selected " + JSON.stringify(component))
   }
 
   getAspectRatio(): any {
@@ -286,7 +310,7 @@ export class PreviewGridComponent implements OnInit {
           if (this.phoneOptions?.customHeight != null) {
             return this.phoneOptions.customHeight;
           }
-          return '80%'; // Height is higher, so PORTRAIT mode
+          return '75%'; // Height is higher, so PORTRAIT mode
         }
       }
     } else {
@@ -294,7 +318,7 @@ export class PreviewGridComponent implements OnInit {
         if (this.phoneOptions?.customHeight != null) {
           return this.phoneOptions.customHeight;
         }
-        return '80%';
+        return '75%';
       }
     }
     return undefined;
@@ -307,7 +331,7 @@ export class PreviewGridComponent implements OnInit {
           if (this.phoneOptions?.customWidth != null) {
             return this.phoneOptions.customWidth;
           }
-          return '70%'; // Width is higher, so LANDSCAPE mode
+          return '65%'; // Width is higher, so LANDSCAPE mode
         } else {
           return undefined; // Height is higher, so PORTRAIT mode
         }
@@ -319,7 +343,7 @@ export class PreviewGridComponent implements OnInit {
         if (this.phoneOptions?.customWidth != null) {
           return this.phoneOptions.customWidth;
         }
-        return '70%';
+        return '65%';
       }
     }
   }
@@ -400,72 +424,40 @@ export class PreviewGridComponent implements OnInit {
     return newDesignElement
   }
 
-  /**
-   * add an item into preivew
-   */
-  public addItem(value: WidgetType, x: number, y: number) {
-    if (this.currentDesignPage?.positions.length != 0) {
-      console.log("something")
-      var maxCurrentId = this.currentDesignPage?.positions[this.currentDesignPage.positions.length - 1].id
-      if (maxCurrentId != null) {
-        const designpostion: DesignPosition = {
-          id: maxCurrentId + 1,
-          positionX: x,
-          positionY: y,
-          width: 1,
-          height: 1,
-          element: this.generateWidgetData(value)
-        }
-        // this.dashboardComponents.push({
-        //   gridsterItem: { cols: 1, rows: 1, x, y, minItemCols: 1, minItemRows: 1 },
-        //   widgetData: this.generateWidgetData(value)
-        // })
-        if (this.currentDesignPage != null) {
-          this.currentDesignPage?.positions.push(designpostion)
-          this.designService.updateData(this.currentDesignPage)
-        }
-      }
-    }
-    else {
-      console.log("empty")
-      const designpostion: DesignPosition = {
-        id: 1,
-        positionX: x,
-        positionY: y,
-        width: 1,
-        height: 1,
-        element: this.generateWidgetData(value)
-      }
-      if (this.currentDesignPage != null) {
-        this.currentDesignPage?.positions.push(designpostion)
-        this.designService.updateData(this.currentDesignPage)
-      }
-    }
-  }
 
   public removeItem(widget: WidgetComponent) {
     if (this.currentDesignPage != null) {
       console.log("current design page is " + JSON.stringify(this.currentDesignPage))
-      this.currentDesignPage.positions = this.currentDesignPage.positions.filter(obj => JSON.stringify(obj.id) !== JSON.stringify(widget.gridsterItem.id))
+      this.currentDesignPage.widgets = this.currentDesignPage.widgets.filter(obj => JSON.stringify(obj.id) !== JSON.stringify(widget.gridsterItem.id))
       console.log(this.currentDesignPage)
       this.designService.updateData(this.currentDesignPage)
     }
   }
 
-  /**
-   * drag and drop
-   * entered
-   */
-  enter(event: CdkDragEnter<any>) {
-    console.log('entered');
-  }
-
-  // onDrop(event: CdkDragDrop<WidgetComponent[]>) {
-  //   this.dragDropService.drop(event);
-  // }
-
   //hotkey for deletion
   deletion() {
     console.log("key pressed")
+  }
+
+
+  // drag and drop
+  emptyCellClick(event: MouseEvent, item: GridsterItem): void {
+    if (this.gridOptions.enableEmptyCellClick != false) {
+      console.info('empty cell click', event, item);
+      const designpostion: DesignPosition = {
+        id: (this.currentDesignPage?.widgets != null) && (this.currentDesignPage?.widgets.length != 0) ? this.currentDesignPage?.widgets[this.currentDesignPage.widgets.length - 1].id! + 1 : 1,
+        positionX: item.x,
+        positionY: item.y,
+        width: 1,
+        height: 1,
+        element: this.generateWidgetData(this.selectedComponent?.componentType!)
+      }
+      if (this.currentDesignPage != null && designpostion != null) {
+        if (this.currentDesignPage?.widgets != null)
+          this.currentDesignPage?.widgets.push(designpostion)
+
+        this.designService.updateData(this.currentDesignPage)
+      }
+    }
   }
 }

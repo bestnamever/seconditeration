@@ -6,6 +6,7 @@ import {PhoneService} from 'src/app/core/services/phone.service';
 import {DeleteComfirmComponent} from '../delete-comfirm/delete-comfirm.component'
 import {PhoneType} from "../../../core/models/phone-type";
 import {PhoneDirection} from "../../../core/models/phone-direction";
+import {DialogComponent} from "../dialog/dialog.component";
 
 @Component({
   selector: 'app-layout-screen',
@@ -57,7 +58,7 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
     this.setHomepage = "Set Homepage"
     this.isInNavigation = "Show in navigation"
     this.delete_component = "Homepage"
-    this.delete_title = "page"
+    this.delete_title = "Delete this Page"
     this.showAdvanced = null;
     // this.showCustomSize = false;
 
@@ -143,8 +144,16 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
 
 
   openDeleteDialog() {
-    const dialogRef = this.dialog.open(DeleteComfirmComponent, { width: '30%', data: { title: this.delete_title, component: this.delete_component } });
-
+    const data = {
+      title: this.delete_title,
+      descriptionHtml:
+        'Are you sure you want to delete this <b>' + this.delete_component + '</b>?<br /><br />' +
+        'Deleting this page is a <b>destructive</b> action, meaning that it cannot be reverted later.',
+      alignActions: 'start',
+      cancelText: 'CANCEL',
+      successText: 'DELETE ' + this.delete_component.toUpperCase(),
+    }
+    const dialogRef = this.dialog.open(DialogComponent, { width: '30%', data: data });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });

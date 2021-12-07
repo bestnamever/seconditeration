@@ -43,5 +43,8 @@
       </div>
     </ng-template>
     <app-preview-updatedtext *ngIf="fullscreen == false" style="margin-top: 2.5em;"></app-preview-updatedtext>
+    <div *ngIf="editMode" style="padding: 12px 12px 12px 12px;">
+      <app-preview-phoneshare></app-preview-phoneshare>
+    </div>
   </div>
 </div>

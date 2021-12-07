@@ -1,4 +1,3 @@
-import { AssetType } from 'src/app/core/models/asset-type';
 import { Injectable } from '@angular/core';
 import openremote, {Auth} from "@openremote/core/dist";
 import {HttpClient} from "@angular/common/http";
@@ -6,6 +5,7 @@ import {OrUserresponse} from "../models/or-userresponse";
 import {AssetQueryAccess} from "@openremote/model";
 import { isThisQuarter } from 'date-fns';
 import { Subject } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -41,13 +41,13 @@ export class OpenremoteService {
         console.log("Connection to OpenRemote server was a success!");
 
         // Getting the list of all asset types
-        httpClient.get('/api/master/model/assetDescriptors').subscribe(result => {
+        httpClient.get('openremote/api/master/model/assetDescriptors').subscribe(result => {
           this.assetTypes = result;
           console.log('DESCRIPTORS', this.assetTypes);
         })
 
         //Getting the currently logged on User:
-        httpClient.get('/api/master/user/user').subscribe(result => {
+        httpClient.get('openremote/api/master/user/user').subscribe(result => {
           console.log("Logged into OpenRemote Servers with the following user:");
           console.log(result);
           const userResponse = result as OrUserresponse;

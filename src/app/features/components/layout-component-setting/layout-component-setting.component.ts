@@ -4,16 +4,15 @@ import { WidgetComponent } from 'src/app/core/models/widget-component';
 import { PreviewService } from "../../../core/services/preview.service"
 import { DesignService } from "../../../core/services/design.service";
 import { GridsterItem } from 'angular-gridster2';
-import { DesignPage } from 'src/app/core/models/design-page';
-import { concat, Subscription } from 'rxjs';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
+import { Design } from 'src/app/core/models/design';
+import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteComfirmComponent } from '../delete-comfirm/delete-comfirm.component';
-import { skip, take, takeLast } from "rxjs/operators";
-import { WidgetType } from 'src/app/core/models/widget-type';
 import { DeletionService } from 'src/app/core/services/deletion.service';
 import { AttributePickerControlService } from "../../../core/services/attributePickerControl.service"
 import { OpenremoteService } from '../../../core/services/openremote.service';
+import {DesignPosition} from "../../../core/models/design-position";
+import { DialogComponent } from '../dialog/dialog.component';
 
 interface width {
   value: number
@@ -28,7 +27,7 @@ interface width {
 export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
 
   //page value
-  designPage: DesignPage | undefined
+  design: Design | undefined
 
   // selected widget
   selectedWidget: WidgetComponent | null
@@ -58,7 +57,7 @@ export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
     this.selectedWidget = null
 
     this.delete_component = "Component"
-    this.delete_title = "component"
+    this.delete_title = "Delete this Component"
 
     this.text = "Room Temperature"
     this.widths = [
@@ -70,17 +69,19 @@ export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
     this.widthValue = 0
 
     // set value on right side bar
-    this.selectedWidgetSub = this.inputData.currentlySelectedWidgetState.subscribe(widget => (
-      this.selectedWidget = widget,
-      this.selectedGridsterItem = widget?.gridsterItem,
-      this.type = widget?.widgetData.widgetType,
-      this.text = widget?.widgetData.text,
-      this.value = widget?.widgetData.values[0].value,
+    this.selectedWidgetSub = this.inputData.currentlySelectedWidgetState.subscribe(widget => {
+      this.selectedWidget = widget;
+      this.selectedGridsterItem = widget?.gridsterItem;
+      this.type = widget?.widgetData.widgetType;
+      this.text = widget?.widgetData.text;
+      if(widget?.widgetData.values != null && widget.widgetData.values.length > 0) {
+        this.value = widget?.widgetData.values[0].value;
+      }
       console.log("value is : " + this.value)
-    ))
+    })
 
     this.currentDesignSub = this.outputData.currentDesignState.subscribe(designpage => {
-      this.designPage = JSON.parse(JSON.stringify(designpage))
+      this.design = JSON.parse(JSON.stringify(designpage))
     });
 
     attributePicker.lastSelectionChange.subscribe( (value) => {
@@ -107,18 +108,22 @@ export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
   setValue(key: string, value: string) {
 
     // change value in designpage
-    this.designPage?.positions.forEach(element => {
-      if (element.id == this.selectedGridsterItem?.id) {
-        if (key === "text") {
-          element.element.text = value
+    this.design?.widgets.forEach((widget: DesignPosition) => {
+      if (widget.id == this.selectedGridsterItem?.id) {
+        if (key === "value") {
+          widget.element.values[0].value = value
+          this.value = value
+        }
+        else if (key === "text") {
+          widget.element.text = value
           this.text = value
         }
       }
     })
 
     // subscript to this.deisgnpage
-    if (this.designPage != null)
-      this.outputData.updateData(this.designPage)
+    if (this.design != null)
+      this.outputData.updateData(this.design)
   }
 
   //textarea input
@@ -149,11 +154,19 @@ export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
   //open delete dialog
   openDeleteDialog() {
     const data = {
-      selectedWidget: this.selectedWidget,
       title: this.delete_title,
-      component: this.delete_component
+      descriptionHtml:
+        'Are you sure you want to delete this <b>' + this.delete_component + '</b>?<br /><br />' +
+        'Deleting this component is a <b>destructive</b> action, meaning that it cannot be reverted later.',
+      alignActions: 'start',
+      cancelText: 'CANCEL',
+      successText: 'DELETE ' + this.delete_component.toUpperCase(),
+      selectedWidget: this.selectedWidget
     }
-    const dialogRef = this.dialog.open(DeleteComfirmComponent, { width: '30%', data });
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '30%',
+      data: data
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === "true") {

@@ -7,6 +7,7 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import openremote from "@openremote/core/dist";
+import {timeout} from "rxjs/operators";
 
 
   /*------------------------------------------------------------------------*/
@@ -26,16 +27,17 @@ export class OpenremoterequestInterceptor implements HttpInterceptor {
 
   // Override HTTP intercept
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    let auth = openremote.getAuthorizationHeader();
-    if(auth == null) { auth = "unknown"; }
-    request = request.clone({
-      url: 'http://martinaeytesting.nl:8080' + request.url,
-      headers: request.headers
-        .append("Authorization", auth)
-        .append("Access-Control-Allow-Origin", '*')
-    });
-    console.log("Going to execute the following request:")
-    console.log(request);
+
+    if(request.url.startsWith("openremote")) {
+      let auth = openremote.getAuthorizationHeader();
+      if(auth == null) { auth = "unknown"; }
+      request = request.clone({
+        url: "http://martinaeytesting.nl:8080" + request.url.replace("openremote", ""),
+        headers: request.headers.append("Authorization", auth)
+      });
+      console.log("Going to execute the following OpenRemote request:")
+      console.log(request);
+    }
     return next.handle(request);
   }
 }

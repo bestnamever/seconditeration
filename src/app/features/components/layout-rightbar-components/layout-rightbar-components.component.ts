@@ -1,11 +1,14 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GridsterItem } from 'angular-gridster2';
 import { DesignPage } from 'src/app/core/models/design-page';
 import { DesignService } from 'src/app/core/services/design.service';
 import { PreviewService } from "../../../core/services/preview.service"
 import { OptionList } from 'src/app/core/models/option-list';
+import { skip } from "rxjs/operators";
 import { Subscription } from "rxjs";
 import { AttributePickerControlService } from 'src/app/core/services/attributePickerControl.service';
+import { Design } from "../../../core/models/design";
+import { DesignPosition } from "../../../core/models/design-position";
 
 @Component({
   selector: 'app-layout-rightbar-components',
@@ -15,7 +18,7 @@ import { AttributePickerControlService } from 'src/app/core/services/attributePi
 export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
 
   //page value
-  designPage: DesignPage | undefined
+  designPage: Design | undefined
 
   // selected widget
   widget: GridsterItem | undefined
@@ -39,6 +42,16 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
       this.measurementSelected = widget?.widgetData.values[0].measurement,
       console.log("property is ::" + this.measurementSelected)
     ))
+
+    // set value on right side bar
+    // this.selectedWidgetSub = this.data.currentlySelectedWidgetState.subscribe(widget => {
+    // this.widget = widget?.gridsterItem;
+    // this.assetSelected = widget?.widgetData.assetType
+    // if (widget?.widgetData.values != null && widget.widgetData.values.length > 0) {
+    //    this.measurementSelected = widget?.widgetData.values[0].measurement;
+    //    console.log("property is ::" + this.measurementSelected);
+    //  }
+    //})
 
     this.currentDesignSub = this.outputData.currentDesignState.subscribe(designpage => {
       this.designPage = JSON.parse(JSON.stringify(designpage));
@@ -83,11 +96,11 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
     const assets = <any[]>this.outputData.currentAssets;
 
     // Get the selected asset
-    const selectedAsset = assets.find((x : any) => x.id === newValues.assetId);
+    const selectedAsset = assets.find((x: any) => x.id === newValues.assetId);
     const assetName = selectedAsset.name;
 
     // Get the selected attribute on the found asset
-    const selectedAttribute = <any>Object.values(selectedAsset.attributes).find((x : any) => x.name === newValues.attributeName)
+    const selectedAttribute = <any>Object.values(selectedAsset.attributes).find((x: any) => x.name === newValues.attributeName)
 
     // Get the value of the selected attribute
     const attributeValue = selectedAttribute.value;
