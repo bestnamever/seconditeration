@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   useLocalStorage: true,
-  useDatabase: true
+  useDatabase: true,
+  previewUrl: 'http://145.93.65.104:4200/preview'
 };
 
 /*

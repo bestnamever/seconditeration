@@ -63,6 +63,9 @@ import './features/litelements/or-icon/or-icon.component'
 import { PreviewComponent } from './features/pages/preview/preview.component';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatExpansionModule} from "@angular/material/expansion";
+import { PreviewPhoneshareComponent } from './features/components/preview-phoneshare/preview-phoneshare.component';
+import { DialogComponent } from './features/components/dialog/dialog.component';
+import {QrCodeModule} from "ng-qrcode";
 
 
 
@@ -90,7 +93,9 @@ import {MatExpansionModule} from "@angular/material/expansion";
     DeleteComfirmComponent,
     AttributePickerComponent,
     TreeViewComponent,
-    PreviewComponent
+    PreviewComponent,
+    PreviewPhoneshareComponent,
+    DialogComponent
   ],
     imports: [
         CommonModule,
@@ -120,6 +125,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
         MatButtonToggleModule,
         MatExpansionModule,
         MatTreeModule,
+        QrCodeModule,
     ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: OpenremoterequestInterceptor, multi: true },

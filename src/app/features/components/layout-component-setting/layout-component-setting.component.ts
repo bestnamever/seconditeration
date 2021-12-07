@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteComfirmComponent } from '../delete-comfirm/delete-comfirm.component';
 import { DeletionService } from 'src/app/core/services/deletion.service';
 import {DesignPosition} from "../../../core/models/design-position";
+import { DialogComponent } from '../dialog/dialog.component';
 
 interface width {
   value: number
@@ -54,7 +55,7 @@ export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
     this.selectedWidget = null
 
     this.delete_component = "Component"
-    this.delete_title = "component"
+    this.delete_title = "Delete this Component"
 
     this.text = "Room Temperature"
     this.widths = [
@@ -147,11 +148,19 @@ export class LayoutComponentSettingComponent implements OnInit, OnDestroy {
   //open delete dialog
   openDeleteDialog() {
     const data = {
-      selectedWidget: this.selectedWidget,
       title: this.delete_title,
-      component: this.delete_component
+      descriptionHtml:
+        'Are you sure you want to delete this <b>' + this.delete_component + '</b>?<br /><br />' +
+        'Deleting this component is a <b>destructive</b> action, meaning that it cannot be reverted later.',
+      alignActions: 'start',
+      cancelText: 'CANCEL',
+      successText: 'DELETE ' + this.delete_component.toUpperCase(),
+      selectedWidget: this.selectedWidget
     }
-    const dialogRef = this.dialog.open(DeleteComfirmComponent, { width: '30%', data });
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '30%',
+      data: data
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === "true") {

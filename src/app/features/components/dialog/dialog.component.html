@@ -1,0 +1,15 @@
+<div>
+  <h1 mat-dialog-title>{{data.title}}</h1>
+  <mat-divider></mat-divider>
+  <div mat-dialog-content class="content">
+    <div style="line-height: 1.5" [innerHTML]="data.descriptionHtml"></div>
+  </div>
+  <div *ngIf="data.qrCodeUrl != null">
+    <qr-code [value]="data.qrCodeUrl" size="240"></qr-code>
+  </div>
+  <div *ngIf="data.cancelText != null || data.successText != null || data.closeButton" mat-dialog-actions [align]="data.alignActions">
+    <span *ngIf="data.cancelText != null" mat-dialog-close mat-dialog-close="false" class="cancel">{{data.cancelText}}</span>
+    <span *ngIf="data.successText != null" mat-dialog-close mat-dialog-close="true" class="confirm">{{data.successText}}</span>
+    <span *ngIf="data.closeButton" mat-dialog-close mat-dialog-close="true" class="cancel" style="right: 0;">CLOSE</span>
+  </div>
+</div>
