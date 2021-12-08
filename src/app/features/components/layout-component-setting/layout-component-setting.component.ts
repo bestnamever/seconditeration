@@ -11,7 +11,7 @@ import { DeleteComfirmComponent } from '../delete-comfirm/delete-comfirm.compone
 import { DeletionService } from 'src/app/core/services/deletion.service';
 import { AttributePickerControlService } from "../../../core/services/attributePickerControl.service"
 import { OpenremoteService } from '../../../core/services/openremote.service';
-import {DesignPosition} from "../../../core/models/design-position";
+import { DesignPosition } from "../../../core/models/design-position";
 import { DialogComponent } from '../dialog/dialog.component';
 
 interface width {
@@ -54,7 +54,7 @@ export class LayoutComponentSettingComponent implements OnDestroy {
   /*                       Constructor Method                             */
   /* -------------------------------------------------------------------- */
 
-  constructor(private openRemote : OpenremoteService, private inputData: PreviewService, private outputData: DesignService, public dialog: MatDialog, private deletionService: DeletionService, private attributePicker : AttributePickerControlService) {
+  constructor(private openRemote: OpenremoteService, private inputData: PreviewService, private outputData: DesignService, public dialog: MatDialog, private deletionService: DeletionService, private attributePicker: AttributePickerControlService) {
 
     // Selected item variables
     this.selectedWidget = null
@@ -78,7 +78,7 @@ export class LayoutComponentSettingComponent implements OnDestroy {
       this.selectedGridsterItem = widget?.gridsterItem;
       this.selectedWidgetType = widget?.widgetData.widgetType;
       this.selectedWidgetText = widget?.widgetData.text;
-      if(widget?.widgetData.values != null && widget.widgetData.values.length > 0) {
+      if (widget?.widgetData.values != null && widget.widgetData.values.length > 0) {
         this.selectedWidgetValue = widget?.widgetData.values[0].value;
       }
       // console.log("value is : " + this.selectedWidgetValue)
@@ -86,13 +86,13 @@ export class LayoutComponentSettingComponent implements OnDestroy {
 
     // Subscribing to the current Design.
     this.currentDesignSub = this.outputData.currentDesignState.subscribe(designpage => {
-      if(designpage != null) {
+      if (designpage != null) {
         this.design = JSON.parse(JSON.stringify(designpage));
       }
     });
 
     // Subsciribing to changes in the attribute picker
-    attributePicker.lastSelectionChange.subscribe( (value) => {
+    attributePicker.lastSelectionChange.subscribe((value) => {
       this.setWidgetValues(this.selectedWidget?.widgetData.values, value);
     })
   }
@@ -113,33 +113,25 @@ export class LayoutComponentSettingComponent implements OnDestroy {
     chip.toggleSelected();
   }
 
-  updateData(event: any, key: string) {
-    console.log("new value " + event.target.value);
-    this.setValue(key, event.target.value)
-  }
-
   //select value by input textarea
-  setValue(key: string, value: string) {
+  setValue(event: any) {
 
     // change value in designpage
     this.design?.widgets.forEach((widget: DesignPosition) => {
+
       if (widget.id == this.selectedGridsterItem?.id) {
-        if (key === "value") {
-          widget.element.values[0].value = value
-          this.selectedWidgetValue = value
-        }
-        else if (key === "text") {
-          widget.element.text = value
-          this.selectedWidgetText = value
-        }
+        console.log("selected widget data is :", widget, "value is : ", event.target.value)
+        widget.element.text = event.target.value
+        this.selectedWidgetText = event.target.value
       }
     })
 
     // subscript to this.deisgnpage
-    if (this.design != null)
+    if (this.design != null) {
+      console.log("design is :::", this.design)
       this.outputData.updateData(this.design)
+    }
   }
-
 
 
 
@@ -196,7 +188,7 @@ export class LayoutComponentSettingComponent implements OnDestroy {
     });
   }
 
-  setWidgetValues (widget : any, newData : any) : void {
+  setWidgetValues(widget: any, newData: any): void {
 
   }
 
