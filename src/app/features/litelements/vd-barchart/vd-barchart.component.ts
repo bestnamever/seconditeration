@@ -10,14 +10,26 @@ interface DesignElement {
   'details'?: Map<string, string>;
 }
 interface DesignElementvalue {
-  'asset': string;
-  'time': Date;
-  'value': string;
-  'measurement': string;
+  assetName: string;
+  asset_name?: string; // FROM DATABASE
+  assetId: string;
+  asset_id?: string; // FROM DATABASE
+  time: Date;
+  attributeName: string;
+  attribute_name?: string; // FROM DATABASE
+  value: string;
+  measurement?: string;
 }
 enum AssetType {
-  THERMOSTAT,
-  SOLAR
+  ALL = "All",
+  GROUP = 'GroupAsset',
+  CONSOLE = 'ConsoleAsset',
+  BUILDING = 'BuildingAsset',
+  ROOM = 'RoomAsset',
+  CITY = "CityAsset",
+  SOLAR = "ElectricityProducerSolarAsset",
+  THERMOSTAT= "Thermostat",
+  WEATHER = "WeatherAsset"
 }
 
 /* ------------------------ */
@@ -121,8 +133,9 @@ export class VdBarChartComponent extends LitElement {
 
   getWidgetLabels(): any[] {
     let values: string[] = [];
+    console.log("getWidgetLabels() has the following widgetData: ", this.widgetData?.values)
     this.widgetData?.values.forEach((x) => {
-      values.push(x.asset);
+      values.push(x.assetName);
     })
     return values;
   }

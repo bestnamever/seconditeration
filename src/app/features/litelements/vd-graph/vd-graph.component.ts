@@ -5,23 +5,32 @@ import 'chartjs-adapter-date-fns';
 /* ----------------------- */
 
 interface DesignElement {
-  assetType: AssetType;
-  text: string;
-  values: Array<DesignElementvalue>;
-  details?: Map<string, string>;
+  'assetType': AssetType;
+  'text': string;
+  'values': Array<DesignElementvalue>;
+  'details'?: Map<string, string>;
 }
 interface DesignElementvalue {
-  asset: string;
+  assetName: string;
+  asset_name?: string; // FROM DATABASE
+  assetId: string;
+  asset_id?: string; // FROM DATABASE
   time: Date;
+  attributeName: string;
+  attribute_name?: string; // FROM DATABASE
   value: string;
-  measurement: string;
+  measurement?: string;
 }
 enum AssetType {
   ALL = "All",
-  THERMOSTAT = "Thermostat",
-  SOLAR = "Solar Collector",
-  AIR = "Air Quality Sensor",
-  HUE = "Philips Hue"
+  GROUP = 'GroupAsset',
+  CONSOLE = 'ConsoleAsset',
+  BUILDING = 'BuildingAsset',
+  ROOM = 'RoomAsset',
+  CITY = "CityAsset",
+  SOLAR = "ElectricityProducerSolarAsset",
+  THERMOSTAT= "Thermostat",
+  WEATHER = "WeatherAsset"
 }
 
 /* ------------------------ */
