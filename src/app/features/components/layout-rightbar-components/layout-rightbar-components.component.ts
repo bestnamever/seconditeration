@@ -41,14 +41,12 @@ export class LayoutRightbarComponentsComponent implements OnDestroy {
 
      // Subscribe to the Selected widget, and change details to that
     this.selectedWidgetSub = this.data.currentlySelectedWidgetState.subscribe(widget => {
-      console.log("LayoutRightBarComponents selected widget is: ", widget);
       const widgetValues = widget?.widgetData.values[0];
       this.selectedGridsterItem = widget?.gridsterItem;
       this.assetSelected = (widgetValues?.asset_name != null) ? widgetValues.asset_name : widgetValues?.assetName;
       this.attributeSelected = (widgetValues?.attribute_name != null) ? widgetValues.attribute_name : widgetValues?.attributeName
       this.measurementSelected = widgetValues?.measurement;
       console.log("property is ::" + this.measurementSelected)
-      console.log("Currently selected asset is: ", this.assetSelected)
     })
 
     // Subscribe to the current design

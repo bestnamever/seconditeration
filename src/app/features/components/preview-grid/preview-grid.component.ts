@@ -493,10 +493,11 @@ export class PreviewGridComponent implements OnInit {
 
   public removeItem(widget: WidgetComponent) {
     if (this.currentDesignPage != null) {
-      console.log("current design page is " + JSON.stringify(this.currentDesignPage))
+      console.log("current design page is ", this.currentDesignPage)
       this.currentDesignPage.widgets = this.currentDesignPage.widgets.filter(obj => JSON.stringify(obj.id) !== JSON.stringify(widget.gridsterItem.id))
       console.log(this.currentDesignPage)
       this.designService.updateData(this.currentDesignPage)
+      console.log("current designpage is : ", this.currentDesignPage)
     }
   }
 
@@ -508,6 +509,9 @@ export class PreviewGridComponent implements OnInit {
 
   // drag and drop
   emptyCellClick(event: MouseEvent, item: GridsterItem): void {
+
+    var temp_component: WidgetComponent | undefined
+
     if (this.gridOptions.enableEmptyCellClick != false) {
       console.info('empty cell click', event, item, this.selectedComponent);
       const designpostion: DesignPosition = {
@@ -527,11 +531,12 @@ export class PreviewGridComponent implements OnInit {
         this.designService.updateData(this.currentDesignPage)
       }
     }
-    
     this.dashboardComponents.forEach(component => {
       (component.gridsterItem.x == item.x && component.gridsterItem.y == item.y)
-      this.selectItem(component)
+      temp_component = component
     })
-
+    console.log("temp is ", temp_component)
+    if (temp_component != null)
+      this.selectItem(temp_component)
   }
 }
