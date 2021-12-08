@@ -4,8 +4,18 @@
   </div>
   <ng-template #content class="widget">
     <!--<app-widget-label class="childWidget" *ngIf="isLabel()" [widgetData]="this.widgetData" ></app-widget-label>-->
-    <element-vd-label class="childWidget" *ngIf="isLabel()" [widgetData]="this.widgetData" ></element-vd-label>
-    <element-vd-graph class="childWidget" *ngIf="isGraph()" [widgetData]="this.widgetData"></element-vd-graph>
-    <element-vd-barchart class="childWidget" *ngIf="isBarChart()" [widgetData]="this.widgetData"></element-vd-barchart>
+    <element-vd-label class="childWidget" *ngIf="isLabel() && (isAssetTypeAll() == false)" [widgetData]="this.widgetData" ></element-vd-label>
+    <element-vd-graph class="childWidget" *ngIf="isGraph() && (isAssetTypeAll() == false)" [widgetData]="this.widgetData"></element-vd-graph>
+    <element-vd-barchart class="childWidget" *ngIf="isBarChart() && (isAssetTypeAll() == false)" [widgetData]="this.widgetData"></element-vd-barchart>
+    <div *ngIf="isAssetTypeAll()" style="height: 100%;">
+      <div class="flex-three">
+        <div class="flex-four">
+          <button mat-button>
+            <mat-icon>add</mat-icon>
+            <span>Add Attribute</span>
+          </button>
+        </div>
+      </div>
+    </div>
   </ng-template>
 </div>

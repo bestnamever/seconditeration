@@ -73,6 +73,7 @@ export class OpenremoteService {
                     }
                   });
                 }
+                localStorage.setItem("usedAssetTypes", JSON.stringify(this.usedAssetTypes));
             });
 
             //this.usedAssets = result.data;
