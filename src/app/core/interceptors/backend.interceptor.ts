@@ -6,6 +6,7 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class BackendInterceptor implements HttpInterceptor {
@@ -17,7 +18,7 @@ export class BackendInterceptor implements HttpInterceptor {
     console.log(request.url);
     if (request.url.startsWith("backend")) {
       request = request.clone({
-        url: "http://207.180.246.34:8000" + request.url.replace("backend", ""),
+        url: environment.backendUrl + request.url.replace("backend", ""),
       });
       console.log("Going to execute the following Backend request:")
       console.log(request);

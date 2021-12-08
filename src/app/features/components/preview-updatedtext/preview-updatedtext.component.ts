@@ -16,7 +16,7 @@ export class PreviewUpdatedtextComponent implements OnInit, OnDestroy {
 
   // Constructor
   constructor(private designService: DesignService) {
-    this.currentDesignSub = this.designService.currentDesignState.pipe(take(1)).subscribe(() => {
+    this.currentDesignSub = this.designService.currentDesignState.subscribe(() => {
       this.designUpdatedAt = new Date().toLocaleString();
     })
   }

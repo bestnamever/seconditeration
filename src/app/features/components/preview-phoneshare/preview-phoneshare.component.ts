@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {DialogComponent} from "../dialog/dialog.component";
 import {environment} from "../../../../environments/environment";
+import {BackendService} from "../../../core/services/backend.service";
+import {DesignService} from "../../../core/services/design.service";
+import {Design} from "../../../core/models/design";
 
 @Component({
   selector: 'app-preview-phoneshare',
@@ -10,9 +13,18 @@ import {environment} from "../../../../environments/environment";
 })
 export class PreviewPhoneshareComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  // Varialbes
+  currentDesign: Design | undefined;
+
+  // Constructor
+  constructor(public dialog: MatDialog, private backendService: BackendService, private designService: DesignService) {
+    this.currentDesign = undefined;
+  }
 
   ngOnInit(): void {
+    this.designService.currentDesignState.subscribe((x) => {
+      this.currentDesign = x;
+    })
   }
 
   openShareDialog() {
@@ -37,6 +49,12 @@ export class PreviewPhoneshareComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+  }
+
+  uploadToDatabase() {
+    if(this.currentDesign != null) {
+      this.backendService.uploadDesign(this.currentDesign);
+    }
   }
 
 }

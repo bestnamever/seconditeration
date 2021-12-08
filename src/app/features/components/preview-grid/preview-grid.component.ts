@@ -49,7 +49,10 @@ export class PreviewGridComponent implements OnInit {
 
   deletionEventSubscription: Subscription
 
-  gridItemCoordinates: Map<GridsterItemComponentInterface, { x: number, y: number, width: number, height: number }>;
+  // NOT USED ANYMORE
+  // gridItemCoordinates: Map<GridsterItemComponentInterface, { x: number, y: number, width: number, height: number }>;
+
+
   //selected type
   // message: string;
   // subscription: Subscription;
@@ -64,7 +67,7 @@ export class PreviewGridComponent implements OnInit {
     this.dashboardComponents = new Array<WidgetComponent>();
     this.selectedComponent = null;
 
-    this.gridItemCoordinates = new Map<GridsterItemComponentInterface, { x: number, y: number, width: number, height: number }>();
+    // this.gridItemCoordinates = new Map<GridsterItemComponentInterface, { x: number, y: number, width: number, height: number }>();
 
     this.gridOptions = {
       isMobile: true,
@@ -176,49 +179,51 @@ export class PreviewGridComponent implements OnInit {
 
     // Subscribe to changes of the Design
     this.designService.currentDesignState.subscribe(design => {
-      var ids = new Array<number>()
-      var deletedComponentId!: any
-      console.log('Starting to render the design..');
-      console.log(design)
+      if(design != null) {
+        var ids = new Array<number>()
+        var deletedComponentId!: any
+        console.log('Starting to render the design..');
+        console.log(design)
 
-      this.currentDesignPage = design;
-      if (design != null && design.widgets != null) {
-        design.widgets.forEach((widget: DesignPosition) => {
-          const item = {
-            gridsterItem: {
-              id: widget.id,
-              cols: widget.width,
-              rows: widget.height,
-              x: widget.positionX,
-              y: widget.positionY
-            },
-            widgetData: widget.element
-          };
+        this.currentDesignPage = design;
+        if (design != null && design.widgets != null) {
+          design.widgets.forEach((widget: DesignPosition) => {
+            const item = {
+              gridsterItem: {
+                id: widget.id,
+                cols: widget.width,
+                rows: widget.height,
+                x: widget.positionX,
+                y: widget.positionY
+              },
+              widgetData: widget.element
+            };
 
-          ids.push(widget.id)
+            ids.push(widget.id)
 
-          // Check if the component is already added with the same properties (width, height, x, y, etc)
-          if (this.dashboardComponents.filter(x => { return x.gridsterItem.id == item.gridsterItem.id }).length == 0) {
-            this.dashboardComponents.push(item);
-          }
-        });
+            // Check if the component is already added with the same properties (width, height, x, y, etc)
+            if (this.dashboardComponents.filter(x => { return x.gridsterItem.id == item.gridsterItem.id }).length == 0) {
+              this.dashboardComponents.push(item);
+            }
+          });
 
-        // get the component's id which is not inside of the design
-        this.dashboardComponents.forEach(component => {
-          if (!ids.includes(component.gridsterItem.id))
-            deletedComponentId = component.gridsterItem.id
-        })
-        var temp = this.dashboardComponents
-        var temp2 = temp.filter(x => {
-          return x.gridsterItem.id != deletedComponentId
-        })
-        console.log("temp2 is " + JSON.stringify(temp2))
+          // get the component's id which is not inside of the design
+          this.dashboardComponents.forEach(component => {
+            if (!ids.includes(component.gridsterItem.id))
+              deletedComponentId = component.gridsterItem.id
+          })
+          var temp = this.dashboardComponents
+          var temp2 = temp.filter(x => {
+            return x.gridsterItem.id != deletedComponentId
+          })
+          // console.log("temp2 is " + JSON.stringify(temp2))
 
-        console.log("deleted component is " + JSON.stringify(this.dashboardComponents[deletedComponentId]))
-        //this.dashboardComponents.splice(deletedComponentId, 1)  infinite loop
-        this.dashboardComponents = temp2
-        console.log('Rendering finished!');
-        console.log(this.dashboardComponents);
+          console.log("deleted component is " + JSON.stringify(this.dashboardComponents[deletedComponentId]))
+          //this.dashboardComponents.splice(deletedComponentId, 1)  infinite loop
+          this.dashboardComponents = temp2
+          console.log('Rendering finished!');
+          console.log(this.dashboardComponents);
+        }
       }
     });
 
@@ -288,7 +293,7 @@ export class PreviewGridComponent implements OnInit {
       this.selectedWidget = widget;
     });
 
-    this.dragDropService.sendGridItemCoordinates(this.gridItemCoordinates)
+    // this.dragDropService.sendGridItemCoordinates(this.gridItemCoordinates)
 
   }
 
@@ -326,13 +331,13 @@ export class PreviewGridComponent implements OnInit {
 
     console.log('itemChanged', item, itemComponent);
     // const itemComponent = this.gridOptions.api.getItemComponent(item);
-    const domRect = itemComponent.el.getBoundingClientRect();
+/*    const domRect = itemComponent.el.getBoundingClientRect();
     const clientX = domRect.left;
     const clientY = domRect.top;
     const width = domRect.width;
-    const height = domRect.height;
-    this.gridItemCoordinates.set(itemComponent, { x: clientX, y: clientY, width, height });
-    console.log(this.gridItemCoordinates);
+    const height = domRect.height;*/
+    // this.gridItemCoordinates.set(itemComponent, { x: clientX, y: clientY, width, height });
+    // console.log(this.gridItemCoordinates);
   }
 
   /* --------------------------------------- */
@@ -513,7 +518,7 @@ export class PreviewGridComponent implements OnInit {
         height: 1,
         element: this.generateWidgetData(this.selectedComponent?.componentType!)
       }
-      if (this.currentDesignPage != null && designpostion != null) {
+      if (this.currentDesignPage != null) {
         if (this.currentDesignPage?.widgets != null)
           this.currentDesignPage?.widgets.push(designpostion)
 

@@ -8,6 +8,7 @@ import {
 import { Observable } from 'rxjs';
 import openremote from "@openremote/core/dist";
 import {timeout} from "rxjs/operators";
+import {environment} from "../../../environments/environment";
 
 
   /*------------------------------------------------------------------------*/
@@ -32,7 +33,7 @@ export class OpenremoterequestInterceptor implements HttpInterceptor {
       let auth = openremote.getAuthorizationHeader();
       if(auth == null) { auth = "unknown"; }
       request = request.clone({
-        url: "http://martinaeytesting.nl:8080" + request.url.replace("openremote", ""),
+        url: environment.openremoteUrl + request.url.replace("openremote", ""),
         headers: request.headers.append("Authorization", auth)
       });
       console.log("Going to execute the following OpenRemote request:")

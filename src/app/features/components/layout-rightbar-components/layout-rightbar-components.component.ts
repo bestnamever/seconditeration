@@ -15,48 +15,50 @@ import { DesignPosition } from "../../../core/models/design-position";
   templateUrl: './layout-rightbar-components.component.html',
   styleUrls: ['./layout-rightbar-components.component.scss']
 })
-export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
+export class LayoutRightbarComponentsComponent implements OnDestroy {
 
-  //page value
-  designPage: Design | undefined
+  // Design object
+  currentDesign: Design | undefined
 
-  // selected widget
-  widget: GridsterItem | undefined
-
-  // selected asset & attribute
+  // Selection state variables
+  selectedGridsterItem: GridsterItem | undefined
   assetSelected: string | undefined
   attributeSelected : string | undefined
-
-  // selected measurement
   measurementSelected: string | undefined
 
+  // Subscription Variables
   private selectedWidgetSub: Subscription;
   private currentDesignSub: Subscription;
 
+
+
+
+  /* -------------------------------------------------------------------- */
+  /*                       Constructor Method                             */
+  /* -------------------------------------------------------------------- */
+
   constructor(private data: PreviewService, private outputData: DesignService, private attributePicker: AttributePickerControlService) {
-     // set value on right side bar
+
+     // Subscribe to the Selected widget, and change details to that
     this.selectedWidgetSub = this.data.currentlySelectedWidgetState.subscribe(widget => {
-      this.widget = widget?.gridsterItem;
-      this.assetSelected = widget?.widgetData.values[0].assetName;
-      this.attributeSelected = widget?.widgetData.values[0].attributeName;
-      this.measurementSelected = widget?.widgetData.values[0].measurement;
+      console.log("LayoutRightBarComponents selected widget is: ", widget);
+      const widgetValues = widget?.widgetData.values[0];
+      this.selectedGridsterItem = widget?.gridsterItem;
+      this.assetSelected = (widgetValues?.asset_name != null) ? widgetValues.asset_name : widgetValues?.assetName;
+      this.attributeSelected = (widgetValues?.attribute_name != null) ? widgetValues.attribute_name : widgetValues?.attributeName
+      this.measurementSelected = widgetValues?.measurement;
       console.log("property is ::" + this.measurementSelected)
+      console.log("Currently selected asset is: ", this.assetSelected)
     })
 
-    // set value on right side bar
-    // this.selectedWidgetSub = this.data.currentlySelectedWidgetState.subscribe(widget => {
-    // this.widget = widget?.gridsterItem;
-    // this.assetSelected = widget?.widgetData.assetType
-    // if (widget?.widgetData.values != null && widget.widgetData.values.length > 0) {
-    //    this.measurementSelected = widget?.widgetData.values[0].measurement;
-    //    console.log("property is ::" + this.measurementSelected);
-    //  }
-    //})
-
+    // Subscribe to the current design
     this.currentDesignSub = this.outputData.currentDesignState.subscribe(designpage => {
-      this.designPage = JSON.parse(JSON.stringify(designpage));
+      if(designpage != null) {
+        this.currentDesign = JSON.parse(JSON.stringify(designpage));
+      }
     })
 
+    // Subscribe to the attribute picker selection
     this.attributePicker.lastSelectionChange.subscribe((value) => {
       console.log("[RightbarComponents]", "The selected attribute was changed", value);
       this.setNewValues(value);
@@ -64,26 +66,13 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
 
   }
 
-  // === ON-INIT ===
-  ngOnInit(): void {
-  }
 
-  // === ON-DESTROY ===
-  ngOnDestroy(): void {
-    this.selectedWidgetSub.unsubscribe();
-    this.currentDesignSub.unsubscribe();
-  }
 
-  // === FUNCTIONS ===
-  //get type of properties
-  getPropertyType(): boolean {
-    return (this.measurementSelected === "KW" || this.measurementSelected === "W") ? true : false
-  }
+  /* -------------------------------------------------------------------- */
+  /*                       Attribute Picker related                       */
+  /* -------------------------------------------------------------------- */
 
-  /**
-   * Sets variable to open the attribute picker
-   */
-  openPicker() : void {
+  openAttributePicker() : void {
     this.attributePicker.setIsOpened(true);
   }
 
@@ -109,8 +98,8 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
     console.log("[RightbarComponents]", "Found following value for this attribute", selectedAttribute, attributeValue);
 
     // Update values of the selected widget
-    this.designPage?.widgets.forEach(element => {
-      if (element.id == this.widget?.id) {
+    this.currentDesign?.widgets.forEach(element => {
+      if (element.id == this.selectedGridsterItem?.id) {
 
         // Set all the values of the widget
         element.element.assetType = selectedAsset.type;
@@ -131,7 +120,7 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
     });
 
     // Save the changed design
-    if (this.designPage != null) this.outputData.updateData(this.designPage);
+    if (this.currentDesign != null) this.outputData.updateData(this.currentDesign);
   }
 
   /**
@@ -175,6 +164,14 @@ export class LayoutRightbarComponentsComponent implements OnInit, OnDestroy {
   //   console.log(chosenValue)
   //   this.setValue(chosenkey, chosenValue)
   // }
+
+
+
+  // === ON-DESTROY ===
+  ngOnDestroy(): void {
+    this.selectedWidgetSub.unsubscribe();
+    this.currentDesignSub.unsubscribe();
+  }
 }
 
 
