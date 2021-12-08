@@ -4,7 +4,7 @@
         <form class="form">
             <mat-form-field class="label_card_text" appearance="outline">
                 <mat-label>Card text</mat-label>
-                <input matInput placeholder="Ex. Room temperature" value={{selectedWidgetText}} (keyup)="updateData($event,'selectedWidgetText')"
+                <input matInput placeholder="Ex. Room temperature" value={{selectedWidgetText}} (keyup)="setValue($event)"
                        [(ngModel)]="selectedWidgetText" name="selectedWidgetText">
                 <!-- value will be passed by the preview -->
             </mat-form-field>
