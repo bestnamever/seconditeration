@@ -128,7 +128,7 @@ export class VdGraphComponent extends LitElement {
           },
           yAxes: {
             beginAtZero: true,
-            max: this.getMaxHeight()
+            max: (this.widgetData?.values[0].value != null) ? Number.parseFloat(this.widgetData?.values[0].value) * 2 : undefined   // this.getMaxHeight()
           }
         },
         plugins: {
@@ -150,25 +150,33 @@ export class VdGraphComponent extends LitElement {
   // Util function for grabbing all times out of the list
   getGraphTimes(): Date[] {
     let data: Date[] = [];
-    this.widgetData?.values.forEach(x => { data.push(x.time); })
+    data = [
+      new Date(new Date().getTime() - (1000 * 60 * 12)),
+      new Date(new Date().getTime() - (1000 * 60 * 7)),
+      new Date(new Date().getTime() - (1000 * 60 * 2))
+    ]
+    // this.widgetData?.values.forEach(x => { data.push(x.time); })
     return data;
   }
 
   // Util function for grabbing all values out of the list
   getGraphData(): any[] {
-    let data: any[] = [];
+    const data = [
+      { 'x': new Date(new Date().getTime() - (1000 * 60 * 12)), 'y': this.widgetData?.values[0].value },
+      { 'x': new Date(new Date().getTime() - (1000 * 60 * 7)), 'y': this.widgetData?.values[0].value },
+      { 'x': new Date(new Date().getTime() - (1000 * 60 * 2)), 'y': this.widgetData?.values[0].value },
+    ];
+    console.log("getGraphData() contains the following data: ", data);
+    return data;
+/*    let data: any[] = [];
     this.widgetData?.values.forEach(x => {
       data.push({ 'x': x.time, 'y': Number.parseFloat(x.value) });
+      data.push({ 'x': '2021-12-08T21:40:45.192Z', 'y': Number.parseFloat(x.value) });
     });
-    return data;
+    console.log("getGraphData contains following data: ", data);
+    return data;*/
   }
 
-/*  getGraphLabels(): string[] {
-    let data: string[] = [];
-    this.widgetData?.values.forEach(x => {
-      data.push(x.measurement)
-    })
-  }*/
 
   // Util function for calculating the maximum height depending on values and the AssetType.
   getMaxHeight(): number {
