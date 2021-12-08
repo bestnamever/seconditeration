@@ -1,4 +1,5 @@
-<div *ngIf="isOpened" class="attribute-picker-wrapper">
+<ng-template #attributedialog class="sizefix">
+  <div class="attribute-picker-wrapper">
   <mat-toolbar color="primary" class="toolbar-header">
     <mat-toolbar-row class="toolbar-row">
       <span>Attribute Picker</span>
@@ -18,7 +19,7 @@
           <div class="picker">
             <app-tree-view treeType="ASSET"></app-tree-view>
           </div>
-        </div>       
+        </div>
         <div class="right-tab tab">
           <mat-toolbar color="primary" class="sub-header">
             <mat-toolbar-row class="toolbar-row">
@@ -36,4 +37,5 @@
       </div>
     </div>
   </div>
-</div>
+  </div>
+</ng-template>
