@@ -86,7 +86,9 @@ export class LayoutComponentSettingComponent implements OnDestroy {
 
     // Subscribing to the current Design.
     this.currentDesignSub = this.outputData.currentDesignState.subscribe(designpage => {
-      this.design = JSON.parse(JSON.stringify(designpage))
+      if(designpage != null) {
+        this.design = JSON.parse(JSON.stringify(designpage));
+      }
     });
 
     // Subsciribing to changes in the attribute picker

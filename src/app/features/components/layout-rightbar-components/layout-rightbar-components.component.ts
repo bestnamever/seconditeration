@@ -50,7 +50,9 @@ export class LayoutRightbarComponentsComponent implements OnDestroy {
 
     // Subscribe to the current design
     this.currentDesignSub = this.outputData.currentDesignState.subscribe(designpage => {
-      this.currentDesign = JSON.parse(JSON.stringify(designpage));
+      if(designpage != null) {
+        this.currentDesign = JSON.parse(JSON.stringify(designpage));
+      }
     })
 
     // Subscribe to the attribute picker selection

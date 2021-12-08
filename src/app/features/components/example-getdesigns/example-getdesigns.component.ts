@@ -20,7 +20,6 @@ export class ExampleGetdesignsComponent implements OnInit, OnDestroy {
     // Here we subscribe to the currentDesign, so that we get updates whenever it changes
     this.currentDesignSub = designService.currentDesignState.subscribe(design => {
       console.log('Design updated! Now we can show it on the page!');
-      // this.design = design;
     })
   }
 

@@ -8,6 +8,7 @@ import { Design } from "../models/design";
 import { PhoneType } from "../models/phone-type";
 import { BackendService } from "./backend.service";
 import { DesignPosition } from '../models/design-position';
+import {DesignElementvalue} from "../models/design-elementvalue";
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,8 @@ export class DesignService {
 
 
   // Variables
-  private currentDesignSubject: BehaviorSubject<Design>; // The state which we can edit
-  public readonly currentDesignState: Observable<Design>; // The view-only state, where we can subscribe on to get updates.
+  private currentDesignSubject: BehaviorSubject<Design | undefined>; // The state which we can edit
+  public readonly currentDesignState: Observable<Design | undefined>; // The view-only state, where we can subscribe on to get updates.
   private readonly designHistory: Design[] // List of all submitted Designs, to keep track of history (for undo-ing but also for checking whether it has changed)
   public readonly currentAssets: any;
 
@@ -28,13 +29,15 @@ export class DesignService {
 
     // Initialize variables
     const firstDesign = this.getFirstDesign();
-    this.currentDesignSubject = new BehaviorSubject<Design>(firstDesign); // Set the 1st design on init
+    this.currentDesignSubject = new BehaviorSubject<Design | undefined>(firstDesign); // Set the 1st design on init
     this.currentDesignState = this.currentDesignSubject.asObservable(); // Make a clone of the state which is read-only
     this.currentAssets = openremoteService.getAssets();
 
     // Setup history object
     this.designHistory = [];
-    this.designHistory.push(firstDesign);
+    if(firstDesign != null) {
+      this.designHistory.push(firstDesign);
+    }
 
     // If using local storage: Save when the design changes.
     if (environment.useLocalStorage) {
@@ -46,6 +49,13 @@ export class DesignService {
     // If using database: Get the initial database objects
     else if (environment.useDatabase) {
       this.getDesignFromDatabase();
+/*      this.currentDesignState.subscribe(design => {
+        console.log("Current designState in DesignService is the following: ", design)
+        if(design != null) {
+          console.log("Pushing new Design into Database! [History length is " + this.designHistory.length + "]");
+          this.backendService.uploadDesign(design);
+        }
+      });*/
     }
   }
 
@@ -61,10 +71,6 @@ export class DesignService {
     this.designHistory.push(JSON.parse(newDesignPage));
     console.log("Updated the location! New history is the following:");
     console.log(this.designHistory);
-
-    if (environment.useDatabase) {
-      // this.backendService.uploadDesign(design);
-    }
   }
 
   public updateData(value: Design): any {
@@ -74,10 +80,6 @@ export class DesignService {
     this.designHistory.push(JSON.parse(newDesignPage));
     console.log("Updated the data! New history is the following:");
     console.log(this.designHistory);
-
-    if (environment.useDatabase) {
-      // this.backendService.uploadDesign(value);
-    }
   }
 
 
@@ -92,9 +94,11 @@ export class DesignService {
 
     // Get design from database
     this.backendService.getResponse("design/1").subscribe(res => {
+      console.log("Result from design/1 was: ", res);
       const response_design = res[0];
       let response_widgets;
       this.backendService.getResponse("widget/1").subscribe(res_widgets => {
+        console.log("Result from widget/1 was: ", res_widgets)
         response_widgets = res_widgets[0];
 
         // Converting received data into Design object.
@@ -124,12 +128,12 @@ export class DesignService {
             height: currentItem.height,
             element: {
               widgetType: currentItem.widget_type,
-              assetType: currentItem.assetType,
+              assetType: currentItem.asset_type,
               text: currentItem.label,
-              values: currentItem.values,
+              values: currentItem.values as DesignElementvalue[],
             }
           }
-          designPage?.widgets.push(designpostion)
+          designPage.widgets.push(designpostion);
         }
 
         // Last function is to update the data in state.
@@ -165,14 +169,14 @@ export class DesignService {
   /*               Initial Value methods (getting 1st design etc)                     */
   /* -------------------------------------------------------------------------------- */
 
-  private getFirstDesign(): Design {
+  private getFirstDesign(): Design | undefined {
     const savedDesign = localStorage.getItem('savedDesign');
     if (environment.useLocalStorage && savedDesign != null) {
       console.log('Got the design from local Storage!');
       /*      console.log(savedDesign);*/
       return JSON.parse(savedDesign) as Design;
     }
-    else {
+    else if(environment.useDatabase == false) {
       return {
         id: 0,
         name: "Main Design",
@@ -308,7 +312,8 @@ export class DesignService {
           }
         ]
       }
-      //}
+    } else {
+      return undefined;
     }
   }
 }

@@ -37,20 +37,22 @@ export class PreviewParentwidgetComponent implements OnInit, AfterViewInit, OnDe
 
     // Subscribe to changes of the Design
     this.currentDesignSub = this.designService.currentDesignState.subscribe(design => {
-      this.designPage = JSON.parse(JSON.stringify(design));
+      if(design != null) {
+        this.designPage = JSON.parse(JSON.stringify(design));
 
-      const oldDesign = this.designService.getHistoryByNumber(1);
-      let oldWidgetData = null;
-      if(oldDesign != null) { oldWidgetData = oldDesign.widgets.find(x => { return x.id == this.widgetId})?.element; }
-      const newWidgetData = design.widgets.find(x => { return x.id == this.widgetId})?.element;
-      if(this.amountOfTimesUpdated == 0 || JSON.stringify(newWidgetData) !== JSON.stringify(oldWidgetData)) {
-        console.log("Updating the ParentWidget...");
-        this.amountOfTimesUpdated++;
-        this.widgetData = newWidgetData;
-        console.log("widgetdata", this.widgetData);
-        if(this.containerRef != null && this.contentRef != null) {
-          this.containerRef.clear();
-          this.containerRef.createEmbeddedView(this.contentRef);
+        const oldDesign = this.designService.getHistoryByNumber(1);
+        let oldWidgetData = null;
+        if(oldDesign != null) { oldWidgetData = oldDesign.widgets.find(x => { return x.id == this.widgetId})?.element; }
+        const newWidgetData = design.widgets.find(x => { return x.id == this.widgetId})?.element;
+        if(this.amountOfTimesUpdated == 0 || JSON.stringify(newWidgetData) !== JSON.stringify(oldWidgetData)) {
+          console.log("Updating the ParentWidget...");
+          this.amountOfTimesUpdated++;
+          this.widgetData = newWidgetData;
+          console.log("widgetdata", this.widgetData);
+          if(this.containerRef != null && this.contentRef != null) {
+            this.containerRef.clear();
+            this.containerRef.createEmbeddedView(this.contentRef);
+          }
         }
       }
     });
