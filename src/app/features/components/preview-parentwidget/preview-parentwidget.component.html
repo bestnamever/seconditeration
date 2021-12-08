@@ -1,19 +1,25 @@
-<div *ngIf="!isAssetTypeAll()" class="flex-one">
+<div class="flex-one">
   <div class="flex-two widget">
     <ng-container #container></ng-container>
   </div>
   <ng-template #content class="widget">
     <!--<app-widget-label class="childWidget" *ngIf="isLabel()" [widgetData]="this.widgetData" ></app-widget-label>-->
-    <element-vd-label class="childWidget" *ngIf="isLabel()" [widgetData]="this.widgetData" ></element-vd-label>
+    <element-vd-label class="childWidget" *ngIf="isLabel() && (isAssetTypeAll() == false)" [widgetData]="this.widgetData" ></element-vd-label>
     <element-vd-graph class="childWidget" *ngIf="isGraph()" [widgetData]="this.widgetData"></element-vd-graph>
     <element-vd-barchart class="childWidget" *ngIf="isBarChart()" [widgetData]="this.widgetData"></element-vd-barchart>
+    <!--<span>{{this.widgetData?.values}}</span>-->
+    <div *ngIf="isAssetTypeAll()" style="height: 100%;">
+      <div class="thisiscentered">
+        <button mat-button (click)="openAttributePicker()" style="height: 90%;">
+          <mat-icon>add</mat-icon>
+          <span>Add Attribute</span>
+        </button>
+      </div>
+    </div>
+    <div *ngIf="isDebugging() && !isAssetTypeAll()" style="position: absolute; right: 0;">
+      <button mat-icon-button (click)="reloadData()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </div>
   </ng-template>
-</div>
-<div *ngIf="isAssetTypeAll()" style="height: 100%;">
-  <div class="thisiscentered">
-    <button mat-button (click)="openAttributePicker()" style="height: 90%; width: 90%;">
-      <mat-icon>add</mat-icon>
-      <span>Add Attribute</span>
-    </button>
-  </div>
 </div>
