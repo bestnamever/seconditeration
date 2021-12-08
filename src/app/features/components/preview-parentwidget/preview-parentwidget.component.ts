@@ -76,7 +76,7 @@ export class PreviewParentwidgetComponent implements OnInit, AfterViewInit, OnDe
 
       // Find the currently used asset based on the selected widget
       let selectedAsset = this.usedAssets.find((obj : any) => {
-        return obj.id == this.widgetData?.values[0].assetId;
+        return obj.id == ((this.widgetData?.values[0].asset_id != null) ? this.widgetData?.values[0].asset_id : this.widgetData?.values[0].assetId);
       })
 
       if (!selectedAsset) return; // When there are no widgets on screen
