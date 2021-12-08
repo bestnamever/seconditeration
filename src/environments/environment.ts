@@ -4,12 +4,11 @@
 
 export const environment = {
   production: false,
-  useLocalStorage: false,
-  useDatabase: true,
+  useLocalStorage: true,
+  useDatabase: false,
   previewUrl: 'http://192.168.178.24:4200/preview',
   backendUrl: 'http://207.180.246.34:8000',
-  openremoteUrl: 'http://martinaeytesting.nl:8080'
-};
+  openremoteUrl: 'http://martinaeytesting.nl:8080'};
 
 /*
  * For easier debugging in development mode, you can import the following file

@@ -21,6 +21,7 @@ import { Components } from 'src/app/core/models/components';
 import { Design } from 'src/app/core/models/design';
 import { BackendService } from 'src/app/core/services/backend.service';
 import { environment } from 'src/environments/environment';
+import { ComponentThumbnailComponent } from '../component-thumbnail/component-thumbnail.component';
 
 
 @Component({
@@ -179,6 +180,7 @@ export class PreviewGridComponent implements OnInit {
 
     // Subscribe to changes of the Design
     this.designService.currentDesignState.subscribe(design => {
+      console.log("current are : design :", design)
       if (design != null) {
         var ids = new Array<number>()
         var deletedComponentId!: any
@@ -201,10 +203,20 @@ export class PreviewGridComponent implements OnInit {
 
             ids.push(widget.id)
 
+
+
             // Check if the component is already added with the same properties (width, height, x, y, etc)
             if (this.dashboardComponents.filter(x => { return x.gridsterItem.id == item.gridsterItem.id }).length == 0) {
               this.dashboardComponents.push(item);
             }
+
+            this.dashboardComponents.forEach(component => {
+              if (component.widgetData != widget.element && component.gridsterItem.id == widget.id) {
+                component.widgetData = widget.element
+              }
+            })
+
+            console.log("current are : dashboard : ", this.dashboardComponents)
           });
 
           // get the component's id which is not inside of the design
@@ -221,8 +233,8 @@ export class PreviewGridComponent implements OnInit {
           console.log("deleted component is " + JSON.stringify(this.dashboardComponents[deletedComponentId]))
           //this.dashboardComponents.splice(deletedComponentId, 1)  infinite loop
           this.dashboardComponents = temp2
+          console.log("final: ", this.dashboardComponents);
           console.log('Rendering finished!');
-          console.log(this.dashboardComponents);
         }
       }
     });
