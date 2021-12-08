@@ -179,7 +179,7 @@ export class PreviewGridComponent implements OnInit {
 
     // Subscribe to changes of the Design
     this.designService.currentDesignState.subscribe(design => {
-      if(design != null) {
+      if (design != null) {
         var ids = new Array<number>()
         var deletedComponentId!: any
         console.log('Starting to render the design..');
@@ -331,11 +331,11 @@ export class PreviewGridComponent implements OnInit {
 
     console.log('itemChanged', item, itemComponent);
     // const itemComponent = this.gridOptions.api.getItemComponent(item);
-/*    const domRect = itemComponent.el.getBoundingClientRect();
-    const clientX = domRect.left;
-    const clientY = domRect.top;
-    const width = domRect.width;
-    const height = domRect.height;*/
+    /*    const domRect = itemComponent.el.getBoundingClientRect();
+        const clientX = domRect.left;
+        const clientY = domRect.top;
+        const width = domRect.width;
+        const height = domRect.height;*/
     // this.gridItemCoordinates.set(itemComponent, { x: clientX, y: clientY, width, height });
     // console.log(this.gridItemCoordinates);
   }
@@ -509,7 +509,7 @@ export class PreviewGridComponent implements OnInit {
   // drag and drop
   emptyCellClick(event: MouseEvent, item: GridsterItem): void {
     if (this.gridOptions.enableEmptyCellClick != false) {
-      console.info('empty cell click', event, item);
+      console.info('empty cell click', event, item, this.selectedComponent);
       const designpostion: DesignPosition = {
         id: (this.currentDesignPage?.widgets != null) && (this.currentDesignPage?.widgets.length != 0) ? this.currentDesignPage?.widgets[this.currentDesignPage.widgets.length - 1].id! + 1 : 1,
         positionX: item.x,
@@ -519,10 +519,12 @@ export class PreviewGridComponent implements OnInit {
         element: this.generateWidgetData(this.selectedComponent?.componentType!)
       }
       if (this.currentDesignPage != null) {
-        if (this.currentDesignPage?.widgets != null)
+        if (this.currentDesignPage?.widgets != null) {
+          console.log("new add component is ", designpostion)
           this.currentDesignPage?.widgets.push(designpostion)
-
-        // this.designService.updateData(this.currentDesignPage)
+          console.log("Current design page :", this.currentDesignPage)
+        }
+        this.designService.updateData(this.currentDesignPage)
       }
     }
   }
