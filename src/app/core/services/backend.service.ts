@@ -46,8 +46,9 @@ export class BackendService {
           value.assetName = (value.asset_name != null) ? value.asset_name : value.assetName;
           value.assetId = (value.asset_id != null) ? value.asset_id : value.assetId;
           value.attributeName = (value.attribute_name != null) ? value.attribute_name : value.attributeName;
+          value.value = value.value.toString();
         });
-      })
+      });
 
       console.log("Posting the following data:", JSON.stringify(newDesign));
 
