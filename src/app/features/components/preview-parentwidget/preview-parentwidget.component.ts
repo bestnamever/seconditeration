@@ -17,6 +17,7 @@ import {OpenremoteService} from 'src/app/core/services/openremote.service';
 import {Design} from "../../../core/models/design";
 import {AssetType} from "../../../core/models/asset-type";
 import {AttributePickerControlService} from "../../../core/services/attributePickerControl.service";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-preview-parentwidget',
@@ -126,6 +127,14 @@ export class PreviewParentwidgetComponent implements OnInit, AfterViewInit, OnDe
     this.attributeService.setIsOpened(true);
   }
 
+  reloadData() {
+    if(this.containerRef != null && this.contentRef != null) {
+      this.containerRef.clear();
+      this.containerRef.createEmbeddedView(this.contentRef);
+    }
+    this.changeDetectorRef.detectChanges();
+  }
+
   /* -------------------------------- */
 
   // ngIf methods
@@ -133,4 +142,6 @@ export class PreviewParentwidgetComponent implements OnInit, AfterViewInit, OnDe
   isGraph(): boolean { return this.widgetData?.widgetType === WidgetType.GRAPH; }
   isBarChart(): boolean { return this.widgetData?.widgetType === WidgetType.BARCHART }
   isAssetTypeAll(): boolean { return this.widgetData?.assetType === AssetType.ALL }
+
+  isDebugging(): boolean { return environment.debug_components; }
 }

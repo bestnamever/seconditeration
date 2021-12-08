@@ -8,7 +8,9 @@ export const environment = {
   useDatabase: false,
   previewUrl: 'http://192.168.178.24:4200/preview',
   backendUrl: 'http://207.180.246.34:8000',
-  openremoteUrl: 'http://martinaeytesting.nl:8080'};
+  openremoteUrl: 'http://martinaeytesting.nl:8080',
+  debug_components: false,
+};
 
 /*
  * For easier debugging in development mode, you can import the following file
