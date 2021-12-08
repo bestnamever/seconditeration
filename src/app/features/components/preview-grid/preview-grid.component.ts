@@ -527,5 +527,11 @@ export class PreviewGridComponent implements OnInit {
         this.designService.updateData(this.currentDesignPage)
       }
     }
+    
+    this.dashboardComponents.forEach(component => {
+      (component.gridsterItem.x == item.x && component.gridsterItem.y == item.y)
+      this.selectItem(component)
+    })
+
   }
 }
