@@ -16,6 +16,7 @@ import {Subscription} from "rxjs";
 import {OpenremoteService} from 'src/app/core/services/openremote.service';
 import {Design} from "../../../core/models/design";
 import {AssetType} from "../../../core/models/asset-type";
+import {AttributePickerControlService} from "../../../core/services/attributePickerControl.service";
 
 @Component({
   selector: 'app-preview-parentwidget',
@@ -38,7 +39,7 @@ export class PreviewParentwidgetComponent implements OnInit, AfterViewInit, OnDe
   private currentDesignSub: Subscription | undefined;
 
   // Constructor
-  constructor(private designService: DesignService, private changeDetectorRef: ChangeDetectorRef, private openRemote : OpenremoteService) {
+  constructor(private designService: DesignService, private changeDetectorRef: ChangeDetectorRef, private openRemote : OpenremoteService, private attributeService: AttributePickerControlService) {
     this.amountOfTimesUpdated = 0;
   }
 
@@ -119,6 +120,10 @@ export class PreviewParentwidgetComponent implements OnInit, AfterViewInit, OnDe
 
   ngOnDestroy() {
     if(this.currentDesignSub != null) { this.currentDesignSub.unsubscribe(); }
+  }
+
+  openAttributePicker() : void {
+    this.attributeService.setIsOpened(true);
   }
 
   /* -------------------------------- */
