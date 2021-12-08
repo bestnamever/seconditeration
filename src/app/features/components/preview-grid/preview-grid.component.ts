@@ -476,8 +476,8 @@ export class PreviewGridComponent implements OnInit {
     //value of new element should be pre-seted
     newDesignElement = {
       widgetType: type,
-      assetType: AssetType.THERMOSTAT,
-      text: "New" + text,
+      assetType: AssetType.ALL,
+      text: "New " + text,
       values: [{
         assetName: "",
         assetId: "",

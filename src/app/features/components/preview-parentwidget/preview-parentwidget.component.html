@@ -1,4 +1,4 @@
-<div class="flex-one">
+<div *ngIf="!isAssetTypeAll()" class="flex-one">
   <div class="flex-two widget">
     <ng-container #container></ng-container>
   </div>
@@ -8,4 +8,12 @@
     <element-vd-graph class="childWidget" *ngIf="isGraph()" [widgetData]="this.widgetData"></element-vd-graph>
     <element-vd-barchart class="childWidget" *ngIf="isBarChart()" [widgetData]="this.widgetData"></element-vd-barchart>
   </ng-template>
+</div>
+<div *ngIf="isAssetTypeAll()" style="height: 100%;">
+  <div class="thisiscentered">
+    <button mat-button (click)="openAttributePicker()" style="height: 90%; width: 90%;">
+      <mat-icon>add</mat-icon>
+      <span>Add Attribute</span>
+    </button>
+  </div>
 </div>

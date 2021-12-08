@@ -1,11 +1,22 @@
-import {AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import {WidgetType} from "../../../core/models/widget-type";
 import {DesignElement} from "../../../core/models/design-element";
 import {DesignService} from "../../../core/services/design.service";
-import { DesignPage } from 'src/app/core/models/design-page';
 import {Subscription} from "rxjs";
-import { OpenremoteService } from 'src/app/core/services/openremote.service';
+import {OpenremoteService} from 'src/app/core/services/openremote.service';
 import {Design} from "../../../core/models/design";
+import {AssetType} from "../../../core/models/asset-type";
+import {AttributePickerControlService} from "../../../core/services/attributePickerControl.service";
 
 @Component({
   selector: 'app-preview-parentwidget',
@@ -28,7 +39,7 @@ export class PreviewParentwidgetComponent implements OnInit, AfterViewInit, OnDe
   private currentDesignSub: Subscription | undefined;
 
   // Constructor
-  constructor(private designService: DesignService, private changeDetectorRef: ChangeDetectorRef, private openRemote : OpenremoteService) {
+  constructor(private designService: DesignService, private changeDetectorRef: ChangeDetectorRef, private openRemote : OpenremoteService, private attributeService: AttributePickerControlService) {
     this.amountOfTimesUpdated = 0;
   }
 
@@ -111,10 +122,15 @@ export class PreviewParentwidgetComponent implements OnInit, AfterViewInit, OnDe
     if(this.currentDesignSub != null) { this.currentDesignSub.unsubscribe(); }
   }
 
+  openAttributePicker() : void {
+    this.attributeService.setIsOpened(true);
+  }
+
   /* -------------------------------- */
 
   // ngIf methods
   isLabel(): boolean { return this.widgetData?.widgetType === WidgetType.LABEL; }
   isGraph(): boolean { return this.widgetData?.widgetType === WidgetType.GRAPH; }
   isBarChart(): boolean { return this.widgetData?.widgetType === WidgetType.BARCHART }
+  isAssetTypeAll(): boolean { return this.widgetData?.assetType === AssetType.ALL }
 }

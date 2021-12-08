@@ -128,11 +128,11 @@ export class LayoutRightbarComponentsComponent implements OnDestroy {
   getSelectedAsset() : string {
     let value : string;
 
-    if (this.assetSelected === "All" || this.assetSelected === undefined){
+    if (this.assetSelected === "All" || this.assetSelected?.length == 0 || this.assetSelected === undefined){
         value = "Select Data"
     }
     else{
-      value = `${this.assetSelected} | ${this.attributeSelected}`
+      value = `${this.assetSelected}  |  ${this.attributeSelected}`
     }
 
     return value;
