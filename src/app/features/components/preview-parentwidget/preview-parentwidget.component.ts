@@ -28,6 +28,8 @@ export class PreviewParentwidgetComponent implements OnInit, AfterViewInit, OnDe
 
   // Variables
   @Input('widgetId') widgetId: number | undefined;
+  @Input('fullscreen') fullscreen: boolean | undefined;
+
   // @Input('widgetData') widgetData: DesignElement | undefined;
   widgetData: DesignElement | undefined;
   designPage: Design | undefined
