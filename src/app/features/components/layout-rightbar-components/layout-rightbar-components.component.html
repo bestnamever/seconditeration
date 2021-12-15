@@ -1,5 +1,31 @@
 <div *ngIf="(this.assetSelected != null) else nothingselected">
-  <div class="top_info">
+  <div>
+    <mat-accordion displayMode="flat" multi style="box-shadow: none">
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header style="border-bottom: 1px solid #E5E5E5; background-color: #F5F5F5;  height: 48px;">
+          <mat-panel-title>Attribute settings</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div style="margin-top: 12px;">
+          <mat-form-field appearance="outline" class="data-field">
+            <mat-label>Selected Attribute</mat-label>
+            <input (click)="openAttributePicker()" matInput placeholder="Select and attribute" readonly=true value="{{getSelectedAsset()}}">
+            <button (click)="openAttributePicker()"><mat-icon aria-hidden="false" aria-label="Example home icon">edit</mat-icon></button>
+          </mat-form-field>
+        </div>
+      </mat-expansion-panel>
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header style="border-bottom: 1px solid #E5E5E5; background-color: #F5F5F5;  height: 48px;">
+          <mat-panel-title>Card properties</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div style="margin-top: 24px;">
+          <app-layout-component-setting></app-layout-component-setting>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+
+  <!--<div class="top_info">
     <div class="icon">
       Infomation card
     </div>
@@ -16,7 +42,7 @@
         <div class="title">Card settings</div>
         <app-layout-component-setting></app-layout-component-setting>
     </div>
-  </div>
+  </div>-->
 </div>
 <ng-template #nothingselected>
   <div class="flex-two" style="height: 100%; text-align: center; background-color: #FFFFFF;">

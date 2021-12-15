@@ -10,7 +10,7 @@
     <!--<span>{{this.widgetData?.values}}</span>-->
     <div *ngIf="isAssetTypeAll()" style="height: 100%;">
       <div class="thisiscentered">
-        <button mat-button (click)="openAttributePicker()">
+        <button mat-button [disabled]="fullscreen" (click)="openAttributePicker()">
           <mat-icon>add</mat-icon>
           <span>Add Attribute</span>
         </button>

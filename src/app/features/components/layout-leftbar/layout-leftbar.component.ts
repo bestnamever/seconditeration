@@ -108,7 +108,7 @@ export class LayoutLeftbarComponent implements OnInit {
 
   /* -------------------Gridster2 Drag and Drop Methods--------------------------- */
 
-  dragStartHandler(event: DragEvent, component: Components): void {
+  dragStartHandler(event: any, component: Components): void {
     console.log("drag starts" + event)
     /**
    * set selected component's isdragging to ture
@@ -123,7 +123,7 @@ export class LayoutLeftbarComponent implements OnInit {
     this.dragdropService.widgetSelected(component)
   }
 
-  dragEndHandler(event: DragEvent, component: Components): void {
+  dragEndHandler(event: any, component: Components): void {
     console.log("drag ends")
     this.isSelected = false
     this.dragdropService.gridOption(this.isSelected)
