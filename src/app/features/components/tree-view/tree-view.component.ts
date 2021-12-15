@@ -8,7 +8,7 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 interface PickerNode {
   id: number;
   name: string;
-  children ? : PickerNode[];
+  children?: PickerNode[];
 }
 
 interface FlatNode {
@@ -39,7 +39,7 @@ export class TreeViewComponent implements OnInit {
     };
   };
 
-  treeControl = new FlatTreeControl < FlatNode > (
+  treeControl = new FlatTreeControl<FlatNode>(
     node => node.level,
     node => node.expandable,
   );
@@ -60,7 +60,7 @@ export class TreeViewComponent implements OnInit {
 
     // Subscribe to the assetchange event
     this.attributePickerControl.selectedAssetChange.subscribe(value => {
-      if(this.treeType === "ATTRIBUTE" && value !="" && value!= undefined){
+      if (this.treeType === "ATTRIBUTE" && value != "" && value != undefined) {
         this.getAttributes();
       }
     })
@@ -89,7 +89,6 @@ export class TreeViewComponent implements OnInit {
       name: "placeholder",
       children: [{}]
     }];
-
     assets.forEach((element: any) => {
       let asset = {
         id: element.id ? element.id : this.attributePickerControl.selectedAsset,
@@ -98,11 +97,12 @@ export class TreeViewComponent implements OnInit {
       }
 
       if (element.parentName) {
-
         let index = formattedArray.map(e => e.name).indexOf(`${element.parentName}_${element.parentId}`);
         // Append asset id to the name
+        if (index != -1) {
+          formattedArray[index].children.push(asset);
+        }
 
-        formattedArray[index].children.push(asset);
       } else {
         formattedArray.push(asset);
       }
@@ -112,7 +112,7 @@ export class TreeViewComponent implements OnInit {
     return formattedArray;
   }
 
-  onAssetSelect(event : Event, selectedItem ? : string): void {
+  onAssetSelect(event: Event, selectedItem?: string): void {
 
     // Get the target element of the click
     let target = <HTMLElement>event.target;
@@ -130,12 +130,12 @@ export class TreeViewComponent implements OnInit {
     console.log(siblings);
 
     // Set the asset or attribute selection in the AtrributePickerControl service based on the tree type
-    if (this.treeType === "ASSET" && selectedItem){
+    if (this.treeType === "ASSET" && selectedItem) {
       let assetId = this.splitNodeId(selectedItem)
 
       this.attributePickerControl.setSelectedAsset((assetId) ? assetId : "");
     }
-    else if (this.treeType === "ATTRIBUTE" && selectedItem){
+    else if (this.treeType === "ATTRIBUTE" && selectedItem) {
 
       this.attributePickerControl.setSelectedAttribute(selectedItem);
     }
@@ -151,7 +151,7 @@ export class TreeViewComponent implements OnInit {
     let attributes = Object.values(selectedAsset.attributes);
 
     // Set the treedata to the array of attributes
-    this.treeData = < PickerNode[] > this.formatData(attributes);
+    this.treeData = <PickerNode[]>this.formatData(attributes);
     this.dataSource.data = this.treeData;
   }
 
