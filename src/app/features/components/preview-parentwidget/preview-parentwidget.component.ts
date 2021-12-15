@@ -28,6 +28,8 @@ export class PreviewParentwidgetComponent implements OnInit, AfterViewInit, OnDe
 
   // Variables
   @Input('widgetId') widgetId: number | undefined;
+  @Input('fullscreen') fullscreen: boolean | undefined;
+
   // @Input('widgetData') widgetData: DesignElement | undefined;
   widgetData: DesignElement | undefined;
   designPage: Design | undefined
@@ -82,9 +84,17 @@ export class PreviewParentwidgetComponent implements OnInit, AfterViewInit, OnDe
       if (!selectedAsset) return; // When there are no widgets on screen
 
       // Find the attribute and its value based on the selected asset
-      let attribute = <any>Object.values(selectedAsset.attributes).find((x : any) => x.name === this.widgetData?.values[0].attributeName);
-      let value = attribute.value;
-
+      let attribute = <any>Object.values(selectedAsset.attributes).find((x : any) => {
+        // console.log("looped attribute in ParentWidget is the following: ", x);
+        // console.log("widgetData value is ", this.widgetData?.values[0]);
+        return x.name === (this.widgetData?.values[0].attribute_name != null ? this.widgetData?.values[0].attribute_name : this.widgetData?.values[0].attributeName); // this.widgetData?.values[0].attributeName;
+      });
+      let value;
+      if(attribute != null && attribute.value != null) {
+        value = attribute.value;
+      } else {
+        value = "NaN";
+      }
       console.log("[ParentWidget]", "checking if update is needed"); // Debug
 
       // If the local value and the OpenRemote value is different, update the local value
