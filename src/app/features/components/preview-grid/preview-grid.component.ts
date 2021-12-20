@@ -40,6 +40,7 @@ export class PreviewGridComponent implements OnInit {
   phoneOptions: PhoneProperties | undefined;
   phoneOrientation: PhoneDirection | undefined;
   dashboardComponents: Array<WidgetComponent>;
+  pageName: string | undefined;
 
   currentDesignPage: Design | null;
   selectedWidget: WidgetComponent | null;
@@ -61,7 +62,7 @@ export class PreviewGridComponent implements OnInit {
   /* ---------------------------------------------------------- */
 
   // Constructor
-  constructor(private backendService: BackendService, private previewService: PreviewService, private designService: DesignService, private phoneService: PhoneService, private dragDropService: DragAndDropService, private deletionService: DeletionService, private changeDetectorRef: ChangeDetectorRef) {
+  constructor(private backendService: BackendService, private previewService: PreviewService, private designService: DesignService, private phoneService: PhoneService, private dragDropService: DragAndDropService, private deletionService: DeletionService) {
     this.selectedWidget = null;
     this.currentDesignPage = null;
     this.isDragging = false;
@@ -307,6 +308,16 @@ export class PreviewGridComponent implements OnInit {
 
     // this.dragDropService.sendGridItemCoordinates(this.gridItemCoordinates)
 
+    // Subscirbe to page name
+    this.previewService.currentPageNameState.subscribe(pageName => {
+      if (pageName != null) {
+        this.pageName = pageName
+      }
+      else {
+        this.pageName = "Homepage";
+        this.previewService.changePageName(this.pageName)
+      }
+    })
   }
 
   /* ----------------------------------------------- */

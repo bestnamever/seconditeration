@@ -2,7 +2,7 @@
   <div class="flex-two">
     <div *ngIf="fullscreen == false else screen" class="phoneContainer" [ngStyle]="{'aspect-ratio': this.getAspectRatio(), 'min-height': this.getPreviewHeight(), 'min-width': this.getPreviewWidth()}">
       <div class="phone" [ngStyle]="{'border-radius': this.phoneOptions?.borderRadius, 'border-width': this.phoneOptions?.borderThickness, 'padding-left': this.getMarginLeft(), 'padding-right': this.getMarginRight()}">
-        <app-preview-topbar toptext="Homepage" [fullscreen]="false" [phoneOptions]="this.phoneOptions" [phoneOrientation]="this.phoneOrientation" [ngStyle]="{'margin-top': getMarginTop()}"></app-preview-topbar>
+        <app-preview-topbar toptext={{pageName}} [fullscreen]="false" [phoneOptions]="this.phoneOptions" [phoneOrientation]="this.phoneOrientation" [ngStyle]="{'margin-top': getMarginTop()}"></app-preview-topbar>
         <div class="gridContainer" [ngStyle]="{'padding-bottom': getMarginBottom()}">
           <gridster *ngIf="(dashboardComponents.length > 0 || isDragging) else listisempty" [options]="gridOptions" class="customGrid">
             <gridster-item class="item" [item]="component.gridsterItem" *ngFor="let component of dashboardComponents"
@@ -29,7 +29,7 @@
       </div>
     </div>
     <ng-template #screen>
-      <app-preview-topbar toptext="Homepage" [fullscreen]="true" [phoneOptions]="this.phoneOptions" [phoneOrientation]="this.phoneOrientation"></app-preview-topbar>
+      <app-preview-topbar toptext={{pageName}} [fullscreen]="true" [phoneOptions]="this.phoneOptions" [phoneOrientation]="this.phoneOrientation"></app-preview-topbar>
       <div class="gridContainer" style="width: 100vw">
         <gridster [options]="gridOptions" class="customGrid">
           <gridster-item class="item" [item]="component.gridsterItem" *ngFor="let component of dashboardComponents"
