@@ -1,0 +1,14 @@
+<div *ngIf="isOpened" class="onboarding-container">
+  <div class="card-upper">
+    <div class="animation-container">
+      <img src="../../../../assets/onboarding.gif" alt="Gif placeholder">
+    </div>
+  </div>
+  <div class="card-lower">
+    <div class="content-container">
+      <h4>Dragging in components</h4>
+      <p>Drag components from the browser on the left onto the preview screen in the center to build on your app.</p>
+      <a (click)="closeOnboarding()">Got it!</a>
+    </div>
+  </div>
+</div>
