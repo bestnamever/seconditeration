@@ -65,11 +65,8 @@ export class PreviewTopbarComponent implements OnInit {
 
   setPageName(event: any) {
     this.previewService.changePageName(event.target.value)
-    console.log("pressed", event.target.value)
-    console.log("pressed", event.code)
 
     if (event.code == "Enter" && event.target.value != "") {
-      console.log("enter pressed")
       this.editing = false
     }
   }
