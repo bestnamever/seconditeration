@@ -54,13 +54,11 @@ export class PreviewTopbarComponent implements OnInit {
   }
 
   isEditing(): boolean {
-    console.log("here :::", this.editing)
     return this.editing
   }
 
   edit() {
     this.editing = true
-    console.log("here :::::", this.editing)
   }
 
   setPageName(event: any) {

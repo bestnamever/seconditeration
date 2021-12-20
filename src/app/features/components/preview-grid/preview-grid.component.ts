@@ -558,6 +558,7 @@ export class PreviewGridComponent implements OnInit {
       (component.gridsterItem.x == item.x && component.gridsterItem.y == item.y)
       temp_component = component
     })
+    console.log(this.dashboardComponents)
     console.log("temp is ", temp_component)
     if (temp_component != null)
       this.selectItem(temp_component)
