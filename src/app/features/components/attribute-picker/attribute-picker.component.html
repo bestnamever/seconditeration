@@ -33,7 +33,7 @@
       </div>
       <div class="bottom-bar">
         <a (click)="closePicker()">CANCEL</a>
-        <a (click)="submitSelection()">SELECT ATTRIBUTE</a>
+        <a (click)="submitSelection()" [ngClass]="{'disabled': validSelection === false}">SELECT ATTRIBUTE</a>
       </div>
     </div>
   </div>

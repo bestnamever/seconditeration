@@ -7,8 +7,8 @@ export const environment = {
   useLocalStorage: true,
   useDatabase: false,
   previewUrl: 'https://bestnamever.github.io/seconditeration/preview',
-  backendUrl: 'http://207.180.246.34:8000',
-  openremoteUrl: 'https://openremote.martinaey.nl',
+  backendUrl: 'https://backend.martinaeytesting.nl',
+  openremoteUrl: 'https://openremote.martinaeytesting.nl',
   debug_components: false,
 };
 
