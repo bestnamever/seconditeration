@@ -8,7 +8,8 @@
     <qr-code [value]="data.qrCodeUrl" size="240"></qr-code>
   </div>
   <div *ngIf="data.cancelText != null || data.successText != null || data.closeButton" mat-dialog-actions
-    [align]="data.alignActions">
+    [align]="data.alignActions" class="button">
+    <mat-checkbox class="checkbox" #c *ngIf="data.qrCodeUrl == null" (click)="showHideDialog(!c.checked)">Do not show again</mat-checkbox>
     <span *ngIf="data.cancelText != null" mat-dialog-close mat-dialog-close="false"
       class="cancel">{{data.cancelText}}</span>
     <span *ngIf="data.successText != null" mat-dialog-close mat-dialog-close="true"
@@ -16,5 +17,4 @@
     <span *ngIf="data.closeButton" mat-dialog-close mat-dialog-close="true" class="cancel"
       style="right: 0;">CLOSE</span>
   </div>
-  <mat-checkbox #c *ngIf="data.qrCodeUrl == null" style="margin-top: 20px;" (click)="showHideDialog(!c.checked)">Do not show again</mat-checkbox>
 </div>
