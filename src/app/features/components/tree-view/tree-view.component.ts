@@ -138,6 +138,7 @@ export class TreeViewComponent implements OnInit {
     else if (this.treeType === "ATTRIBUTE" && selectedItem) {
 
       this.attributePickerControl.setSelectedAttribute(selectedItem);
+      this.attributePickerControl.setValidSelection(true);
     }
   }
 
