@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
-import { tr } from 'date-fns/locale';
+import { is } from 'date-fns/locale';
 import { DeletionService } from 'src/app/core/services/deletion.service';
 
 @Component({
@@ -10,14 +10,13 @@ import { DeletionService } from 'src/app/core/services/deletion.service';
 })
 export class DialogComponent implements OnInit {
 
-  isDialogShown: boolean = false
-
   constructor(private deletionService: DeletionService, public dialogRef: MatDialogRef<DialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any,) {
-
   }
 
   ngOnInit(): void {
-    this.deletionService.showDialog(this.isDialogShown)
   }
 
+  showHideDialog(checked:boolean){
+    this.deletionService.showDialog(checked)
+  }
 }

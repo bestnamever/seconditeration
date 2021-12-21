@@ -101,7 +101,8 @@ export class LayoutComponentSettingComponent implements OnDestroy {
 
     deletionService.isDialogShownState.subscribe(isShown => {
       console.log("dialog shown:", this.isDialogShown)
-      this.isDialogShown = isShown
+      if (isShown != null)
+        this.isDialogShown = isShown
     })
   }
 
@@ -183,7 +184,7 @@ export class LayoutComponentSettingComponent implements OnDestroy {
       successText: 'DELETE ' + this.delete_component.toUpperCase(),
       selectedWidget: this.selectedWidget
     }
-    if (this.isDialogShown) {
+    if (!this.isDialogShown) {
       const dialogRef = this.dialog.open(DialogComponent, {
         width: '30%',
         data: data

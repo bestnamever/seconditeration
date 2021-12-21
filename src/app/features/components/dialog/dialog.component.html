@@ -16,5 +16,5 @@
     <span *ngIf="data.closeButton" mat-dialog-close mat-dialog-close="true" class="cancel"
       style="right: 0;">CLOSE</span>
   </div>
-  <mat-checkbox *ngIf="data.qrCodeUrl == null" style="margin-top: 20px;" [(ngModel)]="isDialogShown">Do not show again</mat-checkbox>
+  <mat-checkbox #c *ngIf="data.qrCodeUrl == null" style="margin-top: 20px;" (click)="showHideDialog(!c.checked)">Do not show again</mat-checkbox>
 </div>

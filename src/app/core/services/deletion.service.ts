@@ -9,13 +9,13 @@ export class DeletionService {
 
   private subject: Subject<any>;
 
-  private isDialogShownSubject: BehaviorSubject<boolean>;
-  public isDialogShownState: Observable<boolean>;
+  private isDialogShownSubject: BehaviorSubject<boolean | null>;
+  public isDialogShownState: Observable<boolean | null>;
 
   constructor() {
     this.subject = new Subject<any>()
 
-    this.isDialogShownSubject = new BehaviorSubject<boolean>(true);
+    this.isDialogShownSubject = new BehaviorSubject<boolean | null>(null);
     this.isDialogShownState = this.isDialogShownSubject.asObservable();
   }
 
