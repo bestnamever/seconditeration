@@ -22,8 +22,9 @@ export class OpenremoteService {
     this.usedAssets = [];
 
     openremote.init({
-      managerUrl: " https://openremote.martinaey.nl",
-      keycloakUrl: " https://openremote.martinaey.nl/auth",
+
+      managerUrl: "https://openremote.martinaeytesting.nl",
+      keycloakUrl: "https://openremote.martinaeytesting.nl/auth",
       auth: Auth.KEYCLOAK,
       autoLogin: true,
       credentials: {
@@ -104,7 +105,7 @@ export class OpenremoteService {
  * @returns {Array} An array containing all the assets used in the current manager platoform realm
  */
   public  getAssets() : Array<any> {
-    console.log("Returning", this.usedAssets);
+    // console.log("Returning", this.usedAssets);
     return this.usedAssets;
   }
 

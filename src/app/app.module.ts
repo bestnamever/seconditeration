@@ -37,7 +37,6 @@ import { AppComponent } from './app.component';
 import { HomepageComponent } from './features/pages/homepage/homepage.component';
 
 // Self-made components
-import { DeleteComfirmComponent } from "./features/components/delete-comfirm/delete-comfirm.component";
 import { LayoutHeaderComponent } from './features/components/layout-header/layout-header.component';
 import { LayoutLeftbarComponent } from './features/components/layout-leftbar/layout-leftbar.component';
 import { LayoutRightbarComponent } from './features/components/layout-rightbar/layout-rightbar.component';
@@ -54,6 +53,7 @@ import { SearchFormComponent } from './features/components/search-form/search-fo
 import { ComponentThumbnailComponent } from './features/components/component-thumbnail/component-thumbnail.component';
 import { AttributePickerComponent } from './features/components/attribute-picker/attribute-picker.component';
 import { TreeViewComponent } from './features/components/tree-view/tree-view.component';
+import { OnboardingComponent } from './features/components/onboarding/onboarding.component';
 
 // Lit Components
 import './features/litelements/vd-label/vd-label.component'
@@ -91,12 +91,12 @@ import { BackendInterceptor } from './core/interceptors/backend.interceptor';
     LayoutRightbarComponentsComponent,
     LayoutComponentSettingComponent,
     LayoutScreenComponent,
-    DeleteComfirmComponent,
     AttributePickerComponent,
     TreeViewComponent,
     PreviewComponent,
     PreviewPhoneshareComponent,
-    DialogComponent
+    DialogComponent,
+    OnboardingComponent
   ],
   imports: [
     CommonModule,

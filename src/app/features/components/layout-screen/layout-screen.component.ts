@@ -1,12 +1,13 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
-import {OptionList} from 'src/app/core/models/option-list';
-import {PhoneProperties} from 'src/app/core/models/phone-properties';
-import {PhoneService} from 'src/app/core/services/phone.service';
-import {DeleteComfirmComponent} from '../delete-comfirm/delete-comfirm.component'
-import {PhoneType} from "../../../core/models/phone-type";
-import {PhoneDirection} from "../../../core/models/phone-direction";
-import {DialogComponent} from "../dialog/dialog.component";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { OptionList } from 'src/app/core/models/option-list';
+import { PhoneProperties } from 'src/app/core/models/phone-properties';
+import { PhoneService } from 'src/app/core/services/phone.service';
+import { PhoneType } from "../../../core/models/phone-type";
+import { PhoneDirection } from "../../../core/models/phone-direction";
+import { DialogComponent } from "../dialog/dialog.component";
+import { PreviewService } from 'src/app/core/services/preview.service';
+import { DesignService } from 'src/app/core/services/design.service';
 
 @Component({
   selector: 'app-layout-screen',
@@ -24,7 +25,7 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
   phoneSelected: string | undefined;
 
   //page name and setHomepge
-  homepage: string;
+  homepage: string | undefined;
 
   //custom width and heigth
   customWidth: number;
@@ -46,11 +47,10 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
   phoneOrientation: PhoneDirection | undefined;
 
   // Advanced settings enabled
-  showAdvanced : boolean | null;
+  showAdvanced: boolean | null;
 
-  constructor(public dialog: MatDialog, private phoneSetting: PhoneService) {
+  constructor(public dialog: MatDialog, private phoneSetting: PhoneService, public previewService: PreviewService, private designSevice: DesignService) {
 
-    this.homepage = "Homepage"
     this.customWidth = 640
     this.customHeight = 480
     this.customScreenSize = "Use custom screen size";
@@ -64,14 +64,16 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
 
     this.phoneOptionList = []
     // this.phoneSelected = "Apple IPhone 13";
-/*      { value: "0", viewValue: "SAMSUNG_S20" },
-      { value: "1", viewValue: "SAMSUNG_S10" },
-    ]*/
-    for(const phoneString in Object.keys(PhoneType)) {
-      if(PhoneType[phoneString] != null) {
-        this.phoneOptionList.push({ value: phoneString, viewValue: PhoneType[phoneString]});
+    /*      { value: "0", viewValue: "SAMSUNG_S20" },
+          { value: "1", viewValue: "SAMSUNG_S10" },
+        ]*/
+    for (const phoneString in Object.keys(PhoneType)) {
+      if (PhoneType[phoneString] != null) {
+        this.phoneOptionList.push({ value: phoneString, viewValue: PhoneType[phoneString] });
       }
     }
+
+
   }
 
 
@@ -79,8 +81,8 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
     this.phoneSetting.currentPhoneState.subscribe(phone => {
       console.log("this.phoneSelected: [" + this.phoneSelected + "]");
       console.log("phone.phoneType: [" + phone.phoneType + "]");
-      if(phone.phoneType !== undefined && this.phoneSelected != phone.phoneType.toString() && this.phoneSelected != null) {
-        if(PhoneType[phone.phoneType].includes('Desktop')) {
+      if (phone.phoneType !== undefined && this.phoneSelected != phone.phoneType.toString() && this.phoneSelected != null) {
+        if (PhoneType[phone.phoneType].includes('Desktop')) {
           this.changeOrientation('LANDSCAPE');
         } else {
           this.changeOrientation('PORTRAIT');
@@ -98,6 +100,12 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
       console.log("Phone Orientation is now " + PhoneDirection[orientation]);
       console.log("Orientation used in Frontend is [" + orientation + "]");
     });
+
+    // Subscirbe to get the pageName
+    this.previewService.currentPageNameState.subscribe(pageName => {
+      if (pageName != null)
+        this.homepage = pageName
+    })
   }
 
   ngOnDestroy() {
@@ -122,18 +130,20 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
     } else if(this.customWidth > this.customHeight) {
       this.phoneOrientation = PhoneDirection.LANDSCAPE;
     }*/
-    if(this.customHeight > 0 && this.customWidth > 0) {
+    if (this.customHeight > 0 && this.customWidth > 0) {
       console.log("Updating Phone Size to " + this.customWidth + 'x' + this.customHeight);
       this.phoneSetting.changePhone(undefined, this.customWidth, this.customHeight);
     }
   }
 
-
+  setPageName(event: any) {
+    this.previewService.changePageName(event.target.value)
+  }
 
 
   showHideCustom() {
     // this.showCustomSize = !this.showCustomSize;
-    if(this.phoneOptions?.phoneType == undefined) {
+    if (this.phoneOptions?.phoneType == undefined) {
       console.log("Switching back to Apple IPhone 13!");
       this.phoneSetting.changePhone(PhoneType["Apple IPhone 13"]);
     } else {

@@ -18,7 +18,7 @@
             <form class="form">
               <mat-form-field class="page_name" appearance="outline" floatLabel="always">
                 <mat-label>Page name</mat-label>
-                <input matInput placeholder="Ex. Homepage" value={{homepage}}>
+                <input matInput placeholder="Ex. Homepage" value={{homepage}} (keyup)="setPageName($event)">
                 <!--value will be passed by the preview-->
               </mat-form-field>
             </form>

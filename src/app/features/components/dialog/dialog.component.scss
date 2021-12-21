@@ -25,3 +25,15 @@ a {
 .confirm a{
   font-weight: 500;
 }
+
+.button{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  .checkbox{
+    margin-right: auto;
+    
+  }
+}
+

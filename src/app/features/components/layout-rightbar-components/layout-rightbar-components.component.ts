@@ -95,6 +95,7 @@ export class LayoutRightbarComponentsComponent implements OnDestroy {
     // Debug
     console.log("[RightbarComponents]", "Found following value for this attribute", selectedAttribute, attributeValue);
 
+
     // Update values of the selected widget
     this.currentDesign?.widgets.forEach(element => {
       if (element.id == this.selectedGridsterItem?.id) {
@@ -118,7 +119,10 @@ export class LayoutRightbarComponentsComponent implements OnDestroy {
     });
 
     // Save the changed design
-    if (this.currentDesign != null) this.outputData.updateData(this.currentDesign);
+    if (this.currentDesign != null) 
+    {
+      this.outputData.updateData(this.currentDesign);
+    }
   }
 
   /**
@@ -167,8 +171,8 @@ export class LayoutRightbarComponentsComponent implements OnDestroy {
 
   // === ON-DESTROY ===
   ngOnDestroy(): void {
-    this.selectedWidgetSub.unsubscribe();
-    this.currentDesignSub.unsubscribe();
+    // this.selectedWidgetSub.unsubscribe();
+    // this.currentDesignSub.unsubscribe();
   }
 }
 

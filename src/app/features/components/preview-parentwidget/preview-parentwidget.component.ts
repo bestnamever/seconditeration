@@ -116,7 +116,11 @@ export class PreviewParentwidgetComponent implements OnInit, AfterViewInit, OnDe
       else console.log("[parentWidget]", false, attribute, this.widgetData?.values[0].value); // Debug
 
       // Save the updated design
-      if (this.designPage != null) this.designService.updateData(this.designPage);
+      if (this.designPage != null) 
+      {
+        console.log("called here")
+        this.designService.updateData(this.designPage);
+      }
 
     }, 3000);
   }
