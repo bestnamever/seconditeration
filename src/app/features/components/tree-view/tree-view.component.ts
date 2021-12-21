@@ -27,6 +27,7 @@ export class TreeViewComponent implements OnInit {
 
   @Input() treeType: any;
   usedAssets: any[];
+  usedAssetTypes : any;
 
   // Material Design Tree declarations
   treeData: PickerNode[] | any;
@@ -57,6 +58,8 @@ export class TreeViewComponent implements OnInit {
   constructor(private openremoteService: OpenremoteService, private attributePickerControl: AttributePickerControlService) {
     // Get currently used assets
     this.usedAssets = this.openremoteService.getAssets();
+    this.usedAssetTypes = localStorage.getItem("usedAssetTypes");
+    if (this.usedAssetTypes) this.usedAssetTypes = JSON.parse(this.usedAssetTypes);
 
     // Subscribe to the assetchange event
     this.attributePickerControl.selectedAssetChange.subscribe(value => {
@@ -90,11 +93,18 @@ export class TreeViewComponent implements OnInit {
       children: [{}]
     }];
     assets.forEach((element: any) => {
+      let elementName = element.name
+      if (element.id) elementName += `_${element.id}`;
+      if (this.treeType === "ASSET" && element.name != "Consoles") elementName += `&${this.getOrIcon(element.type)}`;
+
+      console.log("element name", elementName);
+
       let asset = {
         id: element.id ? element.id : this.attributePickerControl.selectedAsset,
-        name: element.id ? `${element.name}_${element.id}` : element.name,
+        name: elementName,
         children: []
       }
+    
 
       if (element.parentName) {
         let index = formattedArray.map(e => e.name).indexOf(`${element.parentName}_${element.parentId}`);
@@ -110,6 +120,11 @@ export class TreeViewComponent implements OnInit {
 
     formattedArray.splice(0, 1);
     return formattedArray;
+  }
+
+  getOrIcon(assetType: string) : string {
+     let result = this.usedAssetTypes.find((x :any) => x.name === assetType)
+     return result.icon;
   }
 
   onAssetSelect(event: Event, selectedItem?: string): void {
@@ -164,6 +179,8 @@ export class TreeViewComponent implements OnInit {
   splitNodeName(nodeName: string): string {
     let subString = nodeName.replace(`_${nodeName.split("_").pop()}`, "");
 
+
+    console.log("Name returning:", (subString) ? subString : nodeName);
     return (subString) ? subString : nodeName;
   }
 
@@ -173,9 +190,19 @@ export class TreeViewComponent implements OnInit {
    * @returns {string} The unique ID of the node from the OpenRemote Manager
    */
   splitNodeId(nodeName: string): string {
-    let nodeId = nodeName.split("_").pop();
+    let temp = nodeName.split("_").pop();
 
+    let nodeId = temp?.split("&").shift();
+
+    console.log("ID returning:", (nodeId) ? nodeId : nodeName);
     return (nodeId) ? nodeId : nodeName;
+  }
+
+  splitNodeIcon(nodeName : string): string {
+    let icon = nodeName.split("&").pop();
+
+    console.log("Icon returning:", (icon) ? icon : nodeName);
+    return (icon) ? icon : nodeName;
   }
 
 
