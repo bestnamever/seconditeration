@@ -46,6 +46,7 @@ export class PreviewGridComponent implements OnInit {
   isDragging: boolean | null;
   selectedComponent: Components | null;
 
+
   // dragEventSubscription: Subscription
 
   deletionEventSubscription: Subscription
@@ -135,6 +136,11 @@ export class PreviewGridComponent implements OnInit {
         this.changedOptions()
       }
     });
+
+    deletionService.isDialogShownState.subscribe(isShown => {
+      if (isShown != null)
+        this.isDialogShown = isShown
+    })
 
 
 
