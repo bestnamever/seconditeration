@@ -22,7 +22,8 @@ export class OpenremoteService {
     this.usedAssets = [];
 
     openremote.init({
-      managerUrl: "https://openremote.martinaeytesting.nl/",
+
+      managerUrl: "https://openremote.martinaeytesting.nl",
       keycloakUrl: "https://openremote.martinaeytesting.nl/auth",
       auth: Auth.KEYCLOAK,
       autoLogin: true,

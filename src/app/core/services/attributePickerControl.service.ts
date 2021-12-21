@@ -10,11 +10,13 @@ export class AttributePickerControlService {
   selectedAsset : string;
   selectedAttribute : string;
   lastSelection : object;
+  validSelection: boolean;
 
   isOpenedChange : Subject<boolean> = new Subject<boolean>();
   selectedAssetChange : Subject<string> = new Subject<string>();
   selectedAttributeChange : Subject<string> = new Subject<string>();
   lastSelectionChange : Subject<object> = new Subject<object>();
+  validSelectionChange: Subject<boolean> = new Subject<boolean>();
 
 constructor() { 
   this.isOpened = false
@@ -35,6 +37,11 @@ constructor() {
   this.lastSelection = {};
   this.lastSelectionChange.subscribe((value) => {
     this.lastSelection = value;
+  })
+
+  this.validSelection = false;
+  this.validSelectionChange.subscribe((value) => {
+    this.validSelection = value;
   })
 }
 
@@ -61,6 +68,11 @@ setLastSelection(assetId : string, attributeName : string){
   console.log("[AttributePickerControlService]", "Saved new last selection", newValue);
 
   this.lastSelectionChange.next(newValue);
+}
+
+setValidSelection(value:boolean){
+  this.validSelectionChange.next(value);
+  console.log("[Picker]", "Valid selection now is:", value);
 }
 
 }
