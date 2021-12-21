@@ -76,11 +76,21 @@
                 }
 
                 .picker{
+                    height: 100%;
                     max-height: calc(100% - 50px);
-                    overflow-y: scroll;
+                    overflow-y: auto;
+
+                    // Scrollbar Firefox  
+                    scrollbar-width: thin;
+
+                    // Scrollbar Chrome, Safari, Edge
+                    &::-webkit-scrollbar{
+                        width: 6px;
+                    }
 
                     .cdk-tree-node{
                         max-height: 100%;
+                        height: 100%;
                     }
                 }
             }

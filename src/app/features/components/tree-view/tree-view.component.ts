@@ -94,8 +94,10 @@ export class TreeViewComponent implements OnInit {
     }];
     assets.forEach((element: any) => {
       let elementName = element.name
+      // Append the id to the name
       if (element.id) elementName += `_${element.id}`;
-      if (this.treeType === "ASSET" && element.name != "Consoles") elementName += `&${this.getOrIcon(element.type)}`;
+      // Append the code for the or-icon to the name if applicable
+      if (this.treeType === "ASSET" && !element.attributes.childAssetType) elementName += `&${this.getOrIcon(element.type)}`;
 
       console.log("element name", elementName);
 
