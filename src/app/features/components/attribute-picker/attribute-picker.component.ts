@@ -18,6 +18,7 @@ export class AttributePickerComponent implements OnInit {
   isOpened : boolean;
   selectedAsset : string;
   selectedAttribute : string;
+  validSelection : boolean;
   dialogRef: MatDialogRef<any> | undefined;
   @ViewChild('attributedialog') attributedialog: TemplateRef<any> | null;
 
@@ -29,6 +30,7 @@ export class AttributePickerComponent implements OnInit {
     this.selectedAsset = this.attributePickerControl.selectedAsset;
     this.selectedAttribute = this.attributePickerControl.selectedAttribute;
     this.attributedialog = null;
+    this.validSelection = this.attributePickerControl.validSelection;
 
     // Subscribe to service variables to handle changes
     this.attributePickerControl.isOpenedChange.subscribe(value => {
@@ -45,6 +47,10 @@ export class AttributePickerComponent implements OnInit {
 
     this.attributePickerControl.selectedAttributeChange.subscribe(value => {
       this.selectedAttribute = value;
+    })
+
+    this.attributePickerControl.validSelectionChange.subscribe(value => {
+      this.validSelection = value
     })
   }
 
@@ -68,6 +74,7 @@ export class AttributePickerComponent implements OnInit {
 
     this.attributePickerControl.setLastSelection(this.selectedAsset, this.selectedAttribute);
 
+    this.attributePickerControl.setValidSelection(false);
     this.closePicker();
 
   }
