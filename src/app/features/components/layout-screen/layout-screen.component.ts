@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { OptionList } from 'src/app/core/models/option-list';
 import { PhoneProperties } from 'src/app/core/models/phone-properties';
 import { PhoneService } from 'src/app/core/services/phone.service';
-import { DeleteComfirmComponent } from '../delete-comfirm/delete-comfirm.component'
 import { PhoneType } from "../../../core/models/phone-type";
 import { PhoneDirection } from "../../../core/models/phone-direction";
 import { DialogComponent } from "../dialog/dialog.component";

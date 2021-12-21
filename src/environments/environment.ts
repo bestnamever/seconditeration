@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  useLocalStorage: false,
-  useDatabase: true,
+  useLocalStorage: true,
+  useDatabase: false,
   previewUrl: 'https://bestnamever.github.io/seconditeration/preview',
   backendUrl: 'https://backend.martinaeytesting.nl',
   openremoteUrl: 'https://openremote.martinaeytesting.nl',
