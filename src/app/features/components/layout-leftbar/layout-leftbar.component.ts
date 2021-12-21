@@ -116,7 +116,6 @@ export class LayoutLeftbarComponent implements OnInit {
    */
     var index = this.selectedComponents.indexOf(component)
     this.selectedComponents[index].isdragging = true
-    console.log(this.components)
     // for showing grid
     this.isSelected = true
     this.dragdropService.gridOption(this.isSelected)

@@ -65,7 +65,7 @@ export class DesignService {
   /* -------------------------------------------------------------------------------- */
 
   public updateLocation(design: Design): any {
-    console.log("Started updating the location in DesignService...");
+    console.log("Started updating the data in DesignService...");
     const newDesignPage = JSON.stringify(design); // Duplicating the variable so it does not update here when frontend changes.
     this.currentDesignSubject.next(JSON.parse(newDesignPage));
     this.designHistory.push(JSON.parse(newDesignPage));
@@ -137,7 +137,6 @@ export class DesignService {
         }
 
         // Last function is to update the data in state.
-        console.log('Data received from the Database is the following:', designPage);
         this.updateData(designPage)
       })
     })

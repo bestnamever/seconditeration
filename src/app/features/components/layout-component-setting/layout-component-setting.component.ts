@@ -100,7 +100,6 @@ export class LayoutComponentSettingComponent implements OnDestroy {
     })
 
     deletionService.isDialogShownState.subscribe(isShown => {
-      console.log("dialog shown:", this.isDialogShown)
       if (isShown != null)
         this.isDialogShown = isShown
     })
@@ -137,7 +136,6 @@ export class LayoutComponentSettingComponent implements OnDestroy {
 
     // subscript to this.deisgnpage
     if (this.design != null) {
-      console.log("design is :::", this.design)
       this.outputData.updateData(this.design)
     }
   }
@@ -191,7 +189,6 @@ export class LayoutComponentSettingComponent implements OnDestroy {
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result === "true") {
-          console.log(result)
           this.deletionService.sendEvent(data.selectedWidget)
         }
       });
