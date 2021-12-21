@@ -3,11 +3,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { OptionList } from 'src/app/core/models/option-list';
 import { PhoneProperties } from 'src/app/core/models/phone-properties';
 import { PhoneService } from 'src/app/core/services/phone.service';
-import { DeleteComfirmComponent } from '../delete-comfirm/delete-comfirm.component'
 import { PhoneType } from "../../../core/models/phone-type";
 import { PhoneDirection } from "../../../core/models/phone-direction";
 import { DialogComponent } from "../dialog/dialog.component";
 import { PreviewService } from 'src/app/core/services/preview.service';
+import { DesignService } from 'src/app/core/services/design.service';
 
 @Component({
   selector: 'app-layout-screen',
@@ -49,7 +49,7 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
   // Advanced settings enabled
   showAdvanced: boolean | null;
 
-  constructor(public dialog: MatDialog, private phoneSetting: PhoneService, public previewService: PreviewService) {
+  constructor(public dialog: MatDialog, private phoneSetting: PhoneService, public previewService: PreviewService, private designSevice: DesignService) {
 
     this.customWidth = 640
     this.customHeight = 480
@@ -136,7 +136,7 @@ export class LayoutScreenComponent implements OnInit, OnDestroy {
     }
   }
 
-  setPageName(event: any){
+  setPageName(event: any) {
     this.previewService.changePageName(event.target.value)
   }
 

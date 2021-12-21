@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { WidgetComponent } from '../models/widget-component';
 
 @Injectable({
@@ -9,8 +9,14 @@ export class DeletionService {
 
   private subject: Subject<any>;
 
+  private isDialogShownSubject: BehaviorSubject<boolean | null>;
+  public isDialogShownState: Observable<boolean | null>;
+
   constructor() {
     this.subject = new Subject<any>()
+
+    this.isDialogShownSubject = new BehaviorSubject<boolean | null>(null);
+    this.isDialogShownState = this.isDialogShownSubject.asObservable();
   }
 
   /* ---------------------------------------------- */
@@ -23,4 +29,9 @@ export class DeletionService {
   getEvent(): Observable<any> {
     return this.subject.asObservable()
   }
+
+  showDialog(isShown: boolean): void {
+    this.isDialogShownSubject.next(isShown);
+  }
 }
+

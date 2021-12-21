@@ -7,7 +7,6 @@ import { GridsterItem } from 'angular-gridster2';
 import { Design } from 'src/app/core/models/design';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { DeleteComfirmComponent } from '../delete-comfirm/delete-comfirm.component';
 import { DeletionService } from 'src/app/core/services/deletion.service';
 import { AttributePickerControlService } from "../../../core/services/attributePickerControl.service"
 import { OpenremoteService } from '../../../core/services/openremote.service';
@@ -38,6 +37,9 @@ export class LayoutComponentSettingComponent implements OnDestroy {
   selectedWidgetText: string | undefined;
   selectedWidgetValue: string | undefined;
 
+  // Dialog shown
+  isDialogShown: boolean | undefined;
+
   // Placeholder text variables
   delete_component: string;
   delete_title: string;
@@ -47,6 +49,7 @@ export class LayoutComponentSettingComponent implements OnDestroy {
   // Subscriptions
   private selectedWidgetSub: Subscription;
   private currentDesignSub: Subscription;
+
 
 
 
@@ -95,6 +98,11 @@ export class LayoutComponentSettingComponent implements OnDestroy {
     attributePicker.lastSelectionChange.subscribe((value) => {
       this.setWidgetValues(this.selectedWidget?.widgetData.values, value);
     })
+
+    deletionService.isDialogShownState.subscribe(isShown => {
+      if (isShown != null)
+        this.isDialogShown = isShown
+    })
   }
 
 
@@ -128,7 +136,6 @@ export class LayoutComponentSettingComponent implements OnDestroy {
 
     // subscript to this.deisgnpage
     if (this.design != null) {
-      console.log("design is :::", this.design)
       this.outputData.updateData(this.design)
     }
   }
@@ -175,17 +182,20 @@ export class LayoutComponentSettingComponent implements OnDestroy {
       successText: 'DELETE ' + this.delete_component.toUpperCase(),
       selectedWidget: this.selectedWidget
     }
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '30%',
-      data: data
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === "true") {
-        console.log(result)
-        this.deletionService.sendEvent(data.selectedWidget)
-      }
-    });
+    if (!this.isDialogShown) {
+      const dialogRef = this.dialog.open(DialogComponent, {
+        width: '30%',
+        data: data
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === "true") {
+          this.deletionService.sendEvent(data.selectedWidget)
+        }
+      });
+    }
+    else {
+      this.deletionService.sendEvent(data.selectedWidget)
+    }
   }
 
   setWidgetValues(widget: any, newData: any): void {

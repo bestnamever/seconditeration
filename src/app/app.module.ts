@@ -37,7 +37,6 @@ import { AppComponent } from './app.component';
 import { HomepageComponent } from './features/pages/homepage/homepage.component';
 
 // Self-made components
-import { DeleteComfirmComponent } from "./features/components/delete-comfirm/delete-comfirm.component";
 import { LayoutHeaderComponent } from './features/components/layout-header/layout-header.component';
 import { LayoutLeftbarComponent } from './features/components/layout-leftbar/layout-leftbar.component';
 import { LayoutRightbarComponent } from './features/components/layout-rightbar/layout-rightbar.component';
@@ -92,7 +91,6 @@ import { BackendInterceptor } from './core/interceptors/backend.interceptor';
     LayoutRightbarComponentsComponent,
     LayoutComponentSettingComponent,
     LayoutScreenComponent,
-    DeleteComfirmComponent,
     AttributePickerComponent,
     TreeViewComponent,
     PreviewComponent,

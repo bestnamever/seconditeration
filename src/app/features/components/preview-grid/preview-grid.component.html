@@ -6,7 +6,7 @@
         <div class="gridContainer" [ngStyle]="{'padding-bottom': getMarginBottom()}">
           <gridster *ngIf="(dashboardComponents.length > 0 || isDragging) else listisempty" [options]="gridOptions" class="customGrid">
             <gridster-item class="item" [item]="component.gridsterItem" *ngFor="let component of dashboardComponents"
-              (click)="selectItem(component)" (touchend)="selectItem(component)" onkeypress="deletion()">
+              (click)="selectItem(component)" (touchend)="selectItem(component)">
               <div class="widgetContainer" [ngStyle]="{'box-shadow': getBorderState(component)}">
                 <!--<p>Test {{component.widgetData}}</p>-->
                 <app-preview-parentwidget [fullscreen]="fullscreen" [widgetId]="component.gridsterItem.id" >
