@@ -27,7 +27,10 @@
         <div class="component-browser-container">
             <h3>Browse components</h3>
             <div id="component-list" class="component-list-wrapper">
-                <div *ngFor="let component of selectedComponents" class="component-card-wrapper" style="z-index: 999">
+                <div *ngFor="let component of selectedComponents" class="component-card-wrapper" style="z-index: 999; position: relative;" (mouseenter)="changeHoverTo(component.componentType)"> <!--(mouseleave)="removeHover()"-->
+                    <div *ngIf="hoveredWidgetType == component.componentType" style="z-index: 1000; position: absolute; width: 100%; text-align: center; margin-top: -40px;">
+                        <app-component-tooltip [widgetType]="component.componentType"></app-component-tooltip>
+                    </div>
                     <mat-grid-list cols="1" rowHeight="100px" style="z-index: 999">
                         <mat-grid-tile colspan="1" rowspan="1" style="border: 0px solid black;z-index: 999"
                             draggable="true" (dragstart)="dragStartHandler($event,component)"

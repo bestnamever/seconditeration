@@ -25,6 +25,7 @@ export class LayoutLeftbarComponent implements OnInit {
   //assetTypeData: Array<AssetType>; // All availible asset types
 
   selectedFilter: AssetFilter | null;
+  hoveredWidgetType: WidgetType | null;
 
   isSelected: boolean | null;
 
@@ -44,6 +45,7 @@ export class LayoutLeftbarComponent implements OnInit {
     this.searchValue = '';
     //this.assetTypeData = Object.values(AssetType);
     this.selectedFilter = null;
+    this.hoveredWidgetType = null;
     this.selectedAssetType = AssetType.ALL
     this.components = this.getComponents()
     this.selectedComponents = this.components
@@ -130,5 +132,13 @@ export class LayoutLeftbarComponent implements OnInit {
 
     var index = this.selectedComponents.indexOf(component)
     this.selectedComponents[index].isdragging = false
+  }
+
+
+  changeHoverTo(widgetType: WidgetType) {
+    this.hoveredWidgetType = widgetType;
+  }
+  removeHover() {
+    this.hoveredWidgetType = null;
   }
 }
