@@ -1,9 +1,10 @@
 ::ng-deep app-onboarding {
   position: absolute;
-  z-index: 11000000;
-  right: -80%;
+  z-index: 1;
+  left: 430px;
   top: 15%;
-  background: white;
+  // background: white;
+  overflow: hidden;
   width: 15vw;
   max-width: 300px;
   border-radius: 10px;
@@ -14,8 +15,9 @@
 
     .card-upper {
       width: 100%;
-      height: 235;
       box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.25);
+      border-radius: 10px 10px 0px 0px;
+      overflow: hidden;
       clip-path: inset(-15px -12px 0px -15px);
 
       img {

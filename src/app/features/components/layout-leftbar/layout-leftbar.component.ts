@@ -11,6 +11,7 @@ import { WidgetType } from 'src/app/core/models/widget-type';
 import { DragAndDropService } from 'src/app/core/services/dragAnddrop.service';
 import { GridsterItemComponentInterface } from 'angular-gridster2';
 import { OpenremoteService } from 'src/app/core/services/openremote.service';
+import {TooltipService} from "../../../core/services/tooltip.service";
 
 @Component({
   selector: 'app-layout-leftbar',
@@ -25,7 +26,7 @@ export class LayoutLeftbarComponent implements OnInit {
   //assetTypeData: Array<AssetType>; // All availible asset types
 
   selectedFilter: AssetFilter | null;
-  hoveredWidgetType: WidgetType | null;
+  hoveredWidgetType: WidgetType | undefined;
 
   isSelected: boolean | null;
 
@@ -41,11 +42,10 @@ export class LayoutLeftbarComponent implements OnInit {
   selectedComponents: Components[]
   gridItemCoordinates: any;
 
-  constructor(private assetFiterService: AssetFilterService, private dragdropService: DragAndDropService, private openremoteService: OpenremoteService) {
+  constructor(private assetFiterService: AssetFilterService, private dragdropService: DragAndDropService, private openremoteService: OpenremoteService, private tooltipService: TooltipService) {
     this.searchValue = '';
     //this.assetTypeData = Object.values(AssetType);
     this.selectedFilter = null;
-    this.hoveredWidgetType = null;
     this.selectedAssetType = AssetType.ALL
     this.components = this.getComponents()
     this.selectedComponents = this.components
@@ -58,6 +58,9 @@ export class LayoutLeftbarComponent implements OnInit {
   ngOnInit(): void {
     this.assetFiterService.currentAssetFilterState.subscribe(assetFilter => {
       this.selectedFilter = assetFilter;
+    });
+    this.tooltipService.currentlyHoveredWidgetTypeState.subscribe(widgetType => {
+      this.hoveredWidgetType = widgetType;
     })
 
     // Debug
@@ -136,9 +139,9 @@ export class LayoutLeftbarComponent implements OnInit {
 
 
   changeHoverTo(widgetType: WidgetType) {
-    this.hoveredWidgetType = widgetType;
+    this.tooltipService.update(widgetType);
   }
   removeHover() {
-    this.hoveredWidgetType = null;
+    this.tooltipService.update(undefined);
   }
 }

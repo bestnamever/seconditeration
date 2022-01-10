@@ -1,3 +1,43 @@
-<div>
+<!--<div>
   <p>Test</p>
+</div>-->
+<div class="onboarding-container">
+  <div class="card-upper">
+    <div class="animation-container">
+
+      <!-- Label -->
+      <div *ngIf="widgetType == 0" style="padding: 30px 55px 0 55px;">
+        <img src="../../../../assets/datacardPreview.gif" style="width: 100%;" alt="Data Card Preview">
+      </div>
+      <!-- Graoh -->
+      <div *ngIf="widgetType == 1" style="padding: 20px 20px 20px 20px;">
+        <img src="../../../../assets/graphPreview.gif" style="width: 100%;" alt="Graph Preview">
+      </div>
+      <!-- Bar Chart -->
+      <div *ngIf="widgetType == 3" style="padding: 20px 55px 20px 55px;">
+        <img src="../../../../assets/barchartPreview.PNG" style="width: 100%;" alt="Bar Chart Preview">
+      </div>
+      <!-- Pie Chart -->
+      <div *ngIf="widgetType == 4" style="padding: 20px 75px 20px 75px;">
+        <img src="../../../../assets/questionMark.png" style="width: 100%; opacity: 0.5;" alt="Pie Chart Preview">
+      </div>
+    </div>
+  </div>
+  <div class="card-lower">
+    <div class="content-container">
+      <h4>{{widgetTitle}}</h4>
+      <p *ngIf="widgetType == 0"> <!-- AKA IS LABEL -->
+        A single number or text containing the value at the moment. Includes a customizable label.
+      </p>
+      <p *ngIf="widgetType == 1"> <!-- AKA IS GRAPH -->
+        A line graph which shows the data of assets over time.
+      </p>
+      <p *ngIf="widgetType == 3"> <!-- AKA IS BARCHART -->
+        A chart which is able to compare assets, so you can see data of multiple sensors in a glance.
+      </p>
+      <p *ngIf="widgetType == 4"> <!-- AKA IS PIECHART -->
+        A pie chart which shows data as a percentage, compared to a total amount. For example, you can compare multiple assets to discover which one delivers the most Power.
+      </p>
+    </div>
+  </div>
 </div>

@@ -10,9 +10,12 @@ export class ComponentTooltipComponent implements OnInit {
 
   // Variables
   @Input('widgetType') widgetType: WidgetType | undefined;
+  @Input('widgetTitle') widgetTitle: string;
 
   // Constructor
-  constructor() { }
+  constructor() {
+    this.widgetTitle = "Unknown"
+  }
 
   // Init
   ngOnInit(): void {
