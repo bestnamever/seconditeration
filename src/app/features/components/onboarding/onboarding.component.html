@@ -1,4 +1,4 @@
-<div *ngIf="isOpened" class="onboarding-container">
+<div *ngIf="isOpened" [ngStyle]="{'opacity': opacity, 'background': background}" class="onboarding-container" disabled>
   <div class="card-upper">
     <div class="animation-container">
       <img src="assets/onboarding.gif" alt="Gif placeholder">

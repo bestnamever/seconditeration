@@ -1,10 +1,7 @@
-::ng-deep app-onboarding {
+::ng-deep app-component-tooltip {
   position: absolute;
-  z-index: 1;
-  left: 430px;
-  top: 15%;
-  // background: white;
-  overflow: hidden;
+  z-index: 11000;
+  background: white;
   width: 15vw;
   max-width: 300px;
   border-radius: 10px;
@@ -24,6 +21,19 @@
         height: 100%;
         width: 100%;
         object-fit: cover;
+      }
+      &:after {
+        content: '';
+        position: absolute;
+        left: -30px;
+        top: 44px;
+        transform: rotate(90deg);
+        width: 0;
+        height: 0;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-top: 20px solid white;
+        clear: both;
       }
     }
 
@@ -50,20 +60,6 @@
         &:hover {
           cursor: pointer;
         }
-      }
-
-      &:after {
-        content: '';
-        position: absolute;
-        left: -30px;
-        top: 25%;
-        transform: rotate(90deg);
-        width: 0;
-        height: 0;
-        border-left: 20px solid transparent;
-        border-right: 20px solid transparent;
-        border-top: 20px solid white;
-        clear: both;
       }
     }
   }

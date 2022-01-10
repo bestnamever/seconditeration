@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ɵclearResolutionOfComponentResourcesQueue } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, Input, OnDestroy, OnInit, ɵclearResolutionOfComponentResourcesQueue } from '@angular/core';
 import { DisplayGrid, GridsterConfig, GridsterItem, GridsterItemComponentInterface } from "angular-gridster2";
 import { WidgetComponent } from "../../../core/models/widget-component";
 import { PhoneProperties } from "../../../core/models/phone-properties";
@@ -21,6 +21,8 @@ import { Design } from 'src/app/core/models/design';
 import { BackendService } from 'src/app/core/services/backend.service';
 import { environment } from 'src/environments/environment';
 import { ComponentThumbnailComponent } from '../component-thumbnail/component-thumbnail.component';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
 
 
 @Component({
@@ -29,6 +31,37 @@ import { ComponentThumbnailComponent } from '../component-thumbnail/component-th
   styleUrls: ['./preview-grid.component.scss']
 })
 export class PreviewGridComponent implements OnInit {
+
+  @HostListener('window:keyup.delete', ['$event']) keyUp(e: KeyboardEvent) {
+    if (this.selectedWidget != null) {
+      console.log('key up', e);
+
+      const data = {
+        title: this.delete_title,
+        descriptionHtml:
+          'Are you sure you want to delete this <b>' + this.delete_component + '</b>?<br /><br />' +
+          'Deleting this component is a <b>destructive</b> action, meaning that it cannot be reverted later.',
+        alignActions: 'start',
+        cancelText: 'CANCEL',
+        successText: 'DELETE ' + this.delete_component.toUpperCase(),
+        selectedWidget: this.selectedWidget
+      }
+      if (!this.isDialogShown) {
+        const dialogRef = this.dialog.open(DialogComponent, {
+          width: '30%',
+          data: data
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result === "true") {
+            this.deletionService.sendEvent(data.selectedWidget)
+          }
+        });
+      }
+      else {
+        this.deletionService.sendEvent(data.selectedWidget)
+      }
+    }
+  }
 
   // Input
   @Input('fullscreen') fullscreen: boolean | undefined;
@@ -40,11 +73,14 @@ export class PreviewGridComponent implements OnInit {
   phoneOrientation: PhoneDirection | undefined;
   dashboardComponents: Array<WidgetComponent>;
   pageName: string | undefined;
+  delete_title: string;
+  delete_component: string
 
   currentDesignPage: Design | null;
   selectedWidget: WidgetComponent | null;
   isDragging: boolean | null;
   selectedComponent: Components | null;
+  isDialogShown: boolean | undefined;
 
 
   // dragEventSubscription: Subscription
@@ -62,12 +98,14 @@ export class PreviewGridComponent implements OnInit {
   /* ---------------------------------------------------------- */
 
   // Constructor
-  constructor(private backendService: BackendService, private previewService: PreviewService, private designService: DesignService, private phoneService: PhoneService, private dragDropService: DragAndDropService, private deletionService: DeletionService) {
+  constructor(private dialog: MatDialog, private backendService: BackendService, private previewService: PreviewService, private designService: DesignService, private phoneService: PhoneService, private dragDropService: DragAndDropService, private deletionService: DeletionService) {
     this.selectedWidget = null;
     this.currentDesignPage = null;
     this.isDragging = false;
     this.dashboardComponents = new Array<WidgetComponent>();
     this.selectedComponent = null;
+    this.delete_title = "Delete this Component"
+    this.delete_component = "Component"
 
     // this.gridItemCoordinates = new Map<GridsterItemComponentInterface, { x: number, y: number, width: number, height: number }>();
 
@@ -243,6 +281,7 @@ export class PreviewGridComponent implements OnInit {
     // Subscribe to the currently selected Widget
     this.previewService.currentlySelectedWidgetState.subscribe(widget => {
       this.selectedWidget = widget;
+
     });
 
     // this.dragDropService.sendGridItemCoordinates(this.gridItemCoordinates)
@@ -304,10 +343,9 @@ export class PreviewGridComponent implements OnInit {
 
   /* --------------------------------------- */
 
-
   selectItem(component: WidgetComponent): void {
     this.previewService.selectWidget(component);
-    console.log("selected " ,component)
+    console.log("selected ", component)
   }
 
   getAspectRatio(): any {
