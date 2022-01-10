@@ -67,6 +67,7 @@ import { PreviewPhoneshareComponent } from './features/components/preview-phones
 import { DialogComponent } from './features/components/dialog/dialog.component';
 import { QrCodeModule } from "ng-qrcode";
 import { BackendInterceptor } from './core/interceptors/backend.interceptor';
+import { ComponentTooltipComponent } from './features/components/component-tooltip/component-tooltip.component';
 
 
 
@@ -96,7 +97,8 @@ import { BackendInterceptor } from './core/interceptors/backend.interceptor';
     PreviewComponent,
     PreviewPhoneshareComponent,
     DialogComponent,
-    OnboardingComponent
+    OnboardingComponent,
+    ComponentTooltipComponent
   ],
   imports: [
     CommonModule,
